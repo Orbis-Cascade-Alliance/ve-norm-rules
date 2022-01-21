@@ -1,0 +1,41 @@
+rule "Primo VE - Lds100"
+	when
+		MARC is "035"."a" AND
+		MARC."035"."a" match ".*OCoLC.*"
+	then
+		set TEMP"1" to MARC."035"."a"
+		remove string (TEMP"1","\\(OCoLC\\)")
+		remove string (TEMP"1","ocm")
+		remove string (TEMP"1","ocn")
+		remove string (TEMP"1","on")
+		remove leading and trailing spaces (TEMP"1")
+		create pnx."display"."lds100" with TEMP"1"
+end
+rule "Primo VE - Lds100_ocm"
+	when
+		MARC is "035"."a" AND
+		MARC."035"."a" match "^ocm.*"
+	then
+		set TEMP"1" to MARC."035"."a"
+		remove string (TEMP"1","ocm")
+		remove leading and trailing spaces (TEMP"1")
+		create pnx."display"."lds100" with TEMP"1"
+end
+rule "Primo VE - Lds100_ocn"
+	when
+		MARC is "035"."a" AND
+		MARC."035"."a" match "^ocn.*"
+	then
+		set TEMP"1" to MARC."035"."a"
+		remove string (TEMP"1","ocn")
+		create pnx."display"."lds100" with TEMP"1"
+end
+rule "Primo VE - Lds100_on"
+	when
+		MARC is "035"."a" AND
+		MARC."035"."a" match "^on.*"
+	then
+		set TEMP"1" to MARC."035"."a"
+		remove string (TEMP"1","on")
+		create pnx."display"."lds100" with TEMP"1"
+end
