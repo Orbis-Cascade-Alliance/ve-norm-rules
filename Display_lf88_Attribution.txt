@@ -1,0 +1,18 @@
+rule "Primo VE - Lds88"
+	when
+		MARC is "245"."c"
+	then
+		set TEMP"1" to MARC "245"."c"
+                remove substring using regex (TEMP"1","(\\.)+$")
+                create pnx."display"."lds88" with TEMP"1"
+end
+
+rule "Primo VE - Lds88b"
+         when
+                MARC is "880"."c" AND
+                MARC."880"."6" match "245-.*"
+         then
+                set TEMP"1" to MARC "880"."c"
+                remove substring using regex (TEMP"1","(=.*)+$")
+         create pnx."display"."lds88" with TEMP"1"
+end
