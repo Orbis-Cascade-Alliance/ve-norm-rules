@@ -1,0 +1,57 @@
+rule "Primo VE - Lds99"
+when
+MARC is "520"."a" AND 
+MARC."520".ind"1" equals "0"
+then	
+set TEMP"1" to MARC."520" subfields "a"
+add prefix (TEMP"1","<b>Subject:</b> ")
+create pnx."display"."lds99" with TEMP"1"
+end
+
+rule "Primo VE - Lds99_1_1"
+when
+MARC is "520"."a" AND 
+MARC."520".ind"1" equals "1"
+then
+set TEMP"1" to MARC."520" subfields "a"
+add prefix (TEMP"1","<b>Review:</b> ")
+create pnx."display"."lds99" with TEMP"1"
+end
+
+rule "Primo VE - Lds99_1_2"
+when
+MARC is "520"."a" AND 
+MARC."520".ind"1" equals "2"
+then
+set TEMP"1" to MARC."520" subfields "a"
+add prefix (TEMP"1","<b>Scope and content:</b> ")
+create pnx."display"."lds99" with TEMP"1"
+end
+
+rule "Primo VE - Lds99_1_3"
+when
+MARC is "520"."a" AND 
+MARC."520".ind"1" equals "3"
+then
+set TEMP"1" to MARC."520" subfields "a"
+add prefix (TEMP"1","<b>Abstract:</b> ")
+create pnx."display"."lds99" with TEMP"1"
+end
+
+rule "Primo VE - Lds99_1_4"
+when
+MARC is "520"."a" AND 
+MARC."520".ind"1" equals "4"
+then
+set TEMP"1" to MARC."520" subfields "a"
+add prefix (TEMP"1","<b>Content advice:</b> ")
+create pnx."display"."lds99" with TEMP"1"
+end
+
+rule "Primo VE - Lds99_880"
+	when
+		MARC is "880"."a" AND
+MARC."880"."6" match "520-.*"
+	then
+		create pnx."display"."lds99" with MARC "880"."a"
+end
