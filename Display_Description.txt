@@ -1,0 +1,60 @@
+rule "Primo VE - Description 500"
+when
+MARC is "500"."a" AND NOT
+MARC."500"."5" match ".*"
+then 
+create pnx."display"."description" with MARC."500"."a"
+end
+
+rule "Primo VE - Description 504"
+when
+MARC is "504"."a"
+then 
+create pnx."display"."description" with MARC."504"."a"
+end
+
+rule "Primo VE - Description 515"
+when
+MARC is "515"."a"
+then 
+create pnx."display"."description" with MARC."515"."a"
+end
+
+rule "Primo VE - Description 555"
+when
+MARC."555" has any "a,b,c,d,u,3"
+then 
+create pnx."display"."description" with MARC."555" sub without sort "a,b,c,d,u,3"
+end
+
+rule "Primo VE - Description 522"
+when
+MARC is "522"."a"
+then
+set TEMP"1" to MARC."522" subfields "a"
+add prefix (TEMP"1","<b>Geographical coverage:</b> ")
+create pnx."display"."description" with TEMP"1"
+end
+
+rule "Primo VE - Description 525"
+when
+MARC is "525"."a"
+then 
+create pnx."display"."description" with MARC."525"."a"
+end
+
+rule "Primo VE - Description 550"
+when
+MARC is "550"."a"
+then
+set TEMP"1" to MARC."550" subfields "a"
+add prefix (TEMP"1","<b>Issuing body:</b> ")
+create pnx."display"."description" with TEMP"1"
+end
+
+rule "Primo VE - Description 547"
+when
+MARC is "547"."a"
+then 
+create pnx."display"."description" with MARC."547"."a"
+end
