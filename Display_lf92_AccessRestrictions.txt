@@ -1,0 +1,97 @@
+rule "Primo VE - Lds92"
+#rule "Primo VE - LDR 6 is P ind1=0 Has 3"
+priority 10
+when
+   MARC is "506"."3" AND
+   MARC.control."LDR"(6-7) equals "p" AND
+   MARC."506".ind"1" equals "0"
+then
+   set TEMP"1" to MARC."506"."3"
+   remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+   add suffix (TEMP"1",": No Restriction")
+   create pnx."display"."lds92" with TEMP"1"
+end
+
+rule "Primo VE - LDR 6 is P Has 3 ind0<>1"
+priority 15
+when
+   MARC is "506"."3"  AND
+   MARC.control."LDR"(6-7) equals "p"
+   AND NOT MARC."506".ind"1" equals "0" 
+then
+   set TEMP"1" to MARC."506"."3"
+   create pnx."display"."lds92" with TEMP"1"
+end
+
+rule "Primo VE - LDR 6 is P - remaining"
+priority 20
+when
+   MARC is "506"  AND
+   MARC.control."LDR"(6-7) equals "p"
+then
+   set TEMP"1" to MARC."506" sub without sort "a,b,c,d,e,f"
+   create pnx."display"."lds92" with TEMP"1"
+end
+
+
+rule "Primo VE - LDR 6 is NOT P $3 exists Ind1=0"
+priority 10
+when
+   MARC is "506"."3" AND
+   MARC."506"."2" match ".*" AND NOT MARC."506"."5" match ".*"
+   AND MARC.control."LDR"(6-7) does not equal "p"
+   AND MARC."506".ind"1" equals "0" 
+then
+   set TEMP"1" to MARC."506"."3"
+   remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+   add suffix (TEMP"1",": No Restriction")
+   create pnx."display"."lds92" with TEMP"1"
+end
+
+rule "Primo VE - LDR 6 is NOT P $3 exists Ind1<>0"
+priority 15
+when
+   MARC is "506"."3" AND
+   MARC."506"."2" match ".*" AND NOT MARC."506"."5" match ".*"
+   AND MARC.control."LDR"(6-7) does not equal "p"
+   AND NOT MARC."506".ind"1" equals "0" 
+then
+   set TEMP"1" to MARC."506"."3"
+   create pnx."display"."lds92" with TEMP"1"
+end
+
+rule "Primo VE - LDR 6 is NOT P grab the rest"
+priority 20
+when
+   MARC."506" has any "a,b,c,d,e,f" AND
+   MARC."506"."2" match ".*" AND NOT MARC."506"."5" match ".*"
+   AND MARC.control."LDR"(6-7) does not equal "p"
+then
+   set TEMP"1" to MARC."506" sub without sort "a,b,c,d,e,f"
+   create pnx."display"."lds92" with TEMP"1"
+end
+
+## experimental rules
+rule "Primo VE - showing 596 LOCAL"
+priority 25
+when
+   MARC is "596" AND MARC."596"."9" match "local|LOCAL"
+then
+   create pnx."display"."lds92" with MARC."596" excluding num subfields without sort
+end
+
+# 
+#Scenario 1 LDR 6 = p
+#For MARC 506
+#If Ind1=0, writes “No Restriction”
+#If $3 exists, remove “:” and output first.
+#Grab the rest of subfield a-f
+ 
+#Scenario 2 LDR 6 <> p
+#For MARC 506
+#Only process if $2 exists and $5 not exist.
+ 
+#If Ind1=0, writes “No Restriction”
+#If $3 exists, remove “:” and output first.
+#Grab the rest of subfield a-f
+ 
