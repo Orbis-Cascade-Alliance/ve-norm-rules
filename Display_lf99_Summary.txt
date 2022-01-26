@@ -4,7 +4,21 @@ MARC is "520"."a" AND
 MARC."520".ind"1" equals "0"
 then	
 set TEMP"1" to MARC."520" subfields "a"
+remove substring using regex (TEMP"1","(-)+$")
+remove substring using regex (TEMP"1","(-)+$")
 add prefix (TEMP"1","<b>Subject:</b> ")
+set TEMP"2" to MARC."520" subfields "b"
+remove substring using regex (TEMP"2","(-)+$")
+remove substring using regex (TEMP"2","(-)+$")
+concatenate with delimiter (TEMP"1",TEMP"2"," ")
+set TEMP"3" to MARC."520" subfields "c"
+add prefix (TEMP"3","--")
+concatenate with delimiter (TEMP"1",TEMP"3","")
+set TEMP"4" to MARC."520" subfields "u"
+remove leading and trailing spaces (TEMP"4")
+add prefix (TEMP"4","(")
+add suffix (TEMP"4",")")
+concatenate with delimiter (TEMP"1",TEMP"4"," ")
 create pnx."display"."lds99" with TEMP"1"
 end
 
@@ -14,7 +28,21 @@ MARC is "520"."a" AND
 MARC."520".ind"1" equals "1"
 then
 set TEMP"1" to MARC."520" subfields "a"
+remove substring using regex (TEMP"1","(-)+$")
+remove substring using regex (TEMP"1","(-)+$")
 add prefix (TEMP"1","<b>Review:</b> ")
+set TEMP"2" to MARC."520" subfields "b"
+remove substring using regex (TEMP"2","(-)+$")
+remove substring using regex (TEMP"2","(-)+$")
+concatenate with delimiter (TEMP"1",TEMP"2"," ")
+set TEMP"3" to MARC."520" subfields "c"
+add prefix (TEMP"3","--")
+concatenate with delimiter (TEMP"1",TEMP"3","")
+set TEMP"4" to MARC."520" subfields "u"
+remove leading and trailing spaces (TEMP"4")
+add prefix (TEMP"4","(")
+add suffix (TEMP"4",")")
+concatenate with delimiter (TEMP"1",TEMP"4"," ")
 create pnx."display"."lds99" with TEMP"1"
 end
 
@@ -24,7 +52,21 @@ MARC is "520"."a" AND
 MARC."520".ind"1" equals "2"
 then
 set TEMP"1" to MARC."520" subfields "a"
+remove substring using regex (TEMP"1","(-)+$")
+remove substring using regex (TEMP"1","(-)+$")
 add prefix (TEMP"1","<b>Scope and content:</b> ")
+set TEMP"2" to MARC."520" subfields "b"
+remove substring using regex (TEMP"2","(-)+$")
+remove substring using regex (TEMP"2","(-)+$")
+concatenate with delimiter (TEMP"1",TEMP"2"," ")
+set TEMP"3" to MARC."520" subfields "c"
+add prefix (TEMP"3","--")
+concatenate with delimiter (TEMP"1",TEMP"3","")
+set TEMP"4" to MARC."520" subfields "u"
+remove leading and trailing spaces (TEMP"4")
+add prefix (TEMP"4","(")
+add suffix (TEMP"4",")")
+concatenate with delimiter (TEMP"1",TEMP"4"," ")
 create pnx."display"."lds99" with TEMP"1"
 end
 
@@ -34,7 +76,21 @@ MARC is "520"."a" AND
 MARC."520".ind"1" equals "3"
 then
 set TEMP"1" to MARC."520" subfields "a"
+remove substring using regex (TEMP"1","(-)+$")
+remove substring using regex (TEMP"1","(-)+$")
 add prefix (TEMP"1","<b>Abstract:</b> ")
+set TEMP"2" to MARC."520" subfields "b"
+remove substring using regex (TEMP"2","(-)+$")
+remove substring using regex (TEMP"2","(-)+$")
+concatenate with delimiter (TEMP"1",TEMP"2"," ")
+set TEMP"3" to MARC."520" subfields "c"
+add prefix (TEMP"3","--")
+concatenate with delimiter (TEMP"1",TEMP"3","")
+set TEMP"4" to MARC."520" subfields "u"
+remove leading and trailing spaces (TEMP"4")
+add prefix (TEMP"4","(")
+add suffix (TEMP"4",")")
+concatenate with delimiter (TEMP"1",TEMP"4"," ")
 create pnx."display"."lds99" with TEMP"1"
 end
 
@@ -44,7 +100,48 @@ MARC is "520"."a" AND
 MARC."520".ind"1" equals "4"
 then
 set TEMP"1" to MARC."520" subfields "a"
+remove substring using regex (TEMP"1","(-)+$")
+remove substring using regex (TEMP"1","(-)+$")
 add prefix (TEMP"1","<b>Content advice:</b> ")
+set TEMP"2" to MARC."520" subfields "b"
+remove substring using regex (TEMP"2","(-)+$")
+remove substring using regex (TEMP"2","(-)+$")
+concatenate with delimiter (TEMP"1",TEMP"2"," ")
+set TEMP"3" to MARC."520" subfields "c"
+add prefix (TEMP"3","--")
+concatenate with delimiter (TEMP"1",TEMP"3","")
+set TEMP"4" to MARC."520" subfields "u"
+remove leading and trailing spaces (TEMP"4")
+add prefix (TEMP"4","(")
+add suffix (TEMP"4",")")
+concatenate with delimiter (TEMP"1",TEMP"4"," ")
+create pnx."display"."lds99" with TEMP"1"
+end
+
+rule "Primo VE - Lds99_1_other"
+when
+MARC is "520"."a" AND NOT
+MARC."520".ind"1" equals "0" AND NOT
+MARC."520".ind"1" equals "1" AND NOT
+MARC."520".ind"1" equals "2" AND NOT
+MARC."520".ind"1" equals "3" AND NOT
+MARC."520".ind"1" equals "4"
+then
+set TEMP"1" to MARC."520" subfields "a"
+remove substring using regex (TEMP"1","(-)+$")
+remove substring using regex (TEMP"1","(-)+$")
+set TEMP"2" to MARC."520" subfields "b"
+remove substring using regex (TEMP"2","(-)+$")
+remove substring using regex (TEMP"2","(-)+$")
+concatenate with delimiter (TEMP"1",TEMP"2"," ")
+set TEMP"3" to MARC."520" subfields "c"
+add prefix (TEMP"3","--")
+concatenate with delimiter (TEMP"1",TEMP"3","")
+set TEMP"4" to MARC."520" subfields "u"
+remove leading and trailing spaces (TEMP"4")
+add prefix (TEMP"4","(")
+add suffix (TEMP"4",")")
+concatenate with delimiter (TEMP"1",TEMP"4"," ")
 create pnx."display"."lds99" with TEMP"1"
 end
 
@@ -53,5 +150,15 @@ rule "Primo VE - Lds99_880"
 		MARC is "880"."a" AND
 MARC."880"."6" match "520-.*"
 	then
+set TEMP"1" to MARC."880" subfields "a"
+remove substring using regex (TEMP"1","(-)+$")
+remove substring using regex (TEMP"1","(-)+$")
+set TEMP"2" to MARC."880" subfields "b"
+remove substring using regex (TEMP"1","(-)+$")
+remove substring using regex (TEMP"1","(-)+$")
+concatenate with delimiter (TEMP"1",TEMP"2"," ")
+set TEMP"3" to MARC."880" subfields "c"
+add prefix (TEMP"3","--")
+concatenate with delimiter (TEMP"1",TEMP"3","")
 		create pnx."display"."lds99" with MARC "880"."a"
 end
