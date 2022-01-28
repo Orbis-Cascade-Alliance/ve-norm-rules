@@ -1,0 +1,101 @@
+rule "Primo VE Display - Creator 100"
+#otb rules
+priority 10
+	when
+		MARC."100" has any "a,b,c,d,e,j,q,u"
+	then
+	    set TEMP"1" to MARC."100" excluding num subfields without sort
+		set TEMP"2" to MARC."100" sub without sort "a"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		set TEMP"3" to multilingual by "100" "Creator" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		set pnx."display"."creator" to TEMP"1"
+end
+
+rule "Primo VE - Creator 110 Block 15/16"
+priority 20
+	when
+		MARC."110" has any "a,b,c,d,e,n"
+	then
+	    set TEMP"1" to MARC."110" sub without sort "a,b,c,d,e,n"
+		set TEMP"2" to MARC."110" sub without sort "a"
+		replace string by string (TEMP"1",";"," ")
+#		replace string by string (TEMP"2",";()?*"," ")
+		remove substring using regex (TEMP"2","[.,/=]+$")
+		add prefix (TEMP"2","$$Q")
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		set TEMP"3" to multilingual by "110" "Creator" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		set pnx."display"."creator" to TEMP"1"
+end
+
+rule "Primo VE Display - Creator 111 Block 17/18"
+priority 30
+	when
+		MARC."111" has any "a,c,d,e,n,j,q" 
+	then
+	    set TEMP"1" to MARC."111" sub without sort "a,c,d,e,n,j,q"
+		set TEMP"2" to MARC."111" sub without sort "a"
+		replace string by string (TEMP"1",";"," ")
+#		replace string by string (TEMP"2",";()?*"," ")
+		remove substring using regex (TEMP"2","[.,/=]+$")
+		add prefix (TEMP"2","$$Q")
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		set TEMP"3" to multilingual by "111" "Creator" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		set pnx."display"."creator" to TEMP"1"
+end
+
+rule "Primo VE Display - alternate creator 880-100"
+priority 10
+	when
+		MARC."880" has any "a,b,c,d,n,j,q" AND
+		MARC."880"."6" match "100-.*"
+	then
+	    set TEMP"1" to MARC."880" excluding num subfields without sort
+		set TEMP"2" to MARC."880" sub without sort "a"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		set TEMP"3" to multilingual by "880" "Creator" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		set pnx."display"."alternate_creator" to TEMP"1"
+end
+
+rule "Primo VE Display - alternate creator 880-110"
+priority 20
+	when
+		MARC."880" has any "a,b,c,d,n" AND
+		MARC."880"."6" match "110-.*"
+	then
+	    set TEMP"1" to MARC."880" excluding num subfields without sort
+		set TEMP"2" to MARC."880" sub without sort "a"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		set TEMP"3" to multilingual by "880" "Creator" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		set pnx."display"."alternate_creator" to TEMP"1"
+end
+
+rule "Primo VE Display - alternate creator 880-111"
+priority 30
+	when
+		MARC."880" has any "a,b,c,d,e,n,q" AND
+		MARC."880"."6" match "111-.*"
+	then
+	    set TEMP"1" to MARC."880" excluding num subfields without sort
+		set TEMP"2" to MARC."880" sub without sort "a"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		set TEMP"3" to multilingual by "880" "Creator" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		set pnx."display"."alternate_creator" to TEMP"1"
+end
