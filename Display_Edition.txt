@@ -1,3 +1,5 @@
+#Difference from OTB: Added rules for 251$a and 254$a.
+
 rule "Primo VE - Complete Edition 250"
 	when
 		MARC."250" has any "3,a,b"
