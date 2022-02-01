@@ -1,5 +1,6 @@
 rule "Primo VE Display - Creator 100"
 #otb rules
+#Difference from OTB: 100 = add d,e,j,q,u to condition. 110 = add d,e,n to condition; limit display form to a,b,c,d,e,n subfields; limit search index form to subfield a.  111 = add d,e,n,j,q to condition; limit display form to a,c,d,e,n,j,q subfields.  880-100 = add j,q to condition.  880-110 = remove subfield b from search indexed form. 880-111 = add e, q to condition.
 priority 10
 	when
 		MARC."100" has any "a,b,c,d,e,j,q,u"
