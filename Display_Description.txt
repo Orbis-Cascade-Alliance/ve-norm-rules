@@ -1,3 +1,5 @@
+#Difference from OTB: Added 500, 504, 515, 555, 522, 525, 550, 547 fields; Removed 520 and 880-520.
+
 rule "Primo VE - Description 500"
 when
 MARC is "500"."a" AND NOT
