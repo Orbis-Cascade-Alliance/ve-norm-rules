@@ -1,3 +1,5 @@
+#Difference from OTB: Fields 600, 610, 611, 630, 650, 651 =added $v to condition and display; condition requires 2nd indicator=0 AND no subfield 9 present. Fields 880-600, 880-610, 880-611, 880-630, 880-650, 880-651 = added $v to condition and display; condition requires 2nd indicator=0.  Removed fields 648, 653-658, 662 and 880-linked versions.
+
 rule "Primo VE Display - Subject 600"
 ##Ex: 45661469, 56655274
 	when
