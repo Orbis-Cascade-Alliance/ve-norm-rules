@@ -1,3 +1,5 @@
+#Difference from OTB: Added rules for 502$a and 502$c display; replace display of 362$a-z publisher notes with "N/A" constant.
+
 rule "Primo VE - publisher 260/3"
 priority 10
 	when
