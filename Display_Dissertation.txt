@@ -1,3 +1,5 @@
+#Difference from OTB: Separated 502$a into its own field instance; added rules for 502 without $g=Thesis (displays subfields b,c,g) and 502 with $g=Thesis (displays subfields b,c).
+
 rule "Primo VE - Dissertation 502a"
 	when 
 		MARC."502" has any "a"
