@@ -1,0 +1,68 @@
+#Difference from OTB: 776 given "additional physical format" label.  024 fields separated based on first indicator value. Add 074 field.  Removed 010, 028, 035, 084, and 086 fields.
+
+rule "Primo VE - Identifier 020"
+	when
+		MARC is "020"."a"
+	then
+		set TEMP"1" to MARC "020"."a"
+		add prefix (TEMP"1","$$CISBN$$V")
+		create pnx."display"."identifier" with TEMP"1"
+end
+
+rule "Prima Display - ISBN 776"
+	when
+        MARC is "776"."z"
+    then
+		set TEMP"1" to MARC "776"."z"
+		add prefix (TEMP"1","$$CISBN$$V")
+		add suffix (TEMP"1"," (Additional Physical Format)")
+		create pnx."display"."identifier" with TEMP"1"
+end
+
+rule "Primo VE - Identifier 022"
+	when
+		MARC is "022"."a"
+	then
+		set TEMP"1" to MARC "022"."a"
+		add prefix (TEMP"1","$$CISSN$$V")
+		create pnx."display"."identifier" with TEMP"1"
+end
+
+rule "Prima Display - ISSN 776"
+	when
+        MARC is "776"."x"
+	then
+		set TEMP"1" to MARC "776"."x"
+		add prefix (TEMP"1","$$CISSN$$V")
+		add suffix (TEMP"1"," (Additional Physical Format)")
+		create pnx."display"."identifier" with TEMP"1"
+end
+
+rule "Primo VE - Identifier 024 ind1-2"
+	when
+		MARC is "024"."a" AND
+        MARC."024".ind"1" equals "2"
+	then
+		set TEMP"1" to MARC "024"."a"
+		add prefix (TEMP"1","$$CISMN$$V")
+		create pnx."display"."identifier" with TEMP"1"
+end
+
+rule "Primo VE - Identifier 024 ind1-1"
+	when
+		MARC is "024"."a" AND
+        MARC."024".ind"1" equals "1"
+	then
+		set TEMP"1" to MARC "024"."a"
+		add prefix (TEMP"1","$$CUPC$$V")
+		create pnx."display"."identifier" with TEMP"1"
+end
+
+rule "Prima Display - ISSN 074"
+	when
+        MARC is "074"."a"
+	then
+		set TEMP"1" to MARC "074"."a"
+		add prefix (TEMP"1","GPO : ")
+		create pnx."display"."identifier" with TEMP"1"
+end
