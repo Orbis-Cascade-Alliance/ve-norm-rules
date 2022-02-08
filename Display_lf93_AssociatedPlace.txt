@@ -1,0 +1,28 @@
+rule "Primo VE - Lds93"
+when
+MARC is "370"."g" 
+then	
+set TEMP"1" to MARC."370" subfields "g"  delimited by "; " remove substring using regex "\\.+$"
+#there is no reason use remove substring, but does not work without it
+add prefix (TEMP"1","Place of Origin of Work: ")
+create pnx."display"."lds93" with TEMP"1"
+end
+
+rule "Primo VE - Lds93_370_c"
+when
+MARC is "370"."c"
+then	
+set TEMP"1" to MARC."370" subfields "c" delimited by "; " remove substring using regex "\\.+$"
+#there is no reason use remove substring, but does not work without it
+add prefix (TEMP"1","Associated Country: ")
+create pnx."display"."lds93" with TEMP"1"
+end
+
+rule "Primo VE - Lds93_370_f"
+when
+MARC is "370"."f"
+then	
+set TEMP"1" to MARC."370" subfields "f"  delimited by "; " remove substring using regex "\\.+$"
+#there is no reason use remove substring, but does not work without it
+create pnx."display"."lds93" with TEMP"1"
+end
