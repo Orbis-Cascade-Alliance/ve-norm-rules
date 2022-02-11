@@ -1,0 +1,55 @@
+rule "Primo VE - Format 300"
+	when
+		MARC is "300"
+	then
+	    set TEMP"1" to MARC."300" excluding num subfields without sort
+		create pnx."display"."format" with TEMP"1"
+end
+rule "Primo VE - Format 340_a"
+	when
+		MARC."340" has any "a"
+	then
+	    set TEMP"1" to MARC."340" subfields "a" delimited by "; " remove substring using regex "\\.+$"
+	    add prefix (TEMP"1","Material base: ")
+		create pnx."display"."format" with TEMP"1"
+end
+rule "Primo VE - Format 340_c"
+	when
+		MARC."340" has any "c"
+	then
+	    set TEMP"1" to MARC."340" subfields "c" delimited by "; " remove substring using regex "\\.+$"
+	    add prefix (TEMP"1","Applied material: ")
+		create pnx."display"."format" with TEMP"1"
+end
+rule "Primo VE - Format 340_e"
+	when
+		MARC."340" has any "e"
+	then
+	    set TEMP"1" to MARC."340"  subfields "e" delimited by "; " remove substring using regex "\\.+$"
+	    add prefix (TEMP"1","Support: ")
+		create pnx."display"."format" with TEMP"1"
+end
+rule "Primo VE - Format 340_d"
+	when
+		MARC."340" has any "d"
+	then
+	    set TEMP"1" to MARC."340"  subfields "d" delimited by "; " remove substring using regex "\\.+$"
+	    add prefix (TEMP"1","Production method: ")
+		create pnx."display"."format" with TEMP"1"
+end
+rule "Primo VE - Format 340_n"
+	when
+		MARC."340" has any "n"
+	then
+	    set TEMP"1" to MARC."340"  subfields "n" delimited by "; " remove substring using regex "\\.+$"
+	    add prefix (TEMP"1","Font size: ")
+		create pnx."display"."format" with TEMP"1"
+end
+rule "Primo VE - Format 348"
+	when
+		MARC."348" has any "a"
+	then
+	    set TEMP"1" to MARC."348"  subfields "a" delimited by "; " remove substring using regex "\\.+$"
+	    add prefix (TEMP"1","Includes: ")
+		create pnx."display"."format" with TEMP"1"
+end

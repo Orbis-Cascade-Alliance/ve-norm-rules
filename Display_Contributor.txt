@@ -1,0 +1,109 @@
+rule "Primo VE Display - contributor 700"
+##Rules grab 700/710/711 and corresponding 880
+priority 20
+    when
+        MARC."700" has any "a,b,c,d,e,j,q,u,3" 
+        MARC."700"."a" match ".*" AND NOT MARC."700"."t" match ".*" AND
+        MARC.control is "001"
+    then
+        set TEMP"1" to MARC."700" sub without sort "a,b,c,d,e,j,q,u,3"
+        remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+        set TEMP"2" to MARC."700" sub without sort "a"
+        remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        set TEMP"3" to multilingual by "700" "Contributor" "display"
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."contributor" with TEMP"1"
+end
+
+rule "Primo VE Display - contributor 710"
+priority 30
+    when
+        MARC."710" has any "a,b,c,d,e,n,3"
+        MARC."710"."a" match ".*" AND NOT MARC."710"."t" match ".*" 
+    then
+        set TEMP"1" to MARC."710" sub without sort "a,b,c,d,e,n,3"
+        remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+        set TEMP"2" to MARC."710" sub without sort "a"
+        remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        set TEMP"3" to multilingual by "710" "Contributor" "display"
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."contributor" with TEMP"1"
+end
+
+rule "Primo VE Display - contributor 711"
+priority 30
+    when
+        MARC."711" has any "a,b,c,d,e,j,n,q,3"
+        MARC."711"."a" match ".*" AND NOT MARC."711"."t" match ".*" 
+    then
+        set TEMP"1" to MARC."711" sub without sort "a,b,c,d,e,j,n,q,3"
+        remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+        set TEMP"2" to MARC."711" sub without sort "a"
+        remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        set TEMP"3" to multilingual by "711" "Contributor" "display"
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."contributor" with TEMP"1"
+end
+
+rule "Primo VE Display - alternate contributor 880-700"
+priority 10
+    when
+        MARC."880" has any "a,b,c,d,e,j,q,u" AND
+        MARC."880"."6" match "700-.*"
+    then
+        set TEMP"1" to MARC."880" sub without sort "a,b,c,d,e,j,q,u"
+        remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+        set TEMP"2" to MARC."880" sub without sort "a"
+        remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        set TEMP"3" to multilingual by "880" "Contributor" "display"
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."alternate_contributor" with TEMP"1"
+end
+
+rule "Primo VE Display - alternate contributor 880-710 "
+priority 30
+    when
+        MARC."880" has any "a,b,c,d,e" AND
+        MARC."880"."6" match "710-.*"
+    then
+        set TEMP"1" to MARC."880" sub without sort "a,b,c,d,e"
+        remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+        set TEMP"2" to MARC."880" sub without sort "a"
+        remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        set TEMP"3" to multilingual by "880" "Contributor" "display"
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."alternate_contributor" with TEMP"1"
+end
+
+rule "Primo VE Display - alternate contributor 880-711"
+priority 30
+    when
+        MARC."880" has any "a,b,c,d,n" AND
+        MARC."880"."6" match "711-.*"
+    then
+        set TEMP"1" to MARC."880" sub without sort "a,b,c,d,n"
+        remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+        set TEMP"2" to MARC."880" sub without sort "a"
+        remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        set TEMP"3" to multilingual by "880" "Contributor" "display"
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."alternate_contributor" with TEMP"1"
+end
