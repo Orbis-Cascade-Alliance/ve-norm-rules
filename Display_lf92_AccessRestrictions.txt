@@ -71,7 +71,6 @@ then
    create pnx."display"."lds92" with TEMP"1"
 end
 
-## experimental rules
 rule "Primo VE - showing 596 LOCAL"
 priority 25
 when
@@ -80,7 +79,6 @@ then
    create pnx."display"."lds92" with MARC."596" excluding num subfields without sort
 end
 
-# 
 #Scenario 1 LDR 6 = p
 #For MARC 506
 #If Ind1=0, writes “No Restriction”
