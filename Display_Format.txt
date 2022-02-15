@@ -1,3 +1,4 @@
+#Difference from OTB: Added display labels for 340 data based on subfield codes; Removed fields 254, 255, 256, 258, 346, 347, 351, and 507.
 rule "Primo VE - Format 300"
 	when
 		MARC is "300"
