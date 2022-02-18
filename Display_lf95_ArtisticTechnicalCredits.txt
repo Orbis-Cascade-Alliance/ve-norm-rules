@@ -1,0 +1,14 @@
+rule "Primo VE - Lds95"
+    when
+        MARC."880" has any "a,3" AND
+        MARC."880"."6" match "508-.*"
+    then
+        create pnx."display"."lds95" with MARC."880" subfields "a,3"
+end
+
+rule "Primo VE - Lds95b"
+    when
+        MARC."508" has any "a,3"
+    then
+        create pnx."display"."lds95" with MARC."508" subfields "a,3"
+end
