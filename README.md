@@ -4,7 +4,7 @@ The main folder of this repository contains the code for each Primo VE Local Dis
 # Optional Code
 The Optional Code directory contains code snippets that can be added to any display field rule in VE (OTB or Local Display fields) to customize what data displays in that field.  For example, one snippet shows how to include data from fields that contain $5 (denotes that the field data is specific to an institution).
 
-# Naming conventions for files in main repository:
+# Naming conventions for files in main folder:
 
 • Rule "section" (Display, Search, Facet) is given.
 
