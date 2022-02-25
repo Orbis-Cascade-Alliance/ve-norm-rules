@@ -1,0 +1,56 @@
+rule "Primo VE - Lds65"
+	when
+		MARC."538" has any "3,a" AND NOT
+                MARC."538"."5" match ".*"
+	then
+		set TEMP"1" to MARC."538" subfields "3"
+		remove substring using regex (TEMP"1","(:)+$")
+		set TEMP"2" to MARC."538" subfields "a"
+		concatenate with delimiter (TEMP"1",TEMP"2",": ")
+		create pnx."display"."lds65" with TEMP"1"
+end
+rule "Primo VE - Lds65_no3"
+	when
+                MARC is "538" AND NOT
+                MARC."538"."5" match ".*" AND NOT	
+                MARC."538"."3" match ".*"
+	then
+		set TEMP"1" to MARC."538" subfields "a"
+		create pnx."display"."lds65" with TEMP"1"
+end
+rule "Primo VE - Lds65_346a"
+	when
+		MARC."346" has any "a" AND NOT
+        MARC."538" has any "a"
+	then
+		set TEMP"1" to MARC."346" subfields "a"
+        add prefix (TEMP"1","Video format: ")
+		create pnx."display"."lds65" with TEMP"1"
+end
+rule "Primo VE - Lds65_346b"
+	when
+		MARC."346" has any "b" AND NOT
+        MARC."538" has any "a"
+	then
+		set TEMP"1" to MARC."346" subfields "b"
+        add prefix (TEMP"1","Broadcast standard: ")
+		create pnx."display"."lds65" with TEMP"1"
+end
+rule "Primo VE - Lds65_347b"
+	when
+		MARC."347" has any "b" AND NOT
+        (MARC is "538"."a" AND (MARC."538"."a" match "video" OR MARC."538"."a" match "Video" OR MARC."538"."a" match "blu" OR MARC."538"."a" match "Blu"  OR MARC."538"."a" match "BLU" OR MARC."538"."a" match "media" OR MARC."538"."a" match "Media" OR MARC."538"."a" match "quick" OR MARC."538"."a" match "Quick" OR MARC."538"."a" match "hd" OR MARC."538"."a" match "HD" OR MARC."538"."a" match "mpeg" OR MARC."538"."a" match "MPEG" OR MARC."538"."a" match "pdf" OR MARC."538"."a" match "PDF"))
+	then
+		set TEMP"1" to MARC."347" subfields "b"
+        add prefix (TEMP"1","Encoding format: ")
+		create pnx."display"."lds65" with TEMP"1"
+end
+rule "Primo VE - Lds65_347e"
+	when
+		MARC."347" has any "e" AND NOT
+        (MARC is "538"."a" AND (MARC."538"."a" match "region" OR MARC."538"."a" match "Region"))
+	then
+		set TEMP"1" to MARC."347" subfields "e"
+        add prefix (TEMP"1","Regional encoding: ")
+		create pnx."display"."lds65" with TEMP"1"
+end
