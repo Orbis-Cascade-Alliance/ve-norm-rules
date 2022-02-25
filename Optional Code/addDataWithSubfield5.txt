@@ -1,0 +1,24 @@
+#####The code below is meant to serve as a model for institutions who want to add data from fields containing $5
+#####Note: you will need to add this code to the very bottom of a rule block
+#####If you want to display your local data: Replace "XX" with a local field number, replace "YYY" with a MARC field, and replace "ZZZZ" with your local MARC Organization Code (https://www.loc.gov/marc/organizations/org-search.php)
+rule "Primo VE - LdsXX_local"
+	when
+		MARC is "YYY" AND
+        	MARC "YYY"."5" match ".*ZZZZ.*"
+	then
+		set TEMP"1" to MARC."YYY" subfields "3"
+		remove substring using regex (TEMP"1","(:)+$")
+		set TEMP"2" to MARC."YYY" excluding num subfields without sort
+		concatenate with delimiter (TEMP"1",TEMP"2",": ")
+		create pnx."display"."ldsXX" with TEMP"1"
+end
+#####If you want to display your local data: Replace "XX" with a local field number, replace "YYY" with a MARC field, and replace "ZZZZ" with your local MARC Organization Code (https://www.loc.gov/marc/organizations/org-search.php)
+rule "Primo VE - LdsXX_local_no3"
+	when
+		MARC is "YYY" AND
+        	MARC "YYY"."5" match ".*XXXX.*" AND NOT
+       		MARC "YYY"."3" match ".*"
+	then
+		set TEMP"1" to MARC."YYY" excluding num subfields without sort
+		create pnx."display"."ldsXX" with TEMP"1"
+end
