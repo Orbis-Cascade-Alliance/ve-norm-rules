@@ -1,0 +1,14 @@
+rule "Primo VE - Lds51"
+	when
+		MARC."856" has any "u,z" AND
+                MARC."856".ind"1" equals "4" AND
+                MARC."856"."z" match ".*finding aid.*"
+	then
+                set TEMP"1" to MARC."856" subfields "u"
+                set TEMP"2" to MARC."856" subfields "z"
+                add prefix (TEMP"1","<a href=\"")
+                add suffix (TEMP"1","\" target=\"_blank\">")
+                add suffix (TEMP"2","</a>")
+                concatenate with delimiter (TEMP"1",TEMP"2","")
+                create pnx."display"."lds51" with TEMP"1"
+end

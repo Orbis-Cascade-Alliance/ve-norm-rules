@@ -1,0 +1,40 @@
+rule "Primo VE - Lds94"
+# OCLC 949929354
+	when
+		MARC."511" has any "a" AND
+		MARC."511".ind"1" equals "0"
+	then
+		create pnx."display"."lds94" with MARC."511" subfields "a"
+end
+
+rule "Primo VE - Lds94 511_1"
+	when
+		MARC."511" has any "a" AND
+		MARC."511".ind"1" equals "1"
+	then
+		set TEMP"1" to MARC."511" subfields "a"
+		add prefix (TEMP"1","Cast: ")
+		create pnx."display"."lds94" with TEMP"1"
+end
+
+# OCLC 144230347  
+rule "Primo VE - Lds94 880/511"
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "511-.*" AND
+		MARC."880".ind"1" equals "0"
+	then
+		create pnx."display"."lds94" with MARC."880" subfields "a"
+end
+
+# OCLC 957180392 
+rule "Primo VE - Lds94 880/511_1"
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "511-.*" AND
+		MARC."880".ind"1" equals "1"
+	then
+		set TEMP"1" to MARC."880" subfields "a"
+		add prefix (TEMP"1","Cast: ")
+		create pnx."display"."lds94" with TEMP"1"
+end
