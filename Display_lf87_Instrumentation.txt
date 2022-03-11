@@ -1,0 +1,83 @@
+rule "Primo VE - Lds87"
+# ex $n 07222513 (01), 00784920 (17)
+# ex $b solo parts 06809612, 1055684538, 28088962 ($b not followed by n)
+# ex $d doubling instruments 1054014464, 807983332
+# ex $p alternative instrumentation 08153868, 457771332, 09224901
+# ex $v note 1112144880, 48788606, 956878944
+# ex no $n 14698923
+# ex $3 268925851
+# ex $v followed by $a 00740415 "chimes/toy instrument [small metal cricket]; triangle/..."
+
+when
+	MARC."382" has any "a,b,e,n,3"
+	
+then
+
+set TEMP"1" to MARC."382" subfields "3"
+set TEMP"2" to MARC."382" sub without sort "a,b,d,e,n,p,r,s,t,v" wrap subfields
+
+# add extra ";" after subfield a to account for fields lacking $n/$e
+	replace wrapping delimiters (TEMP"2","a","",";")
+	replace wrapping delimiters (TEMP"2","n","(",");")
+	replace wrapping delimiters (TEMP"2","e","(",");")
+# $b prefix solo parts with solo
+	replace wrapping delimiters (TEMP"2","b","solo ","AFTERB")
+# $d separate doubling parts with /
+	replace wrapping delimiters (TEMP"2","d","/","")
+	replace string by string (TEMP"2"," \\([0-9]+\\); /","/")
+# $p separate alternative instrumentation with or
+	replace wrapping delimiters (TEMP"2","p","or ","")
+	replace string by string (TEMP"2"," \\([0-9]+\\); or "," or ")
+# $v surround notes with []
+	replace wrapping delimiters (TEMP"2","v","[","]")
+# $r # soloists
+	replace wrapping delimiters (TEMP"2","r","Total soloists: ",".")
+	replace string by string (TEMP"2","Total soloists: 1\\.","")
+# $s # performers
+	replace wrapping delimiters (TEMP"2","s","Total performers: ",".")
+	replace string by string (TEMP"2","Total performers: 1\\.","")
+# $t 
+	replace wrapping delimiters (TEMP"2","t","Total ensembles: ",".")
+	replace string by string (TEMP"2","Total ensembles: 1\\.","")
+# fix erroneous $n in form (01)
+	replace string by string (TEMP"2"," \\(0"," \\(")
+# remove number of players when = 1
+	replace string by string (TEMP"2"," \\(1\\);",";")
+# clean up punctuation around notes
+	replace string by string (TEMP"2",";+ \\["," \\[")
+	replace string by string (TEMP"2","\\] /","\\]/")
+# for $v followed by #a
+	replace string by string (TEMP"2","\\] ([a-z])","\\]; $1")
+# add explanatory words
+	replace string by string (TEMP"2","; Total ","\\. Total ")
+	add prefix (TEMP"2","For ")
+# remove extra spaces from end
+	replace string by string (TEMP"2"," +$","")
+# add period before Total if instrumentation ends in note (])
+	replace string by string (TEMP"2","] Total","]\\. Total")
+# remove any extra semicolons 
+	replace string by string (TEMP"2",";;",";")
+	replace string by string (TEMP"2",";\\.","\\.")
+	replace string by string (TEMP"2","; \\("," \\(")
+	replace string by string (TEMP"2",";/","/")
+	replace string by string (TEMP"2","; or "," or ")
+	replace string by string (TEMP"2",";$","")
+#fix punctuation after $b (needed to account for $b not followed by a $n
+	replace string by string (TEMP"2","AFTERB;",";")
+	replace string by string (TEMP"2","AFTERB/","/")
+	replace string by string (TEMP"2","AFTERB or "," or ")
+	replace string by string (TEMP"2","AFTERB \\["," \\[")
+	replace string by string (TEMP"2","AFTERB",";")
+
+# combine $3 and $a so $3 comes first; add colon in case missing
+	concatenate existing with delimiter (TEMP"1",TEMP"2",": ")
+# remove extra colon if it was already there in data
+	replace string by string (TEMP"1","::",":")
+	
+create pnx."display"."lds87" with TEMP"1"
+
+end
+
+# based on MLA/MOUG display recommendations
+# https://musicoclcusers.org/resources/discovery-reference-collections/
+# https://www.musiclibraryassoc.org/mpage/mdr_IID

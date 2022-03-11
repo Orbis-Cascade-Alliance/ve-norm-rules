@@ -1,0 +1,14 @@
+rule "Primo VE - Lds84"
+# ex 1145799732 (no $3), 1200737739 ($3 with colon)
+# ex 1113859921 ($3 without colon), 123897619 ($3 after $a)
+when
+	MARC."384" has any "3,a"
+then
+	set TEMP"1" to MARC."384" subfields "3"
+	set TEMP"2" to MARC."384" subfields "a"
+	# combine $3 and $a so $3 comes first; add colon in case missing
+	concatenate existing with delimiter (TEMP"1",TEMP"2",": ")
+	# remove extra colon if it was already there in data
+	replace string by string (TEMP"1","::",":")
+	create pnx."display"."lds84" with TEMP"1"
+end

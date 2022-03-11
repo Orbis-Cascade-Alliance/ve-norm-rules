@@ -1,0 +1,6 @@
+rule "Primo VE Marc - Lsr84"
+	when
+		MARC is "384"."a"
+	then
+		create pnx."search"."lsr84" with MARC "384"."a"
+end

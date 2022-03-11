@@ -1,0 +1,37 @@
+rule "Primo VE Marc - Lsr87"
+	when
+		MARC is "382"."a"
+	then
+		create pnx."search"."lsr87" with MARC "382"."a"
+end
+
+rule "Primo VE Marc - Lsr87b"
+	when
+		MARC is "382"."b"
+	then
+		create pnx."search"."lsr87" with MARC "382"."b"
+end
+
+rule "Primo VE Marc - Lsr87b2"
+#repeat $b followed by "(solo)"
+	when
+		MARC is "382"."b"
+	then
+		set TEMP"1" to MARC."382" subfields "b"
+		add suffix (TEMP"1"," (solo)")
+		create pnx."search"."lsr87" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr87d"
+	when
+		MARC is "382"."d"
+	then
+		create pnx."search"."lsr87" with MARC "382"."d"
+end
+
+rule "Primo VE Marc - Lsr87p"
+	when
+		MARC is "382"."p"
+	then
+		create pnx."search"."lsr87" with MARC "382"."p"
+end
