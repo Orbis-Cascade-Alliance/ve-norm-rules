@@ -1,0 +1,412 @@
+rule "Primo VE Marc - Lsr52"
+	when
+		MARC."710" has any "a,b,c,d,e,n,3"
+		MARC."710"."a" match ".*" AND NOT MARC."710"."t" match ".*" 
+	then
+		set TEMP"1" to MARC."710" sub without sort "a,b,c,d,e,n,3"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_contributor_711"
+	when
+		MARC."711" has any "a,b,c,d,e,j,n,q,3"
+		MARC."711"."a" match ".*" AND NOT MARC."711"."t" match ".*" 
+	then
+		set TEMP"1" to MARC."711" sub without sort "a,b,c,d,e,j,n,q,3"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_description_500"
+	when
+		MARC is "500"."a" AND NOT
+		MARC."500"."5" match ".*"
+	then 
+		create pnx."search"."lsr52" with MARC."500"."a"
+end
+
+rule "Primo VE Marc - Lsr52_description_504"
+	when
+		MARC is "504"."a"
+	then 
+		create pnx."search"."lsr52" with MARC."504"."a"
+end
+
+rule "Primo VE Marc - Lsr52_description_515"
+	when
+		MARC is "515"."a"
+	then 
+		create pnx."search"."lsr52" with MARC."515"."a"
+end
+
+rule "Primo VE Marc - Lsr52_description+lf63_555"
+	when
+		MARC."555" has any "a,b,c,d,u,3"
+	then 
+		create pnx."search"."lsr52" with MARC."555" excluding num subfields without sort
+end
+
+rule "Primo VE Marc - Lsr52_description_522"
+	when
+		MARC is "522"."a"
+	then
+		create pnx."search"."lsr52" with MARC."522"."a"
+end
+
+rule "Primo VE Marc - Lsr52_description_525"
+	when
+		MARC is "525"."a"
+	then 
+		create pnx."search"."lsr52" with MARC."525"."a"
+end
+
+rule "Primo VE Marc - Lsr52_description_550"
+	when
+		MARC is "550"."a"
+	then
+		create pnx."search"."lsr52" with MARC."550"."a"
+end
+
+rule "Primo VE Marc - Lsr52_description_547"
+	when
+		MARC is "547"."a"
+	then 
+		create pnx."search"."lsr52" with MARC."547"."a"
+end
+
+rule "Primo VE Marc - Lsr52_edition_251"
+	when
+		MARC."251" has any "a"
+	then
+		create pnx."search"."lsr52" with MARC."251" subfields "a"
+end
+
+rule "Primo VE Marc - Lsr52_edition_254"
+	when
+		MARC."254" has any "a"
+	then
+		create pnx."search"."lsr52" with MARC."254" subfields "a"
+end
+
+rule "Primo VE Marc - Lsr52_format_348"
+	when
+		MARC."348" has any "a"
+	then
+	    set TEMP"1" to MARC."348"  subfields "a" delimited by "; " remove substring using regex "\\.+$"
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_identifier_074"
+	when
+        MARC is "074"."a"
+	then
+		create pnx."search"."lsr52" with MARC."074"."a"
+end
+
+rule "Primo VE Marc - Lsr52_lds100_035_with_leading_zeros"
+	when
+		MARC is "035"."a" AND
+		MARC."035"."a" match ".*OCoLC.*"
+	then
+		set TEMP"1" to MARC."035"."a"
+		remove string (TEMP"1","\\(OCoLC\\)")
+		remove string (TEMP"1","ocm")
+		remove string (TEMP"1","ocn")
+		remove string (TEMP"1","on")
+		remove leading and trailing spaces (TEMP"1")
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_lds100_035_without_leading_zeros"
+	when
+		MARC is "035"."a" AND
+		MARC."035"."a" match ".*OCoLC.*"
+	then
+		set TEMP"1" to MARC."035"."a"
+		remove string (TEMP"1","\\(OCoLC\\)")
+		remove string (TEMP"1","ocm")
+		remove string (TEMP"1","ocn")
+		remove string (TEMP"1","on")
+		remove leading and trailing spaces (TEMP"1")
+		remove substring using regex (TEMP"1","^0+")
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_lds99_880-520"
+	when
+		MARC is "880"."a" AND
+		MARC."880"."6" match "520-.*"
+	then
+		set TEMP"1" to MARC."880" subfields "a"
+		remove substring using regex (TEMP"1","(-)+$")
+		remove substring using regex (TEMP"1","(-)+$")
+		set TEMP"2" to MARC."880" subfields "b"
+		remove substring using regex (TEMP"1","(-)+$")
+		remove substring using regex (TEMP"1","(-)+$")
+		concatenate with delimiter (TEMP"1",TEMP"2"," ")
+		set TEMP"3" to MARC."880" subfields "c"
+		add prefix (TEMP"3","--")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_lds98_385"
+	when
+		MARC is "385"."a"
+	then
+		create pnx."search"."lsr52" with MARC."385"."a"
+end
+
+rule "Primo VE Marc - Lsr52_lds97_222"
+	when
+		MARC."222" has any "a,b"
+	then
+		set TEMP"1" to MARC."222" subfields "a,b"
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_lds97_242"
+	when
+		MARC."242" has any "a,b,n,p" AND
+		MARC."242".ind"1" equals "1"
+	then
+		set TEMP"1" to MARC."242" sub without sort "a,b,n,p"
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_lds97_880-222"
+	when
+		MARC is "880" AND
+		MARC."880"."6" match "222-.*"
+	then
+		create pnx."search"."lsr52" with MARC."880" excluding num subfields without sort
+end
+
+rule "Primo VE Marc - Lsr52_lds97_880-242"
+	when
+		MARC is "880" AND
+		MARC."880"."6" match "242-.*"
+	then
+		create pnx."search"."lsr52" with MARC."880" excluding num subfields without sort
+end
+
+rule "Primo VE Marc - Lsr52_lds96_386"
+	when
+		MARC."386" has any "a,i"
+	then
+		set TEMP"1" to MARC."386" subfields "a" delimited by "; " remove substring using regex "\\.+$"
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_lds95_880-508"
+    when
+        MARC."880" has any "a,3" AND
+        MARC."880"."6" match "508-.*"
+    then
+        create pnx."search"."lsr52" with MARC."880" subfields "a,3"
+end
+
+rule "Primo VE Marc - Lsr52_lds94_511"
+	when
+		MARC."511" has any "a"
+	then
+		create pnx."search"."lsr52" with MARC."511" subfields "a"
+end
+
+rule "Primo VE Marc - Lsr52_lds94_880-511"
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "511-.*"
+	then
+		create pnx."search"."lsr52" with MARC."880" subfields "a"
+end
+
+rule "Primo VE Marc - Lsr52_lds93_370g"
+	when
+		MARC is "370"."g" 
+	then
+		set TEMP"1" to MARC."370" subfields "g"  delimited by "; " remove substring using regex "\\.+$"
+		#there is no reason use remove substring, but does not work without it
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_lds93_370c"
+	when
+		MARC is "370"."c"
+	then
+		set TEMP"1" to MARC."370" subfields "c" delimited by "; " remove substring using regex "\\.+$"
+		#there is no reason use remove substring, but does not work without it
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_lds93_370f"
+	when
+		MARC is "370"."f"
+	then
+		set TEMP"1" to MARC."370" subfields "f"  delimited by "; " remove substring using regex "\\.+$"
+		#there is no reason use remove substring, but does not work without it
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lds52_lds92_506"
+	when
+		MARC is "506"
+	then
+		set TEMP"1" to MARC."506" sub without sort "3,a,b,c,d,e,f"
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_lds92_596"
+	when
+		MARC is "596" AND MARC."596"."9" match "local|LOCAL"
+	then
+		create pnx."search"."lsr52" with MARC."596" excluding num subfields without sort
+end
+
+rule "Primo VE Marc - Lds52_lds91_540"
+	when
+		MARC is "540"
+	then
+		set TEMP"1" to MARC."540" sub without sort "3,a,b,c,d"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_lds89_561"
+	when
+		MARC is "561"."a" AND NOT
+		MARC "561"."5" match ".*"
+	then
+		create pnx."search"."lsr52" with MARC."561"."a"
+end
+
+rule "Primo VE Marc - Lsr52_lds88_245c"
+	when
+		MARC is "245"."c"
+	then
+		set TEMP"1" to MARC "245"."c"
+		remove substring using regex (TEMP"1","(\\.)+$")
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_lds88_880-245c"
+	when
+		MARC is "880"."c" AND
+		MARC."880"."6" match "245-.*"
+	then
+		set TEMP"1" to MARC "880"."c"
+		remove substring using regex (TEMP"1","(=.*)+$")
+		create pnx."search"."lsr52" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr52_lds87_382"
+	when
+		MARC."382" has any "a,b,e,n,3"
+	then
+		create pnx."search"."lsr52" with MARC."382" excluding num subfields without sort
+end
+
+rule "Primo VE Marc - Lsr52_lds84_384a"
+	when
+		MARC is "384"."a"
+	then
+		create pnx."search"."lsr52" with MARC."384"."a"
+end
+
+rule "Primo VE Marc - Lsr52_lds74_536"
+	when
+		MARC is "536"
+	then
+		create pnx."search"."lsr52" with MARC."536" excluding num subfields without sort
+end
+
+rule "Primo VE Marc - Lsr52_lds72_533"
+	when
+		MARC is "533" AND NOT
+		MARC."533"."5" match ".*"
+	then
+        create pnx."search"."lsr52" with MARC."533" excluding num subfields without sort
+end
+
+rule "Primo VE Marc - Lsr52_lds71_255"
+	when
+		MARC is "255"
+	then
+		create pnx."search"."lsr52" with MARC."255" excluding num subfields without sort
+end
+
+rule "Primo VE Marc - Lsr52_lds71_507"
+	when
+		MARC is "507"
+	then
+		create pnx."search"."lsr52" with MARC."507" excluding num subfields without sort
+end
+
+rule "Primo VE Marc - Lsr52_lds68_524"
+	when
+		MARC is "524"
+	then
+		create pnx."search"."lsr52" with MARC."524" excluding subfields without sorting "6,8"
+end
+
+rule "Primo VE Marc - Lsr52_lds66_532a"
+	when
+		MARC is "532"."a"
+	then
+		create pnx."search"."lsr52" with MARC."532"."a"
+end
+
+rule "Primo VE Marc - Lsr52_lds65_538a"
+	when
+		MARC is "538"."a" AND NOT
+		MARC."538"."5" match ".*"
+	then
+		create pnx."search"."lsr52" with MARC."538"."a"
+end
+
+rule "Primo VE Marc - Lsr52_lds65_346a"
+	when
+		MARC is "346"."a" AND NOT
+		MARC."538" has any "a"
+	then
+		create pnx."search"."lsr52" with MARC."346"."a"
+end
+
+rule "Primo VE Marc - Lsr52_lds65_346b"
+	when
+		MARC is "346"."b" AND NOT
+		MARC."538" has any "a"
+	then
+		create pnx."search"."lsr52" with MARC."346"."b"
+end
+
+rule "Primo VE Marc - Lsr52_lds65_347b"
+	when
+		MARC is "347"."b" AND NOT
+		(MARC is "538"."a" AND (MARC."538"."a" match "video" OR MARC."538"."a" match "Video" OR MARC."538"."a" match "blu" OR MARC."538"."a" match "Blu"  OR MARC."538"."a" match "BLU" OR MARC."538"."a" match "media" OR MARC."538"."a" match "Media" OR MARC."538"."a" match "quick" OR MARC."538"."a" match "Quick" OR MARC."538"."a" match "hd" OR MARC."538"."a" match "HD" OR MARC."538"."a" match "mpeg" OR MARC."538"."a" match "MPEG" OR MARC."538"."a" match "pdf" OR MARC."538"."a" match "PDF"))
+	then
+		create pnx."search"."lsr52" with MARC."347"."b"
+end
+
+rule "Primo VE Marc - Lsr52_lds65_347e"
+	when
+		MARC is "347"."e" AND NOT
+		(MARC is "538"."a" AND (MARC."538"."a" match "region" OR MARC."538"."a" match "Region"))
+	then
+		create pnx."search"."lsr52" with MARC."347"."e"
+end
+
+rule "Primo VE Marc - Lsr52_lds62_510"
+	when
+		MARC is "510"
+	then
+		create pnx."search"."lsr52" with MARC."510" subfields "a-c,u"
+end
+
+rule "Primo VE Marc - Lsr52_lds61_351"
+	when
+		MARC is "351"
+	then
+		create pnx."search"."lsr52" with MARC."351" excluding num subfields without sort
+end
