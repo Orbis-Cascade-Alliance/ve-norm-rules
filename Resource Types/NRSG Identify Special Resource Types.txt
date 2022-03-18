@@ -1,0 +1,158 @@
+rule "audiocd - LDR, 007, 3xx, 5xx"
+when
+    #sound recordings AND not online form
+    ((existsControl "LDR.{6,1}.i|j") AND (not existsControl "008.{23,1}.o"))
+    AND 
+    #sound recording with 4 3/4 in. dimension in 007 coding
+    ((existsControl "007.{0,7}.s*****g")
+    OR
+    #physical description includes disc AND 4 3/4 in. dimension (if not coded in 007 properly).
+    ((exists "300.a.*disc*") AND (exists "300.c.*4 3/4*"))
+    OR
+    #Media type has CD OR 500 OR 538 contains compact disc or Compact disc (if 007 and 300 do not include coding).
+    ((exists "337.a.*CD*") OR (exists "500.a.*CD*|*ompact disc*") OR (exists "538.a.*CD*|*ompact disc*")))
+then
+    set indication."true"
+end
+
+rule "audiocassette - LDR, 007, 300"
+when
+    #sound recordings AND not online form
+    ((existsControl "LDR.{6,1}.i|j") AND (not existsControl "008.{23,1}.o"))
+    AND 
+    #sound recording/sound cassette bytes in 007 OR cassette in physical description.
+    ((existsControl "007.{0,2}.ss") OR (exists "300.a.*cassette*"))
+then
+    set indication."true"
+end
+
+rule "lprecord - LDR, 007, 300"
+when
+    #Sound recording AND not online form.
+    ((existsControl "LDR.{6,1}.i|j") AND (not existsControl "008.{23,1}.o"))
+    AND 
+    #Sound recording category with sound disc SMD and 12 in diameter dimension in 007 OR 300 contains 12 in. dimension (if 007 not coded properly).
+    ((existsControl "007.{0,7}.sd****e") OR (exists "300.c.*12 in*"))
+then
+    set indication."true"
+end
+
+rule "videogame - LDR, 008"
+when
+    #Computer file AND type of computer file = game.
+    ((existsControl "LDR.{06,1}.m") AND (existsControl "008.{26,1}.g"))
+then
+    set indication."true"
+end
+
+rule "cddvdrom - LDR, 008, 007"
+when
+    #exclude all record types except nonserial language material, sound recordings, computer files, mixed materials, and manuscripts AND require direct electronic form byte AND (require electronic resource with dimension of 4 3/4 in. in 007 OR "-ROM" in 300$a) AND exclude conference proceedings AND exclude monographic serials AND exclude dissertations.
+    (((not existsControl "LDR.{6,1}.c|d|e|f|g|k|o|r") AND (not existsControl "LDR.{6,2}.ab|ai|as") AND (existsControl "008.{23,1}.q") AND ((existsControl "007.{00,5}.c***g") OR (exists "300.a.*-ROM*")) AND (not existsControl "008.{29,1}.1") AND (not existsControl "008.{24,1}.m") AND (not exists "502"))
+    OR
+    #Projected media AND direct electronic form AND (electronic resource with dimension of 4 3/4 in. in 007 OR "-ROM" in 300$a) AND not slides or transparencies (TMat) AND exclude dissertations.
+    ((existsControl "LDR.{6,1}.g") AND (existsControl "008.{29,1}.q") AND ((existsControl "007.{00,5}.c***g") OR (exists "300.a.*-ROM*")) AND (not existsControl "008.{33,1}.s|t") AND (not exists "502"))
+    OR
+    #2-D nonprojectable graphic AND direct electronic form AND (electronic resource with dimension of 4 3/4 in. in 007 OR "-ROM" in 300$a) AND not picture, graphic, technical drawing, chart, slide, or transparency AND exclude dissertations.
+    ((existsControl "LDR.{6,1}.k") AND (existsControl "008.{29,1}.q") AND ((existsControl "007.{00,5}.c***g") OR (exists "300.a.*-ROM*")) AND (not existsControl "008.{33,1}.i|k|l|n|s|t") AND (not exists "502"))
+    OR
+    #Kit AND direct electronic form AND (electronic resource with dimension of 4 3/4 in. in 007 OR "-ROM" in 300$a) AND exclude dissertations.
+    ((existsControl "LDR.{6,1}.o") AND (existsControl "008.{29,1}.q") AND ((existsControl "007.{00,5}.c***g") OR (exists "300.a.*-ROM*")) AND (not exists "502")))
+then
+    set indication."true"
+end
+
+rule "microform - LDR, 008"
+when
+    #Include language material, sound recordings, computer files, mixed materials, and manuscripts AND require microform form byte AND exclude conference proceedings AND exclude monographic serials AND exclude dissertations.
+    (((not existsControl "LDR.{6,1}.e|f|g|k|o|r") AND (existsControl "008.{23,1}.a|b|c") AND (not existsControl "008.{29,1}.1") AND (not existsControl "008.{24,1}.m") AND (not exists "502"))
+    OR
+    #Cartographic material, projected media, 2-d nonprojectable graphic, kit, or 3-d artifact AND microform form AND exclude dissertations.
+    ((existsControl "LDR.{6,1}.e|f|g|k|o|r") AND (existsControl "008.{29,1}.a|b|c") AND (not exists "502")))
+then
+    set indication."true"
+end
+
+rule "dvdvideo - 008, LDR, 007, 3xx, 5xx"
+when
+    #Type of visual material is videorecording AND not online form
+    (((existsControl "008.{33,1}.v") AND (not existsControl "008.{29,1}.o"))
+    AND 
+    #Projected medium AND videorecording with DVD format in 007
+    (((existsControl "LDR.{6,1}.g") AND (existsControl "007.{0,5}.v***v"))
+    OR
+    #300 OR 347 OR 538 include DVD (if 007 not properly coded).
+    ((exists "300.a.*DVD*") OR (exists "347.b.*DVD*") OR (exists "538.a.*DVD*"))))
+then
+    set indication."true"
+end
+
+rule "blurayvideo- 008, LDR, 007, 3xx, 5xx"
+when
+    #Type of visual material is videorecording AND not online form.
+    (((existsControl "008.{33,1}.v") AND (not existsControl "008.{29,1}.o"))
+    AND 
+    #Visual materials AND Videorecording with format of blu-ray in 007 coding.
+    (((existsControl "LDR.{6,1}.g") AND (existsControl "007.{0,5}.v***s"))
+    OR
+    #300 OR 347 OR 538 contain Blu- or blu- (if 007 not coded properly).
+    ((exists "300.a.*blu-*|*Blu-*") OR (exists "347.b.*blu-*|*Blu-*") OR (exists "538.a.*blu-*|*Blu-*"))))
+then
+    set indication."true"
+end
+
+rule "videocassette - 008, LDR, 007, 3xx, 5xx"
+when
+    #Type of visual material is videorecording AND not online form
+    (((existsControl "008.{33,1}.v") AND (not existsControl "008.{29,1}.o")) 
+    AND
+    #Projected medium AND video recording category with videocassette SMD in 007. 
+    (((existsControl "LDR.{6,1}.g") AND (existsControl "007.{0,2}.vf"))
+    OR
+    #300 OR 346 OR 538 contain VHS (if 007 not coded properly.
+    ((exists "300.a.*VHS*") OR (exists "346.a.*VHS*") OR (exists "538.a.*VHS*"))))
+then
+    set indication."true"
+end
+
+rule "laserdisc - 008, LDR, 007, 3xx, 5xx"
+when
+    #Type of visual material is videorecording AND not online form
+    (((existsControl "008.{33,1}.v") AND (not existsControl "008.{29,1}.o"))
+    AND 
+    #Projected medium AND videorecording with laserdisc format in 007.
+    (((existsControl "LDR.{6,1}.g") AND (existsControl "007.{0,5}.v***g"))
+    OR
+    #300 OR 500 OR 538 include laserdisc (if 007 not properly coded).
+    ((exists "300.a.*laserdisc*") OR (exists "500.a.*laserdisc*") OR (exists "538.a.*laserdisc*"))))
+then
+    set indication."true"
+end
+
+rule "pbook - LDR, 008, 502"
+when
+    #nonserial print, OR monographic serials OR non-thesis monographs
+    (((existsControl "LDR.{06,2}.aa|ac|ad") OR ((existsControl "LDR.{06,2}.ab|ai|as") AND (existsControl "008.{21,1}.m")) OR ((existsControl "LDR.{06,2}.am") AND (not existsControl "008.{24,1}.m")))
+    AND 
+    #exclude microform, online, electronic form codes, AND exclude conference proceedings, AND exclude dissertations.
+    ((not existsControl "008.{23,1}.a|b|c|o|q|s") AND (not existsControl "008.{29,1}.1") AND (not exists "502")))
+then
+    set indication."true"
+end
+
+rule "computerfile - LDR, 008"
+when
+    #exclude all record types except nonserial language material, sound recordings, computer files, mixed materials, and manuscripts AND require direct electronic form byte AND exclude electronic resource with dimension of 4 3/4 in. in 007 AND exclude conference proceedings AND exclude monographic serials AND exclude dissertations.
+    (((not existsControl "LDR.{6,1}.c|d|e|f|g|k|o|r") AND (not existsControl "LDR.{6,2}.ab|ai|as") AND (existsControl "008.{23,1}.q") AND (not existsControl "007.{00,5}.c***g") AND (not existsControl "008.{29,1}.1") AND (not existsControl "008.{24,1}.m") AND (not exists "502"))
+    OR
+    #Projected media AND direct electronic form AND exclude electronic resource with dimension of 4 3/4 in. in 007 AND not slides or transparencies (TMat) AND exclude dissertations.
+    ((existsControl "LDR.{6,1}.g") AND (existsControl "008.{29,1}.q") AND (not existsControl "007.{00,5}.c***g") AND (not existsControl "008.{33,1}.s|t") AND (not exists "502"))
+    OR
+    #2-D nonprojectable graphic AND direct electronic form AND exclude electronic resource with dimension of 4 3/4 in. in 007 AND not picture, graphic, technical drawing, chart, slide, or transparency AND exclude dissertations.
+    ((existsControl "LDR.{6,1}.k") AND (existsControl "008.{29,1}.q") AND (not existsControl "007.{00,5}.c***g") AND (not existsControl "008.{33,1}.i|k|l|n|s|t") AND (not exists "502"))
+    OR
+    #Kit AND direct electronic form AND exclude electronic resource with dimension of 4 3/4 in. in 007 AND exclude dissertations.
+    ((existsControl "LDR.{6,1}.o") AND (existsControl "008.{29,1}.q") AND (not existsControl "007.{00,5}.c***g") AND (not exists "502")))
+then
+    set indication."true"
+end
