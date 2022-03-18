@@ -1,0 +1,20 @@
+rule "Primo VE - Lds82"
+	when
+		MARC is "544" AND NOT
+		MARC "544"."3" match ".*"
+	then
+		set TEMP"1" to MARC."544" excluding num subfields without sort
+		create pnx."display"."lds82" with TEMP"1"
+end
+
+rule "Primo VE - Lds82_544_3"
+	when
+		MARC is "544" AND
+		MARC "544"."3" match ".*"
+	then
+		set TEMP"1" to MARC."544" subfields "3"
+		remove substring using regex (TEMP"1","(:)+$")
+		set TEMP"2" to MARC."544" excluding num subfields without sort
+		concatenate with delimiter (TEMP"1",TEMP"2",": ")
+		create pnx."display"."lds82" with TEMP"1"
+end
