@@ -314,6 +314,13 @@ rule "Primo VE Marc - Lsr52_lds84_384a"
 		create pnx."search"."lsr52" with MARC."384"."a"
 end
 
+rule "Primo VE Marc - Lsr52_lds82_544"
+	when
+		MARC is "544"."a"
+	then
+		create pnx."search"."lsr52" with MARC."544" excluding num subfields without sort
+end
+
 rule "Primo VE Marc - Lsr52_lds74_536"
 	when
 		MARC is "536"
