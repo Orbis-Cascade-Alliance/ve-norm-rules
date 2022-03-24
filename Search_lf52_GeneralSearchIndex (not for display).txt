@@ -281,7 +281,7 @@ rule "Primo VE Marc - Lsr52_lds89_561"
 		create pnx."search"."lsr52" with MARC."561"."a"
 end
 
-rule "Primo VE Marc - Lsr52_lds88_245c"
+rule "Primo VE Marc - Lsr52_lds88and70_245c"
 	when
 		MARC is "245"."c"
 	then
@@ -290,7 +290,7 @@ rule "Primo VE Marc - Lsr52_lds88_245c"
 		create pnx."search"."lsr52" with TEMP"1"
 end
 
-rule "Primo VE Marc - Lsr52_lds88_880-245c"
+rule "Primo VE Marc - Lsr52_lds88and70_880-245c"
 	when
 		MARC is "880"."c" AND
 		MARC."880"."6" match "245-.*"
@@ -319,6 +319,14 @@ rule "Primo VE Marc - Lsr52_lds82_544"
 		MARC is "544"."a"
 	then
 		create pnx."search"."lsr52" with MARC."544" excluding num subfields without sort
+end
+
+rule "Primo VE Marc - Lsr52_lds75and76and77_545"
+	when
+		MARC."545" has any "a,b,u" AND NOT
+		MARC."545"."5" match ".*"
+	then
+		create pnx."search"."lsr52" with MARC."545" excluding num subfields without sort
 end
 
 rule "Primo VE Marc - Lsr52_lds74_536"
@@ -416,4 +424,11 @@ rule "Primo VE Marc - Lsr52_lds61_351"
 		MARC is "351"
 	then
 		create pnx."search"."lsr52" with MARC."351" excluding num subfields without sort
+end
+
+rule "Primo VE Marc - Lsr52_lds60_541"
+	when
+		MARC is "541"
+	then
+		create pnx."search"."lsr52" with MARC."541" excluding num subfields without sort
 end
