@@ -1,0 +1,12 @@
+rule "Primo VE - Lds75"
+# 545 Biographical or Historical Data
+# indicator 1 <> 0, 1 = type of info not specified
+# ex. 29853594, 48000754 ($b)
+	when
+		MARC."545" has any "a,b,u" AND NOT
+		MARC."545".ind"1" equals "0" AND NOT
+		MARC."545".ind"1" equals "1" AND NOT
+		MARC."545"."5" match ".*"
+	then
+		create pnx."display"."lds75" with MARC."545" subfields 
+end

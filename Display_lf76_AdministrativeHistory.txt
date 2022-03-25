@@ -1,0 +1,11 @@
+rule "Primo VE - Lds76"
+# 545 Administrative History
+# indicator 1 = 1
+# ex. 1051460952, 51610546 ($u)
+	when
+		MARC."545" has any "a,b,u" AND
+		MARC."545".ind"1" equals "1" AND NOT
+		MARC."545"."5" match ".*"
+	then
+		create pnx."display"."lds76" with MARC."545" subfields 
+end

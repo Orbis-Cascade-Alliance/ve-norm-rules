@@ -1,0 +1,11 @@
+rule "Primo VE - Lds77"
+# 545 Biographical Sketch
+# indicator 1 = 0
+# ex. 41950108 
+	when
+		MARC."545" has any "a,b,u" AND
+		MARC."545".ind"1" equals "0" AND NOT
+		MARC."545"."5" match ".*"
+	then
+		create pnx."display"."lds77" with MARC."545" subfields 
+end
