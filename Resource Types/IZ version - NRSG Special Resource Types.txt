@@ -38,7 +38,8 @@ end
 rule "videogame - LDR, 008"
 priority 85
 when
-    ((existsControl "LDR.{06,1}.m") AND (existsControl "008.{26,1}.g") AND (not exists "972"))
+    #Computer file AND type of computer file = game AND not online form.
+    ((existsControl "LDR.{06,1}.m") AND (existsControl "008.{26,1}.g") AND (not existsControl "008.{23,1}.o"))
 then
     addField "972.a.videogames" if (not exists "972")
     addSubField "972.9.LOCAL" if (not exists "972.9.LOCAL")
