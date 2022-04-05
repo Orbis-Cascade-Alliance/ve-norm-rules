@@ -1,0 +1,24 @@
+rule "Primo VE - Lds90"
+# 041$h original language
+# uses OTB language translation table; use translations must be checked
+priority 2
+when
+	MARC is "041"."h"
+then
+	set TEMP"1" to MARC."041" subfields "h" append translation "h"
+	add prefix (TEMP"1","Original language(s): ")
+	replace string by string (TEMP"1","\\$\\$ ","\\$\\$; ")
+	replace string by string (TEMP"1","\\$\\$T","\\$\\$Tlang\\.")
+	#remove substring using regex (TEMP"1","; $")
+	create pnx."display"."lds90" with TEMP"1"
+end
+
+rule "Primo VE - Lds90 546"
+# 546 - Language Note
+priority 1
+when
+	MARC is "546"."a"
+then
+	set TEMP"1" to MARC."546"."a"
+	create pnx."display"."lds90" with TEMP"1"
+end

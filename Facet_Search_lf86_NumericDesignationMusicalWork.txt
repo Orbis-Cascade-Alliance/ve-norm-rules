@@ -1,0 +1,47 @@
+rule "Primo VE Marc - Lsr86"
+# 383 Numeric Designation of Musical Work WITH $a
+# $a Serial number (R), $b Opus number (R)
+# $e - Publisher associated with opus number (NR)
+# ex 36366857 ($a), 14698923 ($b), 961100812 ($a, $b), 957303692 (multiple $b)
+# ex 09099071 ($b, $c, $d), 01916816 ($a includes comma)
+# ex 1227319100 ($3), 936302141
+when
+	MARC."383" has any "a,b" AND
+	MARC."383"."a" match ".*"
+then
+	set TEMP"1" to MARC."383" sub without sort "a,b" wrap subfields
+	replace wrapping delimiters (TEMP"1","a","",", ")
+	replace wrapping delimiters (TEMP"1","b","",", ")
+	#remove duplicate commas when comma is explicitly added to metadata
+	replace string by string (TEMP"1",",,",",")
+	#remove comma from end
+	replace string by string (TEMP"1",", $","")
+	create pnx."search"."lsr86" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr86a"
+# 383 Numeric Designation of Musical Work WITHOUT $a
+# $b Opus number (R)
+# $e - Publisher associated with opus number (NR)
+# ex 01806650
+when
+	MARC is "383"."b" AND NOT
+	MARC."383"."a" match ".*"
+then
+	set TEMP"1" to MARC."383"."b"
+	#remove comma from end
+	replace string by string (TEMP"1",", $","")
+	create pnx."search"."lsr86" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr86b"
+# 383 Numeric Designation of Musical Work
+# $c Thematic index number (R)
+# $d Thematic index code (NR)
+# ex 1227319555, 1138097577
+# ex 04566698, 971479624, 1055535827, 50245832 (multiple $c)
+when
+	MARC is "383"."c"
+then
+	create pnx."search"."lsr86" with MARC."383"."c"
+end

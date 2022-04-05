@@ -1,0 +1,18 @@
+rule "Primo VE Marc - Lsr58"
+# ex. #13695212, #07965044
+	when
+		 MARC is "382"."s"
+	then
+		set TEMP"1" to MARC."382"."s"
+		add suffix (TEMP"1"," performers")
+		replace string by string (TEMP"1","^1 performers","1 performer")
+		create pnx."search"."lsr58" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr58 a"
+# ex. #298359688 
+	when
+		 MARC."382" has any "e,t"
+	then
+		create pnx."search"."lsr58" with "ensemble(s)"
+end
