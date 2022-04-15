@@ -1,0 +1,21 @@
+rule "Primo VE Marc - Lsr83"
+# 257 Country of Producing Entity
+# facet created only when country name is from $2 naf controlled vocab and each country name is in its own $a
+# faceted 
+# ex #820678236 ($aJapan$2naf), 430257475 ($aSpain$aFrance$2naf)
+# ex #732332269 ($aDenmark ;$aFinland ;$aSweden$2naf)
+# not faceted
+# ex #795528994 (Poland.), #611021059 ($aHungary ; Austria ; France$2naf)
+# ex #76816549 ($a[Philippines?].), #68815757 ($aUnited States ; United Kingdom ; Germany.)
+	when
+		MARC is "257"."a" AND
+		MARC."257"."2" match "naf" AND NOT
+		MARC."257"."a" match ".*; .*"
+	then
+		set TEMP"1" to MARC."257"."a"
+		#remove ending semicolon
+		replace string by string (TEMP"1",";$","")
+		#remove most ending periods
+		replace string by string (TEMP"1","([a-z])\\.$","$1")
+		create pnx."search"."lsr83" with TEMP"1"
+end
