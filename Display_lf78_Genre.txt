@@ -1,0 +1,267 @@
+rule "Primo VE - Lds78"
+#655_7 lcgft OCLC 774607605 
+	when
+		MARC."655" has any "a" AND
+		MARC."655".ind"2" equals "7" AND  
+		MARC."655"."2" match "lcgft" 
+	then
+		create pnx."display"."lds78" with MARC "655" subfields "a" delimited by " " remove substring using regex "\\.+$"
+end
+
+rule "Primo VE - Lds78 655 #7 except lcgft"
+#655_7 fast OCLC 05264690 
+	when
+		MARC."655" has any "a" AND
+		MARC."655".ind"2" equals "7" AND  
+		(MARC."655"."2" match "aat" OR
+		MARC."655"."2" match "fast" OR 
+		MARC."655"."2" match "ftamc" OR
+		MARC."655"."2" match "gmgpc" OR
+		MARC."655"."2" match "gsafd" OR
+		MARC."655"."2" match "lcac" OR
+		MARC."655"."2" match "lcsh" OR
+		MARC."655"."2" match "lcshac" OR
+		MARC."655"."2" match "local" OR
+		MARC."655"."2" match "mesh" OR
+		MARC."655"."2" match "ngl" OR
+		MARC."655"."2" match "olacvggt" OR
+		MARC."655"."2" match "rbbin" OR
+		MARC."655"."2" match "rbgenr" OR
+		MARC."655"."2" match "rbpap" OR
+		MARC."655"."2" match "rbpri" OR
+		MARC."655"."2" match "rbprov" OR
+		MARC."655"."2" match "rbpub" OR
+		MARC."655"."2" match "rbtyp" OR
+		MARC."655"."2" match "mim" OR
+		MARC."655"."2" match "migfg")
+	then
+	   	set TEMP"1" to MARC."655" subfields "a" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."655" sub without sorting "v,x-z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds78 655 #0,4"
+#655 _0 OCLC 43354922 
+	when
+		MARC."655" has any "a" AND
+		(MARC."655".ind"2" equals "0" OR
+		MARC."655".ind"2" equals "4")
+	then
+		set TEMP"1" to MARC."655" subfields "a" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."655" sub without sorting "v,x-z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds78 380"
+	when
+		MARC."380" has any "a"
+	then
+		create pnx."display"."lds78" with MARC "380" subfields "a" delimited by " " remove substring using regex "\\.+$"
+end
+
+rule "Primo VE - Lds78 694"
+	when
+		MARC."694" has any "a"
+	then
+		set TEMP"1" to MARC."694" subfields "a" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."694" sub without sorting "v,x-z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds78 008/30"
+# lit text - sound recordings OCLC 1197080110
+when
+    (MARC.control."008"(30-31) equals "a" OR
+    MARC.control."008"(30-31) equals "b" OR
+    MARC.control."008"(30-31) equals "c" OR
+    MARC.control."008"(30-31) equals "d" OR
+    MARC.control."008"(30-31) equals "e" OR
+    MARC.control."008"(30-31) equals "f" OR
+    MARC.control."008"(30-31) equals "h" OR
+    MARC.control."008"(30-31) equals "i" OR
+    MARC.control."008"(30-31) equals "j" OR
+    MARC.control."008"(30-31) equals "k" OR
+    MARC.control."008"(30-31) equals "l" OR
+    MARC.control."008"(30-31) equals "m" OR
+    MARC.control."008"(30-31) equals "o" OR
+    MARC.control."008"(30-31) equals "p" OR
+    MARC.control."008"(30-31) equals "t") AND
+    MARC.control."LDR"(6-7) matches "i|j"  
+then
+    set TEMP"1" to position("008",30-31)
+    add prefix (TEMP"1","$$Tgenre_008_LitTxtSR_")
+    add suffix (TEMP"1","$$")
+    create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds78 008/31"
+when
+    (MARC.control."008"(31-32) equals "a" OR
+    MARC.control."008"(31-32) equals "b" OR
+    MARC.control."008"(31-32) equals "c" OR
+    MARC.control."008"(31-32) equals "d" OR
+    MARC.control."008"(31-32) equals "e" OR
+    MARC.control."008"(31-32) equals "f" OR
+    MARC.control."008"(31-32) equals "h" OR
+    MARC.control."008"(31-32) equals "i" OR
+    MARC.control."008"(31-32) equals "j" OR
+    MARC.control."008"(31-32) equals "k" OR
+    MARC.control."008"(31-32) equals "l" OR
+    MARC.control."008"(31-32) equals "m" OR
+    MARC.control."008"(31-32) equals "o" OR
+    MARC.control."008"(31-32) equals "p" OR
+    MARC.control."008"(31-32) equals "t") AND
+    MARC.control."LDR"(6-7) matches "i|j"  
+then
+    set TEMP"1" to position("008",31-32)
+    add prefix (TEMP"1","$$Tgenre_008_LitTxtSR_")
+    add suffix (TEMP"1","$$")
+    create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds78 008/24"
+# nature of contents OCLC 1055568196
+when
+    (MARC.control."008"(24-25) equals "5" OR
+    MARC.control."008"(24-25) equals "6" OR
+    MARC.control."008"(24-25) equals "c" OR
+    MARC.control."008"(24-25) equals "d" OR
+    MARC.control."008"(24-25) equals "e" OR
+    MARC.control."008"(24-25) equals "f" OR
+    MARC.control."008"(24-25) equals "i" OR
+    MARC.control."008"(24-25) equals "j" OR
+    MARC.control."008"(24-25) equals "k" OR
+    MARC.control."008"(24-25) equals "o" OR
+    MARC.control."008"(24-25) equals "p" OR
+    MARC.control."008"(24-25) equals "r" OR
+    MARC.control."008"(24-25) equals "s" OR
+    MARC.control."008"(24-25) equals "t" OR
+    MARC.control."008"(24-25) equals "w" OR
+    MARC.control."008"(24-25) equals "y" OR
+    MARC.control."008"(24-25) equals "z") AND
+    MARC.control."LDR"(6-8) matches "aa|ac|ad|am"
+then
+    set TEMP"1" to position("008",24-25)
+    add prefix (TEMP"1","$$Tgenre_008_NatureContents_")
+    add suffix (TEMP"1","$$")
+    create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds78 008/25"
+# nature of contents
+when
+    (MARC.control."008"(25-26) equals "5" OR
+    MARC.control."008"(25-26) equals "6" OR
+    MARC.control."008"(25-26) equals "c" OR
+    MARC.control."008"(25-26) equals "d" OR
+    MARC.control."008"(25-26) equals "e" OR
+    MARC.control."008"(25-26) equals "f" OR
+    MARC.control."008"(25-26) equals "i" OR
+    MARC.control."008"(25-26) equals "j" OR
+    MARC.control."008"(25-26) equals "k" OR
+    MARC.control."008"(25-26) equals "o" OR
+    MARC.control."008"(25-26) equals "p" OR
+    MARC.control."008"(25-26) equals "r" OR
+    MARC.control."008"(25-26) equals "s" OR
+    MARC.control."008"(25-26) equals "t" OR
+    MARC.control."008"(25-26) equals "w" OR
+    MARC.control."008"(25-26) equals "y" OR
+    MARC.control."008"(25-26) equals "z") AND
+    MARC.control."LDR"(6-8) matches "aa|ac|ad|am"
+then
+    set TEMP"1" to position("008",25-26)
+    add prefix (TEMP"1","$$Tgenre_008_NatureContents_")
+    add suffix (TEMP"1","$$")
+    create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds78 008/26"
+# nature of contents
+when
+    (MARC.control."008"(26-27) equals "5" OR
+    MARC.control."008"(26-27) equals "6" OR
+    MARC.control."008"(26-27) equals "c" OR
+    MARC.control."008"(26-27) equals "d" OR
+    MARC.control."008"(26-27) equals "e" OR
+    MARC.control."008"(26-27) equals "f" OR
+    MARC.control."008"(26-27) equals "i" OR
+    MARC.control."008"(26-27) equals "j" OR
+    MARC.control."008"(26-27) equals "k" OR
+    MARC.control."008"(26-27) equals "o" OR
+    MARC.control."008"(26-27) equals "p" OR
+    MARC.control."008"(26-27) equals "r" OR
+    MARC.control."008"(26-27) equals "s" OR
+    MARC.control."008"(26-27) equals "t" OR
+    MARC.control."008"(26-27) equals "w" OR
+    MARC.control."008"(26-27) equals "y" OR
+    MARC.control."008"(26-27) equals "z") AND
+    MARC.control."LDR"(6-8) matches "aa|ac|ad|am"
+then
+    set TEMP"1" to position("008",26-27)
+    add prefix (TEMP"1","$$Tgenre_008_NatureContents_")
+    add suffix (TEMP"1","$$")
+    create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds78 008/27"
+# nature of contents
+when
+    (MARC.control."008"(27-28) equals "5" OR
+    MARC.control."008"(27-28) equals "6" OR
+    MARC.control."008"(27-28) equals "c" OR
+    MARC.control."008"(27-28) equals "d" OR
+    MARC.control."008"(27-28) equals "e" OR
+    MARC.control."008"(27-28) equals "f" OR
+    MARC.control."008"(27-28) equals "i" OR
+    MARC.control."008"(27-28) equals "j" OR
+    MARC.control."008"(27-28) equals "k" OR
+    MARC.control."008"(27-28) equals "o" OR
+    MARC.control."008"(27-28) equals "p" OR
+    MARC.control."008"(27-28) equals "r" OR
+    MARC.control."008"(27-28) equals "s" OR
+    MARC.control."008"(27-28) equals "t" OR
+    MARC.control."008"(27-28) equals "w" OR
+    MARC.control."008"(27-28) equals "y" OR
+    MARC.control."008"(27-28) equals "z") AND
+    MARC.control."LDR"(6-8) matches "aa|ac|ad|am"
+then
+    set TEMP"1" to position("008",27-28)
+    add prefix (TEMP"1","$$Tgenre_008_NatureContents_")
+    add suffix (TEMP"1","$$")
+    create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds78 008/33"
+# literary form OCLC 1057242876
+when
+    (MARC.control."008"(33-34) equals "1" OR
+    MARC.control."008"(33-34) equals "d" OR
+    MARC.control."008"(33-34) equals "e" OR
+    MARC.control."008"(33-34) equals "f" OR
+    MARC.control."008"(33-34) equals "j" OR
+    MARC.control."008"(33-34) equals "p" OR
+    MARC.control."008"(33-34) equals "s") AND
+    MARC.control."LDR"(6-8) matches "ab|ai|as"
+then
+    set TEMP"1" to position("008",33-34)
+    add prefix (TEMP"1","$$Tgenre_008_LitF_")
+    add suffix (TEMP"1","$$")
+    create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds78 008/34"
+#biography
+when
+    (MARC.control."008"(34-35) equals "a" OR
+    MARC.control."008"(34-35) equals "b" OR
+    MARC.control."008"(34-35) equals "c") AND
+    MARC.control."LDR"(6-8) matches "aa|ac|ad|am"
+then
+    set TEMP"1" to position("008",34-35)
+    add prefix (TEMP"1","$$Tgenre_008_Biog_")
+    add suffix (TEMP"1","$$")
+    create pnx."display"."lds78" with TEMP"1"
+end
