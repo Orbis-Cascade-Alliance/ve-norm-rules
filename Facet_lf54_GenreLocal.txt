@@ -1,0 +1,66 @@
+rule "Primo VE Marc - Lsr54"
+#655_7 lcgft OCLC 774607605 
+    when
+        MARC."655" has any "a" AND
+        MARC."655".ind"2" equals "7" AND  
+	(MARC."655"."2" match "lcgft" OR
+        MARC."655"."2" match "fast")
+    then
+        create pnx."search"."lsr54" with MARC "655" subfields "a" delimited by " " remove substring using regex "\\.+$"
+end
+
+rule "Primo VE Marc - Lsr54 380"     
+    when         
+        MARC is "380"."a" AND         
+        MARC."380"."2" match "lcgft"     
+    then         
+        create pnx."search"."lsr54" with MARC "380"."a" 
+end
+
+rule "Primo VE Marc - Lsr54 600"
+    when
+	    MARC."600" has any "v" AND
+	    MARC."600".ind"2" equals "0"
+    then
+        create pnx."search"."lsr54" with MARC "600" subfields "v" delimited by " " remove substring using regex "\\.+$"
+end
+
+rule "Primo VE Marc - Lsr54 610"
+    when
+	    MARC."610" has any "v" AND
+	    MARC."610".ind"2" equals "0" 
+    then
+        create pnx."search"."lsr54" with MARC "610" subfields "v" delimited by " " remove substring using regex "\\.+$"
+end
+
+rule "Primo VE Marc - Lsr54 611"
+    when
+	    MARC."611" has any "v" AND
+	    MARC."611".ind"2" equals "0" 
+    then
+        create pnx."search"."lsr54" with MARC "611" subfields "v" delimited by " " remove substring using regex "\\.+$"
+end
+
+rule "Primo VE Marc - Lsr54 630"
+    when
+	    MARC."630" has any "v" AND
+	    MARC."630".ind"2" equals "0" 
+    then
+        create pnx."search"."lsr54" with MARC "630" subfields "v" delimited by " " remove substring using regex "\\.+$"
+end
+
+rule "Primo VE Marc - Lsr54 650"
+    when
+	    MARC."650" has any "v" AND
+	    MARC."650".ind"2" equals "0" 
+    then
+        create pnx."search"."lsr54" with MARC "650" subfields "v" delimited by " " remove substring using regex "\\.+$"
+end
+
+rule "Primo VE Marc - Lsr54 651"
+    when
+	    MARC."651" has any "v" AND
+	    MARC."651".ind"2" equals "0" 
+    then
+        create pnx."search"."lsr54" with MARC "651" subfields "v" delimited by " " remove substring using regex "\\.+$"
+end
