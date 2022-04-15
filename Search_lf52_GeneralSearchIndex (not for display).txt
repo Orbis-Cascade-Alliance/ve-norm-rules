@@ -412,7 +412,7 @@ rule "Primo VE Marc - Lsr52_lds69_542"
 		MARC is "542" AND NOT
                 MARC."542".ind"1" equals "0"
 	then
-		create pnx."display"."lds69" with MARC "542" subfields "a-f,h-p,r-s"
+		create pnx."search"."lsr52" with MARC "542" subfields "a-f,h-p,r-s"
 end
 
 rule "Primo VE Marc - Lsr52_lds68_524"
