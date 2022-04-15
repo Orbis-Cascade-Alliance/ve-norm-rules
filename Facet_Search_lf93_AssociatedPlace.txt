@@ -1,0 +1,18 @@
+rule "Primo VE Marc - Lsr93"
+	when
+		MARC is "370"."c"
+	then
+		create pnx."search"."lsr93" with MARC "370"."c"
+end
+rule "Primo VE Marc - Lsr93_f"
+	when
+		MARC is "370"."f"
+	then
+		create pnx."search"."lsr93" with MARC "370"."f"
+end
+rule "Primo VE Marc - Lsr93_g"
+	when
+		MARC is "370"."g"
+	then
+		create pnx."search"."lsr93" with MARC "370"."g"
+end
