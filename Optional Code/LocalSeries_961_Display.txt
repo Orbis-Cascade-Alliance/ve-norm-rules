@@ -1,0 +1,29 @@
+rule "Primo VE - LdsXX"
+#Displays local series field 961 and associated 880.
+	when
+		MARC is "961"."t"
+	then
+		set TEMP"1" to MARC."961" excluding subfields without sorting "[0-9]|x|w"
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"2" to MARC."961" excluding subfields without sorting "[0-9]|v|x|w"
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."ldsXX" with TEMP"1"
+end
+
+rule "Primo VE - LdsXX_880-961"
+	when
+		MARC is "880"."t" AND
+		MARC."880"."6" match "961-.*"
+	then
+		set TEMP"1" to MARC."880"  excluding subfields without sorting "[0-9]|x|w"
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"2" to MARC."880" excluding subfields without sorting "[0-9]|v|x|w"
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."ldsXX" with TEMP"1"
+end

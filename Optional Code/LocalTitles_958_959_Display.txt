@@ -1,0 +1,41 @@
+rule "Primo VE - LdsXX"
+#Displays local title fields 958, 959, and associated 880s.
+#Replace XX with the desired local field number.
+	when
+		MARC is "958"
+	then
+		set TEMP"1" to MARC."958" excluding num subfields without sort
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		add prefix (TEMP"1","Journal title : ")
+		create pnx."display"."ldsXX" with TEMP"1"
+end
+
+rule "Primo VE - LdsXX_880-958"
+	when
+		MARC "880"."6" match "958-.*"
+	then
+		set TEMP"1" to MARC."880" excluding num subfields without sort
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		add prefix (TEMP"1","Journal title : ")
+		create pnx."display"."ldsXX" with TEMP"1"
+end
+
+rule "Primo VE - LdsXX_959"
+	when
+		MARC is "959"
+	then
+		set TEMP"1" to MARC."959" excluding num subfields without sort
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		add prefix (TEMP"1","Alternate form of title : ")
+		create pnx."display"."ldsXX" with TEMP"1"
+end
+
+rule "Primo VE - LdsXX_880-959"
+	when
+		MARC "880"."6" match "959-.*"
+	then
+		set TEMP"1" to MARC."880" excluding num subfields without sort
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		add prefix (TEMP"1","Alternate form of title : ")
+		create pnx."display"."ldsXX" with TEMP"1"
+end

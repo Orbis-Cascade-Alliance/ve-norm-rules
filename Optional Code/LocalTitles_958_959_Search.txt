@@ -1,0 +1,37 @@
+rule "Primo VE Marc - LsrXX"
+#Indexes local title fields 958, 959, and associated 880s for search in VE.
+#Replace "XX" with desired local field number.
+	when
+		MARC is "958"
+	then
+		set TEMP"1" to MARC."958" excluding num subfields without sort
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_880-958"
+	when
+		MARC "880"."6" match "958-.*"
+	then
+		set TEMP"1" to MARC."880" excluding num subfields without sort
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_959"
+	when
+		MARC is "959"
+	then
+		set TEMP"1" to MARC."959" excluding num subfields without sort
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_880-959"
+	when
+		MARC "880"."6" match "959-.*"
+	then
+		set TEMP"1" to MARC."880" excluding num subfields without sort
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsrXX" with TEMP"1"
+end

@@ -1,0 +1,153 @@
+rule "Primo VE Marc - LsrXX"
+#Indexes local series field 961 and associated 880 for search alongside other series fields.
+	when
+		MARC is "961"."t"
+	then
+		set TEMP"1" to MARC."961" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_880-961"
+	when
+		MARC is "880"."t" AND
+		MARC."880"."6" match "961-.*"
+	then
+		set TEMP"1" to MARC."880"  excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_400"
+	when
+		MARC is "400"."t"
+	then
+		set TEMP"1" to MARC."400" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_880-400"
+	when
+		MARC is "880"."t" AND
+		MARC."880"."6" match "400-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_440"
+	when
+		MARC is "440"."t"
+	then
+		set TEMP"1" to MARC."440" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_880-440"
+	when
+		MARC is "880"."t" AND
+		MARC."880"."6" match "440-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_490"
+	when
+		MARC is "490"."t"
+	then
+		set TEMP"1" to MARC."490" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_880-490"
+	when
+		MARC is "880"."t" AND
+		MARC."880"."6" match "490-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_800"
+	when
+		MARC is "800"."t"
+	then
+		set TEMP"1" to MARC."800" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_880-800"
+	when
+		MARC is "880"."t" AND
+		MARC."880"."6" match "800-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_810"
+	when
+		MARC is "810"."t"
+	then
+		set TEMP"1" to MARC."810" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_880-810"
+	when
+		MARC is "880"."t" AND
+		MARC."880"."6" match "810-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_811"
+	when
+		MARC is "811"."t"
+	then
+		set TEMP"1" to MARC."811" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_880-811"
+	when
+		MARC is "880"."t" AND
+		MARC."880"."6" match "811-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_830"
+	when
+		MARC is "830"
+	then
+		set TEMP"1" to MARC."830" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_880-830"
+	when
+		MARC is "880" AND
+		MARC."880"."6" match "830-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_840"
+	when
+		MARC is "840"
+	then
+		set TEMP"1" to MARC."840" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
+
+rule "Primo VE Marc - LsrXX_880-840"
+	when
+		MARC is "880" AND
+		MARC."880"."6" match "840-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|v|x|w"
+		create pnx."search"."lsrXX" with TEMP"1"
+end
