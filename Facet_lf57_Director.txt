@@ -1,0 +1,83 @@
+rule "Primo VE Marc - Lsr56"
+# ex 557091776 ($4drt$4pro), 428129792 ($4pro$4drt)
+# ex 122942671 ($e film director), 40924552 ($e director)
+# ex 1078530747 ($e film director, $e screenwriter, $e film producer.
+# NOTE: cannot use match conditions in when statement 
+# because only matches on first instance of a given subfield (won't match $epro$edrt)
+# Instead perform match in TEMP"2", concatenate with name in TEMP"1"
+# and drop all names that don't match
+	when
+		MARC is "700"."a" AND
+		(MARC."700"."4" match ".*" OR
+		MARC."700"."e" match ".*")
+
+	then
+		set TEMP"1" to MARC "700" sub without sort "a,b,c,d,q"
+		set TEMP"2" to MARC "700" sub without sort "4,e"  wrap subfields
+		
+		#prepare $4/$e for matching
+		replace wrapping delimiters (TEMP"2","4","___","___")
+		replace wrapping delimiters (TEMP"2","e","___","___")
+		lower case (TEMP"2")
+		replace string by string (TEMP"2","(,|\\.)","")
+
+		#mark $4/$e that match a term used for director
+		replace string by string (TEMP"2",".*___(drt|fmd|fmk|tld)___.*","MATCH")
+		replace string by string (TEMP"2",".*___(film|television) director___.*","MATCH")
+		replace string by string (TEMP"2",".*___(filmmaker|director|direction)___.*","MATCH")
+		
+		# combine name with modified string (MATCH or $e/$4)
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		
+		#remove any names that don't end with MATCH
+		replace string by string (TEMP"1",".*___$","")
+		#remove MATCH from end of string
+		replace string by string (TEMP"1","MATCH$","")
+		
+		#remove comma from end of name
+		replace string by string (TEMP"1",",$","")
+		#remove selected periods from end of name
+		#(if preceded by numbers or 2 consecutive lower case letters)
+		replace string by string (TEMP"1","([a-z0-9]{2})\\.$","$1")
+		
+		create pnx."search"."lsr56" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr56a"
+# repeat rule for 100 field
+	when
+		MARC is "100"."a" AND
+		(MARC."100"."4" match ".*" OR
+		MARC."100"."e" match ".*")
+
+	then
+		set TEMP"1" to MARC "100" sub without sort "a,b,c,d,q"
+		set TEMP"2" to MARC "100" sub without sort "4,e"  wrap subfields
+		
+		#prepare $4/$e for matching
+		replace wrapping delimiters (TEMP"2","4","___","___")
+		replace wrapping delimiters (TEMP"2","e","___","___")
+		lower case (TEMP"2")
+		replace string by string (TEMP"2","(,|\\.)","")
+
+		#mark $4/$e that match a term used for director
+		replace string by string (TEMP"2",".*___(drt|fmd|fmk|tld)___.*","MATCH")
+		replace string by string (TEMP"2",".*___(film|television) director___.*","MATCH")
+		replace string by string (TEMP"2",".*___(filmmaker|director|direction)___.*","MATCH")
+		
+		# combine name with modified string (MATCH or $e/$4)
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		
+		#remove any names that don't end with MATCH
+		replace string by string (TEMP"1",".*___$","")
+		#remove MATCH from end of string
+		replace string by string (TEMP"1","MATCH$","")
+		
+		#remove comma from end of name
+		replace string by string (TEMP"1",",$","")
+		#remove selected periods from end of name
+		#(if preceded by numbers or 2 consecutive lower case letters)
+		replace string by string (TEMP"1","([a-z0-9]{2})\\.$","$1")
+		
+		create pnx."search"."lsr56" with TEMP"1"
+end
