@@ -1,0 +1,176 @@
+rule "Primo VE Marc - Lsr98"
+	when
+		MARC is "385"."a"
+	then
+		create pnx."search"."lsr98" with MARC "385"."a"
+end
+################The rules below use the 22nd character of 008 as a lookup table################
+################The rules below exclude SE (Continuing Resources), MP (Maps), and MX (Mixed Materials)################
+rule "Primo VE Marc - Lsr98_008_22_b"
+	when
+                MARC.control."008"(22-23) equals "b" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
+		MARC is "385"
+	then
+                set TEMP"1" to position("008",22-23)
+                add prefix (TEMP"1","School children,Children") 
+                remove string (TEMP"1","b") 
+                create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_008_22_c"
+	when
+                MARC.control."008"(22-23) equals "c" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
+		MARC is "385"
+	then
+                set TEMP"1" to position("008",22-23)
+                add prefix (TEMP"1","Preteens,Children") 
+                remove string (TEMP"1","c") 
+                create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_008_22_d"
+	when
+                MARC.control."008"(22-23) equals "d" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
+		MARC is "385"
+	then
+                set TEMP"1" to position("008",22-23)
+                add prefix (TEMP"1","Teenagers") 
+                remove string (TEMP"1","d") 
+                create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_008_22_e"
+	when
+                MARC.control."008"(22-23) equals "e" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
+		MARC is "385"
+	then
+                set TEMP"1" to position("008",22-23)
+                add prefix (TEMP"1","Adults") 
+                remove string (TEMP"1","e") 
+                create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_008_22_f"
+	when
+                MARC.control."008"(22-23) equals "f" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
+		MARC is "385"
+	then
+                set TEMP"1" to position("008",22-23)
+                add prefix (TEMP"1","Specialized audience") 
+                remove string (TEMP"1","f") 
+                create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_008_22_g"
+	when
+                MARC.control."008"(22-23) equals "g" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
+		MARC is "385"
+	then
+                set TEMP"1" to position("008",22-23)
+                add prefix (TEMP"1","General audience") 
+                remove string (TEMP"1","g") 
+                create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_008_22_j"
+##Ex: 06357402
+	when
+                MARC.control."008"(22-23) equals "j" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
+		MARC is "385"
+	then
+                set TEMP"1" to position("008",22-23)
+                add prefix (TEMP"1","Children") 
+                remove string (TEMP"1","j") 
+                create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_008_22_a"
+	when
+                MARC.control."008"(22-23) equals "a" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
+		MARC is "385"
+	then
+                set TEMP"1" to position("008",22-23)
+                add prefix (TEMP"1","Preschool children,Children") 
+                remove string (TEMP"1","a") 
+                create pnx."search"."lsr98" with TEMP"1"
+end
+################################
+rule "Primo VE Marc - Lsr98_655_juvenile"
+	when
+		MARC is "655"."a" AND
+		MARC."655".ind"2" equals "7" AND
+		MARC."655"."a" match ".*[Jj]uvenile [Ww]orks.*"
+	then
+		set TEMP"1" to MARC."655"."a"
+		replace string by string (TEMP"1",".+","Children")
+		create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_655_childrens"
+	when
+		MARC is "655"."a" AND
+		MARC."655".ind"2" equals "7" AND
+		MARC."655"."a" match ".*[Cc]hildren's.*"
+	then
+		set TEMP"1" to MARC."655"."a"
+		replace string by string (TEMP"1",".+","Children")
+		create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_600"
+	when
+		MARC is "600"."v" AND
+		MARC."600".ind"2" equals "0" AND
+		MARC."600"."v" match ".*[Jj]uvenile.*"
+	then
+		set TEMP"1" to MARC."600"."v"
+		replace string by string (TEMP"1",".+","Children")
+		create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_610"
+	when
+		MARC is "610"."v" AND
+		MARC."610".ind"2" equals "0" AND
+		MARC."610"."v" match ".*[Jj]uvenile.*"
+	then
+		set TEMP"1" to MARC."610"."v"
+		replace string by string (TEMP"1",".+","Children")
+		create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_611"
+	when
+		MARC is "611"."v" AND
+		MARC."611".ind"2" equals "0" AND
+		MARC."611"."v" match ".*[Jj]uvenile.*"
+	then
+		set TEMP"1" to MARC."611"."v"
+		replace string by string (TEMP"1",".+","Children")
+		create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_650"
+	when
+		MARC is "650"."v" AND
+		MARC."650".ind"2" equals "0" AND
+		MARC."650"."v" match ".*[Jj]uvenile.*"
+	then
+		set TEMP"1" to MARC."650"."v"
+		replace string by string (TEMP"1",".+","Children")
+		create pnx."search"."lsr98" with TEMP"1"
+end
+rule "Primo VE Marc - Lsr98_651"
+	when
+		MARC is "651"."v" AND
+		MARC."651".ind"2" equals "0" AND
+		MARC."651"."v" match ".*[Jj]uvenile.*"
+	then
+		set TEMP"1" to MARC."651"."v"
+		replace string by string (TEMP"1",".+","Children")
+		create pnx."search"."lsr98" with TEMP"1"
+end
