@@ -13,7 +13,7 @@ rule "Primo VE - Lds70"
                 remove leading and trailing spaces (TEMP"1")
                 add suffix (TEMP"1","...")
                 replace string by string (TEMP"1","(_\\.\\.\\.)$","")
-                replace string by string (TEMP"1",";(?!.*;).*$","...")
+                replace string by string (TEMP"1",";(?!.*;).*$(?<=.{200})","...")
 		create pnx."display"."lds70" with TEMP"1"
 end
 
@@ -33,6 +33,6 @@ rule "Primo VE - Lds70_880"
                 remove leading and trailing spaces (TEMP"1")
                 add suffix (TEMP"1","...")
                 replace string by string (TEMP"1","(_\\.\\.\\.)$","")
-                replace string by string (TEMP"1",";(?!.*;).*$","...")
+                replace string by string (TEMP"1",";(?!.*;).*$(?<=.{200})","...")
 		create pnx."display"."lds70" with TEMP"1"
 end
