@@ -11,6 +11,7 @@ end
 
 rule "Primo VE Marc - LsrXX_880-958"
 	when
+		MARC is "880" AND
 		MARC "880"."6" match "958-.*"
 	then
 		set TEMP"1" to MARC."880" excluding num subfields without sort
@@ -29,6 +30,7 @@ end
 
 rule "Primo VE Marc - LsrXX_880-959"
 	when
+		MARC is "880" AND
 		MARC "880"."6" match "959-.*"
 	then
 		set TEMP"1" to MARC."880" excluding num subfields without sort
