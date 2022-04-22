@@ -1,0 +1,6 @@
+rule "Primo VE - Relation"
+    when
+        MARC is "XXX"."a"
+    then
+        create pnx."display"."relation" with MARC "XXX"."a"
+end

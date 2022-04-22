@@ -1,0 +1,31 @@
+rule "Primo VE - addtitle 740"
+#Removed 730 (in Related Works and Collections and Included Works)
+#Removed 246 and 247 (in Alternate Form of Title)
+	when
+		MARC is "740"
+	then
+		create pnx."display"."addtitle" with MARC."740" excluding num subfields without sort
+end
+
+rule "Primo VE - addtitle 840"
+	when
+		MARC is "840"
+	then
+		create pnx."display"."addtitle" with MARC."840" excluding num subfields without sort
+end
+
+rule "Primo VE - addtitle 880-740"
+	when
+		MARC is "880" AND
+		MARC."880"."6" match "740-.*"
+	then
+		create pnx."display"."addtitle" with MARC."880" excluding num subfields without sort
+end
+
+rule "Primo VE - addtitle 880-840"
+	when
+		MARC is "880" AND
+		MARC."880"."6" match "840-.*"
+	then
+		create pnx."display"."addtitle" with MARC."880" excluding num subfields without sort
+end

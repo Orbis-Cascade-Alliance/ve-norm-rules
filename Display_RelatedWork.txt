@@ -1,0 +1,6 @@
+rule "Primo VE - Related Work 700"
+	when
+		MARC is "XXX"."a"
+	then
+		create pnx."display"."related_work" with MARC."XXX"."a"
+end
