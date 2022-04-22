@@ -1,0 +1,10 @@
+rule "Primo Ve - Complete Title 880-245"
+#Remove $c, $h from display
+	when
+		MARC is "880" AND
+	    MARC."880"."6" match "245-.*"
+	then
+		set TEMP"1" to MARC."880" subfields "a,n,p,b,f,g,k,s"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."display"."vertitle" with TEMP"1"
+end
