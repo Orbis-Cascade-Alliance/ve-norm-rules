@@ -1,0 +1,67 @@
+rule "Primo VE - MESH 600"
+	when
+		MARC."600" has any "a-u,w-z" AND
+		MARC."600".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."600" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."600" subfields "x-z" delimited by " -- " remove substring using regex "\\.+$"
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+        create pnx."display"."mesh" with TEMP"1"
+end
+
+rule "Primo VE - MESH 610"
+	when
+		MARC."610" has any "a-u,w-z" AND
+		MARC."610".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."610" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."610" subfields "x-z" delimited by " -- " remove substring using regex "\\.+$"
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+        create pnx."display"."mesh" with TEMP"1"
+end
+
+rule "Primo VE - MESH 611"
+	when
+		MARC."611" has any "a-u,w-z" AND
+		MARC."611".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."611" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."611" subfields "x-z" delimited by " -- " remove substring using regex "\\.+$"
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+        create pnx."display"."mesh" with TEMP"1"
+end
+
+rule "Primo VE - MESH 630"
+	when
+		MARC."630" has any "a-u,w-z" AND
+		MARC."630".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."630" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."630" subfields "x-z" delimited by " -- " remove substring using regex "\\.+$"
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+        kormarc remove nonfiling brackets MARC."630" sourcetag "630" from TEMP"1"
+        create pnx."display"."mesh" with TEMP"1"
+end
+
+rule "Primo VE - MESH 650"
+	when
+		MARC."650" has any "a-u,w-z" AND
+		MARC."650".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."650" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."650" subfields "x-z" delimited by " -- " remove substring using regex "\\.+$"
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+        create pnx."display"."mesh" with TEMP"1"
+end
+
+rule "Primo VE - MESH 651"
+	when
+		MARC."651" has any "a-u,w-z" AND
+		MARC."651".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."651" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."651" subfields "x-z" delimited by " -- " remove substring using regex "\\.+$"
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+        create pnx."display"."mesh" with TEMP"1"
+end
+

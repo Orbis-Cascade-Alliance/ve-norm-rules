@@ -1,0 +1,26 @@
+rule "Primo VE Marc - Lsr81"
+# 060 - National Library of Medicine Call Number (R)
+# https://classification.nlm.nih.gov/outline
+# uses only first $a if there is more than one
+# uses only fields that have $b (item number)
+# ones without $b are some kind of shelving number
+# and not useful as facets
+# also removes anything that is not exclusively part of
+# the NLM schedule (QS-QZ, W-WZ)
+# ex 42683384, 03003092, 45800374 (LC class used)
+	when
+		MARC is "060"."a" AND
+		MARC."060"."b" match ".*" AND
+		(MARC."060"."a" match "^Q[S-Z].*" OR
+		MARC."060"."a" match "^W.*")
+	then
+		set TEMP"1" to MARC "060"."a"
+		# get first two characters of call number
+		replace string by string (TEMP"1","^(.{2}).*","$1")
+		# remove spaces and numbers
+		replace string by string (TEMP"1"," ","")
+		replace string by string (TEMP"1","\\d","")
+		# mark with prefix for NLM mapping
+		add prefix (TEMP"1","nlm_")
+		create pnx."search"."lsr81" with TEMP"1"
+end

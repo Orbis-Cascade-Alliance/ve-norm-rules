@@ -1,0 +1,40 @@
+rule "Primo VE Marc - Lsr59"
+# ex $n 07222513 (01), 00784920 (17)
+# ex $b solo parts 06809612, 1055684538, 28088962 ($b not followed by n)
+# ex $d doubling instruments 1054014464, 807983332
+# ex $p alternative instrumentation 08153868, 457771332, 09224901
+# ex $v note 1112144880, 48788606, 956878944
+# ex no $n 14698923
+# ex $3 268925851
+# ex $v followed by $a 00740415 "chimes/toy instrument [small metal cricket]; triangle/..."
+
+when
+	MARC."382" has any "a,b,e,n"
+	
+then
+
+set TEMP"1" to MARC."382" sub without sort "a,b,e,n" wrap subfields
+
+# add extra ";" after subfield a to account for fields lacking $n/$e
+	replace wrapping delimiters (TEMP"1","a","",";")
+	replace wrapping delimiters (TEMP"1","n","(",");")
+	replace wrapping delimiters (TEMP"1","e","(",");")
+	replace wrapping delimiters (TEMP"1","b","",";")
+# fix erroneous $n in form (01)
+	replace string by string (TEMP"1"," \\(0"," \\(")
+# remove number of players when = 1
+	replace string by string (TEMP"1"," \\(1\\);",";")
+# remove extra spaces from end
+	replace string by string (TEMP"1"," +$","")
+# remove any extra semicolons 
+	replace string by string (TEMP"1",";+",";")
+	replace string by string (TEMP"1","; \\("," \\(")
+	replace string by string (TEMP"1",";$","")
+# remove extra $n associated with $d/$p (repeat for multiple $n in  a row
+# replace (#) (#) with the first (#) for #/## etc. and any number of (#) (#) (#)
+	replace string by string (TEMP"1","(\\(\\d+\\))( \\(\\d+\\))+","$1")
+
+
+create pnx."search"."lsr59" with TEMP"1"
+
+end
