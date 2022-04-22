@@ -1,0 +1,330 @@
+rule "Primo VE - Lds85"
+# 046 - Special Coded Dates YEAR ONLY
+# $k - Beginning or single date created (NR)
+# $l - Ending date created (NR)
+# prefer dates from 046$o if both $o and $k exist
+# in these situations, $k is the date of the collection and not the original content
+# exclude records with second indicator 2 because these are for expressions
+# and not the original content
+# The date and time are recorded according to Representations of Dates and Times (ISO 8601) 
+# in the pattern yyyy, yyyy-mm, or yyyymmdd (4 for the year, 2 for the month, and 2 for the day)
+# unless subfield $2 (Source of date) specifies another date scheme.
+# https://www.loc.gov/marc/authority/ad046.html
+# ex 27645172, 976496254
+
+	when
+		MARC."046" has any "k,l" AND
+		MARC."046"."k" match "\\d{4}" AND NOT
+		MARC."046".ind"1" equals "2" AND NOT
+		MARC."046"."o" match ".*"
+	then
+		#get beginning year from $k
+		set TEMP"1" to MARC."046" subfields "k"
+		#remove leading zero
+		replace string by string (TEMP"1","^0+","")
+		#get ending year from $l
+		set TEMP"2" to MARC."046" subfields "l"
+		#remove leading zero
+		replace string by string (TEMP"2","^0+","")
+		
+		concatenate with delimiter (TEMP"1",TEMP"2","-")
+		create pnx."display"."lds85" with TEMP"1"
+end
+
+rule "Primo VE - Lds85a"
+# 046 - Special Coded Dates YEAR + MONTH
+# $k - Beginning or single date created (NR)
+# $l - Ending date created (NR)
+# ex 1013746921 ($k edtf)
+	when
+		MARC."046" has any "k,l" AND
+		MARC."046"."k" match "\\d{4}(-)?\\d{2}" AND NOT
+		MARC."046".ind"1" equals "2" AND NOT
+		MARC."046"."o" match ".*"
+	then
+		#get year from first date in $k
+		set TEMP"1" to MARC."046" subfields "k"
+		replace string by string (TEMP"1","^(\\d{4}).*","$1")		
+		#get month from first date in $k
+		set TEMP"2" to MARC."046" subfields "k"
+		#remove hyphens
+		replace string by string (TEMP"2","-","")
+		#extract month
+		replace string by string (TEMP"2","^(\\d{4})(\\d{2}).*","$2")
+		replace string by string (TEMP"2","01","January")
+		replace string by string (TEMP"2","02","February")
+		replace string by string (TEMP"2","03","March")
+		replace string by string (TEMP"2","04","April")
+		replace string by string (TEMP"2","05","May")
+		replace string by string (TEMP"2","06","June")
+		replace string by string (TEMP"2","07","July")
+		replace string by string (TEMP"2","08","August")
+		replace string by string (TEMP"2","09","September")
+		replace string by string (TEMP"2","10","October")
+		replace string by string (TEMP"2","11","November")
+		replace string by string (TEMP"2","12","December")
+		replace string by string (TEMP"2","21","Spring")
+		replace string by string (TEMP"2","22","Summer")
+		replace string by string (TEMP"2","23","Autumn")
+		replace string by string (TEMP"2","24","Winter")
+		
+		concatenate with delimiter (TEMP"2",TEMP"1"," ")
+		create pnx."display"."lds85" with TEMP"2"
+end
+
+rule "Primo VE - Lds85b"
+# 046 - Special Coded Dates YEAR + MONTH + DATE
+# $k - Beginning or single date created (NR)
+# $l - Ending date created (NR)
+# ex 846683696 ($k not edtf), 961222900 ($k edtf)
+	when
+		MARC."046" has any "k,l" AND
+		(MARC."046"."k" match "\\d{8}" OR
+		MARC."046"."k" match "\\d{4}(-)?\\d{2}(-)?\\d{2}") AND NOT
+		MARC."046".ind"1" equals "2" AND NOT
+		MARC."046"."o" match ".*"
+	then
+		#get year from first date in $k
+		set TEMP"1" to MARC."046" subfields "k"
+		#extract month
+		replace string by string (TEMP"1","^(\\d{4}).*","$1")		
+		#get month from first date in $k
+		set TEMP"2" to MARC."046" subfields "k"
+		#remove hyphens
+		replace string by string (TEMP"2","-","")
+		replace string by string (TEMP"2","^(\\d{4})(\\d{2}).*","$2")
+		replace string by string (TEMP"2","01","January")
+		replace string by string (TEMP"2","02","February")
+		replace string by string (TEMP"2","03","March")
+		replace string by string (TEMP"2","04","April")
+		replace string by string (TEMP"2","05","May")
+		replace string by string (TEMP"2","06","June")
+		replace string by string (TEMP"2","07","July")
+		replace string by string (TEMP"2","08","August")
+		replace string by string (TEMP"2","09","September")
+		replace string by string (TEMP"2","10","October")
+		replace string by string (TEMP"2","11","November")
+		replace string by string (TEMP"2","12","December")
+		
+		#get date from first date in $k
+		set TEMP"3" to MARC."046" subfields "k"
+		#remove hyphens
+		replace string by string (TEMP"3","-","")
+		#extract date
+		replace string by string (TEMP"3","^(\\d{6})(\\d{2}).*","$2")
+		#remove leading zero from date
+		replace string by string (TEMP"3","^0(\\d)","$1")
+		
+		concatenate with delimiter (TEMP"3",TEMP"1",", ")
+		concatenate with delimiter (TEMP"2",TEMP"3"," ")
+		create pnx."display"."lds85" with TEMP"2"
+end
+
+rule "Primo VE - Lds85c"
+# 046 - Special Coded Dates CENTURY
+# $k - Beginning or single date created (NR)
+# $l - Ending date created (NR)
+# ex 02834862, 08759657, 704121276
+	when
+		MARC."046" has any "k,l" AND
+		MARC."046"."k" match "-?\\d{2}" AND NOT
+		MARC."046".ind"1" equals "2" AND NOT
+		MARC."046"."o" match ".*"
+	then
+		#get century from first date in $k
+		set TEMP"1" to MARC."046" subfields "k"
+		#add 00s to end
+		add suffix (TEMP"1","00s")
+		#handle BCE dates
+		replace string by string (TEMP"1","-(\\d{2}00s)","$1 BCE")
+		#remove leading zero
+		replace string by string (TEMP"1","^0","")
+
+		#get century from second date in $l
+		set TEMP"2" to MARC."046" subfields "l"
+		#add 00s to end
+		add suffix (TEMP"2","00s")
+		#handle BCE dates
+		replace string by string (TEMP"2","-(\\d{2}00s)","$1 BCE")
+		#remove leading zero
+		replace string by string (TEMP"2","^0","")
+		
+		#combine dates
+		concatenate with delimiter (TEMP"1",TEMP"2","-")
+		create pnx."display"."lds85" with TEMP"1"
+end
+
+rule "Primo VE - Lds85d"
+# 046 - Special Coded Dates YEAR ONLY
+# $o - Single or starting date for aggregated content (NR)
+# $p - Ending date for aggregated content (NR)
+# prefer dates from 046$o if both $o and $k exist
+# in these situations, $k is the date of the collection and not the original content
+# exclude records with second indicator 2 because these are for expressions
+# and not the original content
+# The date and time are recorded according to Representations of Dates and Times (ISO 8601) 
+# in the pattern yyyy, yyyy-mm, or yyyymmdd (4 for the year, 2 for the month, and 2 for the day)
+# unless subfield $2 (Source of date) specifies another date scheme.
+# https://www.loc.gov/marc/authority/ad046.html
+# ex 15857926, 888747354 (unwanted $k shows)
+
+	when
+		MARC."046" has any "o,p" AND
+		MARC."046"."o" match "\\d{4}" AND NOT
+		MARC."046".ind"1" equals "2"
+	then
+		#get beginning year from $o
+		set TEMP"1" to MARC."046" subfields "o"
+		#remove leading zero
+		replace string by string (TEMP"1","^0+","")
+		#get ending year from $p
+		set TEMP"2" to MARC."046" subfields "p"
+		#remove leading zero
+		replace string by string (TEMP"2","^0+","")
+		
+		concatenate with delimiter (TEMP"1",TEMP"2","-")
+		create pnx."display"."lds85" with TEMP"1"
+end
+
+rule "Primo VE - Lds85e"
+# 046 - Special Coded Dates YEAR + MONTH
+# $o - Single or starting date for aggregated content (NR)
+# $p - Ending date for aggregated content (NR)
+# ex 17202441 ($p not currently displaying), 607381475 ($p not yet)
+	when
+		MARC."046" has any "o,p" AND
+		MARC."046"."o" match "\\d{4}(-)?\\d{2}" AND NOT
+		MARC."046".ind"1" equals "2"
+	then
+		#get year from first date in $o
+		set TEMP"1" to MARC."046" subfields "o"
+		replace string by string (TEMP"1","^(\\d{4}).*","$1")		
+		#get month from first date in $o
+		set TEMP"2" to MARC."046" subfields "o"
+		#remove hyphens
+		replace string by string (TEMP"2","-","")
+		#extract month
+		replace string by string (TEMP"2","^(\\d{4})(\\d{2}).*","$2")
+		replace string by string (TEMP"2","01","January")
+		replace string by string (TEMP"2","02","February")
+		replace string by string (TEMP"2","03","March")
+		replace string by string (TEMP"2","04","April")
+		replace string by string (TEMP"2","05","May")
+		replace string by string (TEMP"2","06","June")
+		replace string by string (TEMP"2","07","July")
+		replace string by string (TEMP"2","08","August")
+		replace string by string (TEMP"2","09","September")
+		replace string by string (TEMP"2","10","October")
+		replace string by string (TEMP"2","11","November")
+		replace string by string (TEMP"2","12","December")
+		replace string by string (TEMP"2","21","Spring")
+		replace string by string (TEMP"2","22","Summer")
+		replace string by string (TEMP"2","23","Autumn")
+		replace string by string (TEMP"2","24","Winter")
+		
+		concatenate with delimiter (TEMP"2",TEMP"1"," ")
+		create pnx."display"."lds85" with TEMP"2"
+end
+
+rule "Primo VE - Lds85f"
+# 046 - Special Coded Dates YEAR + MONTH + DATE
+# $o - Single or starting date for aggregated content (NR)
+# $p - Ending date for aggregated content (NR)
+# ex 867763999, 1265304461
+	when
+		MARC."046" has any "o,p" AND
+		(MARC."046"."o" match "\\d{8}" OR
+		MARC."046"."o" match "\\d{4}(-)?\\d{2}(-)?\\d{2}") AND NOT
+		MARC."046".ind"1" equals "2"
+	then
+		#get year from first date in $o
+		set TEMP"1" to MARC."046" subfields "o"
+		#extract month
+		replace string by string (TEMP"1","^(\\d{4}).*","$1")		
+		#get month from first date in $o
+		set TEMP"2" to MARC."046" subfields "o"
+		#remove hyphens
+		replace string by string (TEMP"2","-","")
+		replace string by string (TEMP"2","^(\\d{4})(\\d{2}).*","$2")
+		replace string by string (TEMP"2","01","January")
+		replace string by string (TEMP"2","02","February")
+		replace string by string (TEMP"2","03","March")
+		replace string by string (TEMP"2","04","April")
+		replace string by string (TEMP"2","05","May")
+		replace string by string (TEMP"2","06","June")
+		replace string by string (TEMP"2","07","July")
+		replace string by string (TEMP"2","08","August")
+		replace string by string (TEMP"2","09","September")
+		replace string by string (TEMP"2","10","October")
+		replace string by string (TEMP"2","11","November")
+		replace string by string (TEMP"2","12","December")
+		
+		#get date from first date in $o
+		set TEMP"3" to MARC."046" subfields "o"
+		#remove hyphens
+		replace string by string (TEMP"3","-","")
+		#extract date
+		replace string by string (TEMP"3","^(\\d{6})(\\d{2}).*","$2")
+		#remove leading zero from date
+		replace string by string (TEMP"3","^0(\\d)","$1")
+		
+		concatenate with delimiter (TEMP"3",TEMP"1",", ")
+		concatenate with delimiter (TEMP"2",TEMP"3"," ")
+		create pnx."display"."lds85" with TEMP"2"
+end
+
+rule "Primo VE - Lds85g"
+# 046 - Special Coded Dates CENTURY
+# $o - Single or starting date for aggregated content (NR)
+# $p - Ending date for aggregated content (NR)
+# ex 40526220, 976406351
+	when
+		MARC."046" has any "o,p" AND
+		MARC."046"."o" match "-?\\d{2}" AND NOT
+		MARC."046".ind"1" equals "2"
+	then
+		#get century from first date in $o
+		set TEMP"1" to MARC."046" subfields "o"
+		#add 00s to end
+		add suffix (TEMP"1","00s")
+		#handle BCE dates
+		replace string by string (TEMP"1","-(\\d{2}00s)","$1 BCE")
+		#remove leading zero
+		replace string by string (TEMP"1","^0","")
+
+		#get century from second date in $p
+		set TEMP"2" to MARC."046" subfields "p"
+		#add 00s to end
+		add suffix (TEMP"2","00s")
+		#handle BCE dates
+		replace string by string (TEMP"2","-(\\d{2}00s)","$1 BCE")
+		#remove leading zero
+		replace string by string (TEMP"2","^0","")
+		
+		#combine dates
+		concatenate with delimiter (TEMP"1",TEMP"2","-")
+		create pnx."display"."lds85" with TEMP"1"
+end
+
+rule "Primo VE - Lds85h"
+# 388 - Time Period of Creation (R)
+# ex 20422479, 00964811, 824957430
+when
+	MARC."388" has any "a,3" AND NOT
+	MARC."388".ind"1" equals "2"	
+then
+	set TEMP"1" to MARC."388" subfields "3"
+	set TEMP"2" to MARC."388" sub without sort "a" wrap subfields
+
+	replace wrapping delimiters (TEMP"2","a","",";")
+	# remove semicolon from end
+	replace string by string (TEMP"2",";$","")
+
+	# combine $3 and $a so $3 comes first; add colon in case missing
+		concatenate existing with delimiter (TEMP"1",TEMP"2",": ")
+	# remove extra colon if it was already there in data
+		replace string by string (TEMP"1","::",":")
+		
+	create pnx."display"."lds85" with TEMP"1"
+
+end

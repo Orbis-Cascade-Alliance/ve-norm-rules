@@ -1,0 +1,1244 @@
+rule "Primo VE - Lds79"
+#Field displays 7700, 710, 711, 952, 953, 954 with $t and 2ind not = 2 and corresponding 880s, plus 730s with 2ind not = 2 and corresponding 880.
+
+	when
+		MARC."700" has any "t" AND NOT
+		MARC."700".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."700" subfields "i"
+		set TEMP"2" to MARC."700"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."700" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_710"
+	when
+		MARC."710" has any "t" AND NOT
+		MARC."710".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."710" subfields "i"
+		set TEMP"2" to MARC."710"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."710" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_711"
+	when
+		MARC."711" has any "t" AND NOT
+		MARC."711".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."711" subfields "i"
+		set TEMP"2" to MARC."711"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."711" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_730"
+	when
+		MARC is "730" AND NOT
+		MARC."730".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."730" subfields "i"
+		set TEMP"2" to MARC."730"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."730" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-700"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "700-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" subfields "i"
+		set TEMP"2" to MARC."880"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-710"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "710-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" subfields "i"
+		set TEMP"2" to MARC."880"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-711"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "711-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" subfields "i"
+		set TEMP"2" to MARC."880"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-730"
+	when
+		MARC is "880" AND
+		MARC."880"."6" match "730-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" subfields "i"
+		set TEMP"2" to MARC."880"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_952"
+	when
+		MARC."952" has any "t" AND NOT
+		MARC."952".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."952" subfields "i"
+		set TEMP"2" to MARC."952"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."952" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-952"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "952-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" subfields "i"
+		set TEMP"2" to MARC."880"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_953"
+	when
+		MARC."953" has any "t" AND NOT
+		MARC."953".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."953" subfields "i"
+		set TEMP"2" to MARC."953"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."953" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-953"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "953-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" subfields "i"
+		set TEMP"2" to MARC."880"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_954"
+	when
+		MARC."954" has any "t" AND NOT
+		MARC."954".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."954" subfields "i"
+		set TEMP"2" to MARC."954"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."954" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-954"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "954-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" subfields "i"
+		set TEMP"2" to MARC."880"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_955"
+	when
+		MARC."955" has any "t"
+	then
+		set TEMP"1" to MARC."955" subfields "i"
+		set TEMP"2" to MARC."955"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."955" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-955"
+	when
+		MARC "880" has any "t" AND
+		MARC."880"."6" match "955-.*"
+	then
+		set TEMP"1" to MARC."880" subfields "i"
+		set TEMP"2" to MARC."880"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_960"
+	when
+		MARC "960" has any "t"
+	then
+		set TEMP"1" to MARC."960" subfields "i"
+		set TEMP"2" to MARC."960"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."960" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-960"
+	when
+		MARC "880" has any "t" AND
+		MARC."880"."6" match "960-.*"
+	then
+		set TEMP"1" to MARC."880" subfields "i"
+		set TEMP"2" to MARC."880"  excluding subfields without sorting "[0-9]|x|i|="
+		concatenate existing with delimiter (TEMP"1",TEMP"2"," ")
+		remove string (TEMP"1"," \\(work\\)")
+		remove string (TEMP"1"," \\(expression\\)")
+		set TEMP"3" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."lds79" with TEMP"1"
+end
+
+# Begin fields from OTB Related Titles field 77X and 78X
+rule "Primo VE - Lds79_760"
+	when
+		MARC."760" has any "t"
+	then
+		set TEMP"1" to MARC "760" excluding subfields without sorting or default "i|w|x|y|6"
+		add prefix (TEMP"1","$$Cmain_series$$V")
+		set TEMP"2" to MARC."760" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."760" prima_w_relation "w"
+		set TEMP"4" to MARC."760" prima_x_relation "x"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-760"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "760.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|i|w|x|y"
+		add prefix (TEMP"1","$$Cmain_series$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_762"
+	when
+		MARC."762" has any "t"
+	then
+		set TEMP"1" to MARC "762" excluding subfields without sorting or default "i|w|x|y|6"
+		add prefix (TEMP"1","$$Csub_series$$V")
+		set TEMP"2" to MARC."762" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."762" prima_w_relation "w"
+		set TEMP"4" to MARC."762" prima_x_relation "x"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-762"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "762-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|i|w|x|y"
+		add prefix (TEMP"1","$$Csub_series$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_765"
+	when
+		MARC."765" has any "t"
+	then
+		set TEMP"1" to MARC "765" excluding subfields without sorting or default "i|u|w|x|y|z|6"
+		add prefix (TEMP"1","$$Corig_language$$V")
+		set TEMP"2" to MARC."765" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."765" prima_w_relation "w"
+		set TEMP"4" to MARC."765" prima_x_relation "x"
+		set TEMP"5" to MARC."765" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-765"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "765-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|i|u|w|x|y|z"
+		add prefix (TEMP"1","$$Corig_language$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_767"
+	when
+		MARC."767" has any "t"
+	then
+		set TEMP"1" to MARC "767" excluding subfields without sorting or default "i|u|w|x|y|z|6"
+		add prefix (TEMP"1","$$Ctranslation$$V")
+		set TEMP"2" to MARC."767" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."767" prima_w_relation "w"
+		set TEMP"4" to MARC."767" prima_x_relation "x"
+		set TEMP"5" to MARC."767" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-767"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "767-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|i|u|w|x|y|z"
+		add prefix (TEMP"1","$$Ctranslation$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_770"
+	when
+		MARC."770" has any "t"
+	then
+		set TEMP"1" to MARC "770" excluding subfields without sorting or default "i|u|w|x|y|z|9|6"
+		add prefix (TEMP"1","$$Csupplement$$V")
+		set TEMP"2" to MARC."770" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."770" prima_w_relation "w"
+		set TEMP"4" to MARC."770" prima_x_relation "x"
+		set TEMP"5" to MARC."770" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-770"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "770-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|i|u|w|x|y|z"
+		add prefix (TEMP"1","$$Csupplement$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_772"
+	when
+		MARC."772" has any "t"
+	then
+		set TEMP"1" to MARC "772" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$Csupp_parent$$V")
+		set TEMP"2" to MARC."772" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."772" prima_w_relation "w"
+		set TEMP"4" to MARC."772" prima_x_relation "x"
+		set TEMP"5" to MARC."772" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-772"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "772-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|i|u|w|x|y|z"
+		add prefix (TEMP"1","$$Csupp_parent$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_774_without_9"
+	when
+		MARC."774" has any "t" AND
+		MARC."774"."9" not match ".*"
+		
+	then
+		set TEMP"1" to MARC "774" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$Cconstituent$$V")
+		set TEMP"2" to MARC."774" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."774" prima_w_relation "w"
+		set TEMP"4" to MARC."774" prima_x_relation "x"
+		set TEMP"5" to MARC."774" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-774_without_9"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "774-.*" AND
+		MARC."880"."9" not match "774-.*"
+		
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$Cconstituent$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_774_with_9"
+	when
+		MARC."774" has any "t" AND
+		MARC."774"."9" match ".*"
+	then
+		set TEMP"1" to MARC "774" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$Cconstituent$$V")
+		set TEMP"2" to MARC."774" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."774" prima_w_relation "w"
+		set TEMP"4" to MARC."774" prima_x_relation "x"
+		set TEMP"5" to MARC."774" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		set TEMP"6" to MARC."774" subfields "9"
+        add prefix (TEMP"6","$$9")
+        concatenate with delimiter (TEMP"1",TEMP"6","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-774_with_9"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "774-.*" AND
+		MARC."880"."9" match "774-.*"
+		
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$Cconstituent$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+       	set TEMP"3" to MARC."880" subfields "9"
+        add prefix (TEMP"3","$$9")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_775"
+	when
+		MARC."775" has any "t"
+	then
+		set TEMP"1" to MARC "775" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$Cedition$$V")
+		set TEMP"2" to MARC."775" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."775" prima_w_relation "w"
+		set TEMP"4" to MARC."775" prima_x_relation "x"
+		set TEMP"5" to MARC."775" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-775"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "775-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|i|u|w|x|y|z"
+		add prefix (TEMP"1","$$Cedition$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_776"
+	when
+		MARC."776" has any "t"
+	then
+		set TEMP"1" to MARC "776" excluding subfields without sorting or default "u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$Cform$$V")
+		set TEMP"2" to MARC."776" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."776" prima_w_relation "w"
+		set TEMP"4" to MARC."776" prima_x_relation "x"
+		set TEMP"5" to MARC."776" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-776"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "776-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|u|w|x|y|z"
+		add prefix (TEMP"1","$$Cform$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_777"
+	when
+		MARC."777" has any "t"
+	then
+		set TEMP"1" to MARC "777" excluding subfields without sorting or default "i|w|x|y|6|9"
+		add prefix (TEMP"1","$$Cissued_with$$V")
+		set TEMP"2" to MARC."777" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."777" prima_w_relation "w"
+		set TEMP"4" to MARC."777" prima_x_relation "x"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-777"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "777-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|i|w|x|y"
+		add prefix (TEMP"1","$$Cissued_with$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+#Next 8 Rules add special prefixes to 780 data.
+rule "Primo VE - Lds79_78000_prefix"
+	when
+		MARC."780" has any "t" AND
+		MARC."780".ind"1" equals "0" AND
+		MARC."780".ind"2" equals "0"
+	then
+		set TEMP"1" to MARC "780" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CContinues : $$V")
+		set TEMP"2" to MARC."780" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."780" prima_w_relation "w"
+		set TEMP"4" to MARC."780" prima_x_relation "x"
+		set TEMP"5" to MARC."780" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78001_prefix"
+	when
+		MARC."780" has any "t" AND
+		MARC."780".ind"1" equals "0" AND
+		MARC."780".ind"2" equals "1"
+	then
+		set TEMP"1" to MARC "780" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CContinues in part : $$V")
+		set TEMP"2" to MARC."780" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."780" prima_w_relation "w"
+		set TEMP"4" to MARC."780" prima_x_relation "x"
+		set TEMP"5" to MARC."780" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78002_prefix"
+	when
+		MARC."780" has any "t" AND
+		MARC."780".ind"1" equals "0" AND
+		MARC."780".ind"2" equals "2"
+	then
+		set TEMP"1" to MARC "780" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CSupersedes : $$V")
+		set TEMP"2" to MARC."780" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."780" prima_w_relation "w"
+		set TEMP"4" to MARC."780" prima_x_relation "x"
+		set TEMP"5" to MARC."780" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78003_prefix"
+	when
+		MARC."780" has any "t" AND
+		MARC."780".ind"1" equals "0" AND
+		MARC."780".ind"2" equals "3"
+	then
+		set TEMP"1" to MARC "780" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CSupersedes in part : $$V")
+		set TEMP"2" to MARC."780" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."780" prima_w_relation "w"
+		set TEMP"4" to MARC."780" prima_x_relation "x"
+		set TEMP"5" to MARC."780" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78004_prefix"
+	when
+		MARC."780" has any "t" AND
+		MARC."780".ind"1" equals "0" AND
+		MARC."780".ind"2" equals "4"
+	then
+		set TEMP"1" to MARC "780" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CUnion of : $$V")
+		set TEMP"2" to MARC."780" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."780" prima_w_relation "w"
+		set TEMP"4" to MARC."780" prima_x_relation "x"
+		set TEMP"5" to MARC."780" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78005_prefix"
+	when
+		MARC."780" has any "t" AND
+		MARC."780".ind"1" equals "0" AND
+		MARC."780".ind"2" equals "5"
+	then
+		set TEMP"1" to MARC "780" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CAbsorbed : $$V")
+		set TEMP"2" to MARC."780" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."780" prima_w_relation "w"
+		set TEMP"4" to MARC."780" prima_x_relation "x"
+		set TEMP"5" to MARC."780" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78006_prefix"
+	when
+		MARC."780" has any "t" AND
+		MARC."780".ind"1" equals "0" AND
+		MARC."780".ind"2" equals "6"
+	then
+		set TEMP"1" to MARC "780" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CAbsorbed in part : $$V")
+		set TEMP"2" to MARC."780" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."780" prima_w_relation "w"
+		set TEMP"4" to MARC."780" prima_x_relation "x"
+		set TEMP"5" to MARC."780" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78007_prefix"
+	when
+		MARC."780" has any "t" AND
+		MARC."780".ind"1" equals "0" AND
+		MARC."780".ind"2" equals "7"
+	then
+		set TEMP"1" to MARC "780" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CSeparated from : $$V")
+		set TEMP"2" to MARC."780" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."780" prima_w_relation "w"
+		set TEMP"4" to MARC."780" prima_x_relation "x"
+		set TEMP"5" to MARC."780" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+#Rule adds generic prefix to 780s without special prefixes.
+rule "Primo VE - Lds79_780_generic"
+	when
+		MARC."780" has any "t" AND
+		(MARC."780".ind"1" equals "1" OR
+		(MARC."780".ind"1" equals "0" AND NOT
+		MARC."780".ind"2" equals "0" AND NOT
+		MARC."780".ind"2" equals "1" AND NOT
+		MARC."780".ind"2" equals "2" AND NOT
+		MARC."780".ind"2" equals "3" AND NOT
+		MARC."780".ind"2" equals "4" AND NOT
+		MARC."780".ind"2" equals "5" AND NOT
+		MARC."780".ind"2" equals "6" AND NOT
+		MARC."780".ind"2" equals "7"))
+	then
+		set TEMP"1" to MARC "780" excluding subfields without sorting or default "u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$Cearlier_title$$V")
+		set TEMP"2" to MARC."780" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."780" prima_w_relation "w"
+		set TEMP"4" to MARC."780" prima_x_relation "x"
+		set TEMP"5" to MARC."780" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-780"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "780-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|u|w|x|y|z"
+		add prefix (TEMP"1","$$Cearlier_title$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+#Next 9 rules add special prefixes to 785 data.
+rule "Primo VE - Lds79_78500_prefix"
+	when
+		MARC."785" has any "t" AND
+		MARC."785".ind"1" equals "0" AND
+		MARC."785".ind"2" equals "0"
+	then
+		set TEMP"1" to MARC "785" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CContinued by : $$V")
+		set TEMP"2" to MARC."785" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."785" prima_w_relation "w"
+		set TEMP"4" to MARC."785" prima_x_relation "x"
+		set TEMP"5" to MARC."785" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78501_prefix"
+	when
+		MARC."785" has any "t" AND
+		MARC."785".ind"1" equals "0" AND
+		MARC."785".ind"2" equals "1"
+	then
+		set TEMP"1" to MARC "785" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CContinued in part by : $$V")
+		set TEMP"2" to MARC."785" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."785" prima_w_relation "w"
+		set TEMP"4" to MARC."785" prima_x_relation "x"
+		set TEMP"5" to MARC."785" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78502_prefix"
+	when
+		MARC."785" has any "t" AND
+		MARC."785".ind"1" equals "0" AND
+		MARC."785".ind"2" equals "2"
+	then
+		set TEMP"1" to MARC "785" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CSuperseded by : $$V")
+		set TEMP"2" to MARC."785" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."785" prima_w_relation "w"
+		set TEMP"4" to MARC."785" prima_x_relation "x"
+		set TEMP"5" to MARC."785" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78503_prefix"
+	when
+		MARC."785" has any "t" AND
+		MARC."785".ind"1" equals "0" AND
+		MARC."785".ind"2" equals "3"
+	then
+		set TEMP"1" to MARC "785" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CSuperseded in part by : $$V")
+		set TEMP"2" to MARC."785" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."785" prima_w_relation "w"
+		set TEMP"4" to MARC."785" prima_x_relation "x"
+		set TEMP"5" to MARC."785" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78504_prefix"
+	when
+		MARC."785" has any "t" AND
+		MARC."785".ind"1" equals "0" AND
+		MARC."785".ind"2" equals "4"
+	then
+		set TEMP"1" to MARC "785" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CAbsorbed by : $$V")
+		set TEMP"2" to MARC."785" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."785" prima_w_relation "w"
+		set TEMP"4" to MARC."785" prima_x_relation "x"
+		set TEMP"5" to MARC."785" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78505_prefix"
+	when
+		MARC."785" has any "t" AND
+		MARC."785".ind"1" equals "0" AND
+		MARC."785".ind"2" equals "5"
+	then
+		set TEMP"1" to MARC "785" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CAbsorbed in part by : $$V")
+		set TEMP"2" to MARC."785" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."785" prima_w_relation "w"
+		set TEMP"4" to MARC."785" prima_x_relation "x"
+		set TEMP"5" to MARC."785" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78506_prefix"
+	when
+		MARC."785" has any "t" AND
+		MARC."785".ind"1" equals "0" AND
+		MARC."785".ind"2" equals "6"
+	then
+		set TEMP"1" to MARC "785" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CSplit into : $$V")
+		set TEMP"2" to MARC."785" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."785" prima_w_relation "w"
+		set TEMP"4" to MARC."785" prima_x_relation "x"
+		set TEMP"5" to MARC."785" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78507_prefix"
+	when
+		MARC."785" has any "t" AND
+		MARC."785".ind"1" equals "0" AND
+		MARC."785".ind"2" equals "7"
+	then
+		set TEMP"1" to MARC "785" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CMerged with : $$V")
+		set TEMP"2" to MARC."785" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."785" prima_w_relation "w"
+		set TEMP"4" to MARC."785" prima_x_relation "x"
+		set TEMP"5" to MARC."785" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_78508_prefix"
+	when
+		MARC."785" has any "t" AND
+		MARC."785".ind"1" equals "0" AND
+		MARC."785".ind"2" equals "8"
+	then
+		set TEMP"1" to MARC "785" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$CChanged back to : $$V")
+		set TEMP"2" to MARC."785" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+		add prefix (TEMP"2","$$Q")
+		remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."785" prima_w_relation "w"
+		set TEMP"4" to MARC."785" prima_x_relation "x"
+		set TEMP"5" to MARC."785" prima_x_relation "z"
+		concatenate with delimiter (TEMP"1",TEMP"2","")
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+#Rule adds generic prefix to 785s without special prefixes.
+rule "Primo VE - Lds79_785_generic"
+	when
+		MARC."785" has any "t" AND
+		(MARC."785".ind"1" equals "1" OR 
+		(MARC."785".ind"1" equals "0" AND NOT
+		MARC."785".ind"2" equals "0" AND NOT
+		MARC."785".ind"2" equals "1" AND NOT
+		MARC."785".ind"2" equals "2" AND NOT
+		MARC."785".ind"2" equals "3" AND NOT
+		MARC."785".ind"2" equals "4" AND NOT
+		MARC."785".ind"2" equals "5" AND NOT
+		MARC."785".ind"2" equals "6" AND NOT
+		MARC."785".ind"2" equals "7" AND NOT
+		MARC."785".ind"2" equals "8"))
+	then
+		set TEMP"1" to MARC "785" excluding subfields without sorting or default "u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$Clater_title$$V")
+		set TEMP"2" to MARC."785" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."785" prima_w_relation "w"
+		set TEMP"4" to MARC."785" prima_x_relation "x"
+		set TEMP"5" to MARC."785" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-785"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "785-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|u|w|x|y|z"
+		add prefix (TEMP"1","$$Clater_title$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_786"
+	when
+		MARC."786" has any "t"
+	then
+		set TEMP"1" to MARC "786" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$Cdata_source$$V")
+		set TEMP"2" to MARC."786" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."786" prima_w_relation "w"
+		set TEMP"4" to MARC."786" prima_x_relation "x"
+		set TEMP"5" to MARC."786" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-786"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "786-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|i|u|w|x|y|z"
+		add prefix (TEMP"1","$$Cdata_source$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_787"
+	when
+		MARC."787" has any "t"
+	then
+		set TEMP"1" to MARC "787" excluding subfields without sorting or default "u|w|x|y|z|6|9"
+		add prefix (TEMP"1","$$Cother_relationship$$V")
+		set TEMP"2" to MARC."787" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."787" prima_w_relation "w"
+		set TEMP"4" to MARC."787" prima_x_relation "x"
+		set TEMP"5" to MARC."787" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		create pnx."display"."lds79" with TEMP"1"
+end
+
+rule "Primo VE - Lds79_880-787"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "787-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|u|w|x|y|z"
+		add prefix (TEMP"1","$$Cother_relationship$$V")
+		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds79" with TEMP"1"
+end

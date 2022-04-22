@@ -1,0 +1,264 @@
+rule "Primo VE Marc - Lsr85"
+# $k - Beginning or single date created (NR)
+# This rule groups dates at the CENTURY or larger level
+# prefer dates from 046$o if both $o and $k exist
+# in these situations, $k is the date of the collection and not the original content
+# exclude records with second indicator 2 because these are for expressions
+# and not the original content
+# ex 16533158 ([1528..1534]), 930378890 ({2011,2013})
+# ex 704121276 (-07), 1129257511 (1918), 19739012 (1893)
+	when
+		MARC is "046"."k" AND NOT
+		MARC."046".ind"1" equals "2" AND NOT
+		MARC."046"."o" match ".*"
+	then
+		set TEMP"1" to MARC "046"."k"
+		# remove unwanted leading punctuation
+		remove substring using regex (TEMP"1","(\\{|\\[)")
+		# keep only initial (optional) - and first two characters
+		replace string by string (TEMP"1","(^-?.{2}).*","$1")
+		# add CHECK_ to beginning of string
+		add prefix (TEMP"1","CHECK_")
+		# revise patterns that match strings in translation table to have proper prefix
+		replace string by string (TEMP"1","CHECK_([0-2][0-9])","original_date_046_century_$1")
+		replace string by string (TEMP"1","CHECK_-.*","original_date_046_century_BCE")
+		# delete anything that doesn't match pattern that will be in translation table
+		replace string by string (TEMP"1","CHECK_.*","")
+		create pnx."search"."lsr85" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr85a"
+# $k - Beginning or single date created (NR)
+# This rule groups dates at the DECADE or half-century level
+# prefer dates from 046$o if both $o and $k exist
+# in these situations, $k is the date of the collection and not the original content
+# exclude records with second indicator 2 because these are for expressions
+# and not the original content
+# ex 16533158 ([1528..1534]), 930378890 ({2011,2013})
+# ex 704121276 (-07), 1129257511 (1918), 19739012 (1893)
+	when
+		MARC is "046"."k" AND NOT
+		MARC."046".ind"1" equals "2" AND NOT
+		MARC."046"."o" match ".*"
+	then
+		set TEMP"1" to MARC "046"."k"
+		# remove unwanted leading punctuation
+		remove substring using regex (TEMP"1","(\\{|\\[)")
+		# keep only first three characters
+		replace string by string (TEMP"1","(^.{3}).*","$1")
+		# add CHECK_ to beginning of string
+		add prefix (TEMP"1","CHECK_")
+		# revise patterns that match strings in translation table to have proper prefix
+		replace string by string (TEMP"1","CHECK_(20[0-9])","original_date_046_decade_$1")
+		replace string by string (TEMP"1","CHECK_(1[8-9][0-9])","original_date_046_decade_$1")
+		# delete anything that doesn't match pattern that will be in translation table
+		replace string by string (TEMP"1","CHECK_.*","")
+		create pnx."search"."lsr85" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr85b"
+# $l - Ending date created (NR)
+# This rule groups dates at the CENTURY or larger level
+# prefer dates from 046$o if both $o and $l exist
+# in these situations, $l is the date of the collection and not the original content
+# exclude records with second indicator 2 because these are for expressions
+# and not the original content
+# ex 944524782
+	when
+		MARC is "046"."l" AND NOT
+		MARC."046".ind"1" equals "2" AND NOT
+		MARC."046"."o" match ".*"
+	then
+		set TEMP"1" to MARC "046"."l"
+		# remove unwanted leading punctuation
+		remove substring using regex (TEMP"1","(\\{|\\[)")
+		# keep only initial (optional) - and first two characters
+		replace string by string (TEMP"1","(^-?.{2}).*","$1")
+		# add CHECK_ to beginning of string
+		add prefix (TEMP"1","CHECK_")
+		# revise patterns that match strings in translation table to have proper prefix
+		replace string by string (TEMP"1","CHECK_([0-2][0-9])","original_date_046_century_$1")
+		replace string by string (TEMP"1","CHECK_-.*","original_date_046_century_BCE")
+		# delete anything that doesn't match pattern that will be in translation table
+		replace string by string (TEMP"1","CHECK_.*","")
+		create pnx."search"."lsr85" with TEMP"1"
+end
+
+#fast 42868193
+
+rule "Primo VE Marc - Lsr85c"
+# $l - Ending date created (NR)
+# This rule groups dates at the DECADE or half-century level
+# prefer dates from 046$o if both $o and $l exist
+# in these situations, $l is the date of the collection and not the original content
+# exclude records with second indicator 2 because these are for expressions
+# and not the original content
+# ex 944524782
+	when
+		MARC is "046"."l" AND NOT
+		MARC."046".ind"1" equals "2" AND NOT
+		MARC."046"."o" match ".*"
+	then
+		set TEMP"1" to MARC "046"."l"
+		# remove unwanted leading punctuation
+		remove substring using regex (TEMP"1","(\\{|\\[)")
+		# keep only first three characters
+		replace string by string (TEMP"1","(^.{3}).*","$1")
+		# add CHECK_ to beginning of string
+		add prefix (TEMP"1","CHECK_")
+		# revise patterns that match strings in translation table to have proper prefix
+		replace string by string (TEMP"1","CHECK_(20[0-9])","original_date_046_decade_$1")
+		replace string by string (TEMP"1","CHECK_(1[8-9][0-9])","original_date_046_decade_$1")
+		# delete anything that doesn't match pattern that will be in translation table
+		replace string by string (TEMP"1","CHECK_.*","")
+		create pnx."search"."lsr85" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr85d"
+# $o - Single or starting date for aggregated content (NR)
+# This rule groups dates at the CENTURY or larger level
+# exclude records with second indicator 2 because these are for expressions
+# and not the original content
+# ex 
+	when
+		MARC is "046"."o" AND NOT
+		MARC."046".ind"1" equals "2"
+	then
+		set TEMP"1" to MARC "046"."o"
+		# remove unwanted leading punctuation
+		remove substring using regex (TEMP"1","(\\{|\\[)")
+		# keep only initial (optional) - and first two characters
+		replace string by string (TEMP"1","(^-?.{2}).*","$1")
+		# add CHECK_ to beginning of string
+		add prefix (TEMP"1","CHECK_")
+		# revise patterns that match strings in translation table to have proper prefix
+		replace string by string (TEMP"1","CHECK_([0-2][0-9])","original_date_046_century_$1")
+		replace string by string (TEMP"1","CHECK_-.*","original_date_046_century_BCE")
+		# delete anything that doesn't match pattern that will be in translation table
+		replace string by string (TEMP"1","CHECK_.*","")
+		create pnx."search"."lsr85" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr85e"
+# $o - Single or starting date for aggregated content (NR)
+# This rule groups dates at the DECADE or half-century level
+# exclude records with second indicator 2 because these are for expressions
+# and not the original content
+# ex 28883139, 44128438
+	when
+		MARC is "046"."o" AND NOT
+		MARC."046".ind"1" equals "2"
+	then
+		set TEMP"1" to MARC "046"."o"
+		# remove unwanted leading punctuation
+		remove substring using regex (TEMP"1","(\\{|\\[)")
+		# keep only first three characters
+		replace string by string (TEMP"1","(^.{3}).*","$1")
+		# add CHECK_ to beginning of string
+		add prefix (TEMP"1","CHECK_")
+		# revise patterns that match strings in translation table to have proper prefix
+		replace string by string (TEMP"1","CHECK_(20[0-9])","original_date_046_decade_$1")
+		replace string by string (TEMP"1","CHECK_(1[8-9][0-9])","original_date_046_decade_$1")
+		# delete anything that doesn't match pattern that will be in translation table
+		replace string by string (TEMP"1","CHECK_.*","")
+		create pnx."search"."lsr85" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr85f"
+# $p - Ending date for aggregated content (NR)
+# This rule groups dates at the CENTURY or larger level
+# exclude records with second indicator 2 because these are for expressions
+# and not the original content
+# ex 
+	when
+		MARC is "046"."p" AND NOT
+		MARC."046".ind"1" equals "2"
+	then
+		set TEMP"1" to MARC "046"."p"
+		# remove unwanted leading punctuation
+		remove substring using regex (TEMP"1","(\\{|\\[)")
+		# keep only initial (optional) - and first two characters
+		replace string by string (TEMP"1","(^-?.{2}).*","$1")
+		# add CHECK_ to beginning of string
+		add prefix (TEMP"1","CHECK_")
+		# revise patterns that match strings in translation table to have proper prefix
+		replace string by string (TEMP"1","CHECK_([0-2][0-9])","original_date_046_century_$1")
+		replace string by string (TEMP"1","CHECK_-.*","original_date_046_century_BCE")
+		# delete anything that doesn't match pattern that will be in translation table
+		replace string by string (TEMP"1","CHECK_.*","")
+		create pnx."search"."lsr85" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr85g"
+# $p - Ending date for aggregated content (NR)
+# This rule groups dates at the DECADE or half-century level
+# exclude records with second indicator 2 because these are for expressions
+# and not the original content
+# ex 
+	when
+		MARC is "046"."p" AND NOT
+		MARC."046".ind"1" equals "2"
+	then
+		set TEMP"1" to MARC "046"."p"
+		# remove unwanted leading punctuation
+		remove substring using regex (TEMP"1","(\\{|\\[)")
+		# keep only first three characters
+		replace string by string (TEMP"1","(^.{3}).*","$1")
+		# add CHECK_ to beginning of string
+		add prefix (TEMP"1","CHECK_")
+		# revise patterns that match strings in translation table to have proper prefix
+		replace string by string (TEMP"1","CHECK_(20[0-9])","original_date_046_decade_$1")
+		replace string by string (TEMP"1","CHECK_(1[8-9][0-9])","original_date_046_decade_$1")
+		# delete anything that doesn't match pattern that will be in translation table
+		replace string by string (TEMP"1","CHECK_.*","")
+		create pnx."search"."lsr85" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr85h"
+# 388 - Time Period of Creation (R)
+# 1st indicator 1 = Creation of work
+# $a in form ??? century
+# ex 00823649 (Nineteenth century), 06085797 (not century)
+	when
+		MARC is "388"."a" AND
+		MARC."388".ind"1" equals "1" AND
+		MARC."388"."a" match ".*entury"
+	then
+		set TEMP"1" to MARC "388"."a"
+		lower case (TEMP"1")
+		# add CHECK_ to beginning of string
+		add prefix (TEMP"1","CHECK_")
+		# brute force replace centuries
+		replace string by string (TEMP"1","CHECK_twenty( |-)first century","original_date_046_century_20")
+		replace string by string (TEMP"1","CHECK_twentieth century","original_date_046_century_19")
+		replace string by string (TEMP"1","CHECK_nineteenth century","original_date_046_century_18")
+		replace string by string (TEMP"1","CHECK_eighteenth century","original_date_046_century_17")
+		replace string by string (TEMP"1","CHECK_seventeenth century","original_date_046_century_16")
+		replace string by string (TEMP"1","CHECK_sixteenth century","original_date_046_century_15")
+		# delete anything that doesn't match pattern
+		replace string by string (TEMP"1","CHECK_.*","")
+		create pnx."search"."lsr85" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr85i"
+# 388 - Time Period of Creation (R)
+# 1st indicator 1 = Creation of work
+# has $2 fast
+# ex 24174689
+	when
+		MARC is "388"."a" AND
+		MARC."388".ind"1" equals "1" AND
+		MARC."388"."2" match "fast"
+	then
+		set TEMP"1" to MARC "388"."a"
+		# keep only first two characters
+		replace string by string (TEMP"1","(^.{2}).*","$1")
+		# add CHECK_ to beginning of string
+		add prefix (TEMP"1","CHECK_")
+		# revise patterns that match strings in translation table to have proper prefix
+		replace string by string (TEMP"1","CHECK_([0-2][0-9])","original_date_046_century_$1")
+		replace string by string (TEMP"1","CHECK_-.*","original_date_046_century_BCE")
+		# delete anything that doesn't match pattern that will be in translation table
+		replace string by string (TEMP"1","CHECK_.*","")
+		create pnx."search"."lsr85" with TEMP"1"
+end

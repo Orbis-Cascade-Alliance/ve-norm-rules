@@ -1,0 +1,543 @@
+rule "Primo VE Marc - Lsr79"
+#Field creates search index using 700, 710, 711, 952, 953, 954 with $t and 2ind not = 2 and corresponding 880s, plus 730s with 2ind not = 2 and corresponding 880.
+
+	when
+		MARC."700" has any "t" AND NOT
+		MARC."700".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."700" excluding subfields without sorting "[0-9]|x|i|=|f"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_710"
+	when
+		MARC."710" has any "t" AND NOT
+		MARC."710".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."710" excluding subfields without sorting "[0-9]|x|i|=|f"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_711"
+	when
+		MARC."711" has any "t" AND NOT
+		MARC."711".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."711" excluding subfields without sorting "[0-9]|x|i|=|f"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_730"
+	when
+		MARC is "730" AND NOT
+		MARC."730".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."730" excluding subfields without sorting "[0-9]|x|i|=|f"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-700"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "700-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-710"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "710-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-711"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "711-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-730"
+	when
+		MARC is "880" AND
+		MARC."880"."6" match "730-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_952"
+	when
+		MARC."952" has any "t" AND NOT
+		MARC."952".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."952" excluding subfields without sorting "[0-9]|x|i|=|f"
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-952"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "952-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_953"
+	when
+		MARC."953" has any "t" AND NOT
+		MARC."953".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."953" excluding subfields without sorting "[0-9]|x|i|=|f"
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-953"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "953-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_954"
+	when
+		MARC."954" has any "t" AND NOT
+		MARC."954".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."954" excluding subfields without sorting "[0-9]|x|i|=|f"
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-954"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "954-.*" AND NOT
+		MARC."880".ind"2"  equals "2"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_955"
+	when
+		MARC "955" has any "t"
+	then
+		set TEMP"1" to MARC."955" excluding subfields without sorting "[0-9]|x|i|=|f"
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-955"
+	when
+		MARC "880" has any "t" AND
+		MARC."880"."6" match "955-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_960"
+	when
+		MARC "960" has any "t"
+	then
+		set TEMP"1" to MARC."960" excluding subfields without sorting "[0-9]|x|i|=|f"
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-960"
+	when
+		MARC "880" has any "t" AND
+		MARC."880"."6" match "960-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_760"
+	when
+		MARC."760" has any "t,w,x"
+	then
+		set TEMP"1" to MARC."760" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-760"
+	when
+		MARC."880" has any "t,w,x" AND
+		MARC."880"."6" match "760.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_762"
+	when
+		MARC."762" has any "t,w,x"
+	then
+		set TEMP"1" to MARC."762" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-762"
+	when
+		MARC."880" has any "t,w,x" AND
+		MARC."880"."6" match "762-.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_765"
+	when
+		MARC."765" has any "t,w,x,z"
+	then
+		set TEMP"1" to MARC."765" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-765"
+	when
+		MARC."880" has any "t,w,x,z" AND
+		MARC."880"."6" match "765-.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_767"
+	when
+		MARC."767" has any "t,w,x,z"
+	then
+		set TEMP"1" to MARC."767" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-767"
+	when
+		MARC."880" has any "t,w,x,z" AND
+		MARC."880"."6" match "767-.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_770"
+	when
+		MARC."770" has any "t,w,x,z"
+	then
+		set TEMP"1" to MARC."770" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-770"
+	when
+		MARC."880" has any "t,w,x,z" AND
+		MARC."880"."6" match "770-.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_772"
+	when
+		MARC."772" has any "t,w,x,z"
+	then
+		set TEMP"1" to MARC."772" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-772"
+	when
+		MARC."880" has any "t,w,x,z" AND
+		MARC."880"."6" match "772-.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_774"
+	when
+		MARC."774" has any "t,w,x,z"
+		
+	then
+		set TEMP"1" to MARC."774" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-774"
+	when
+		MARC."880" has any "t,w,x,z" AND
+		MARC."880"."6" match "774-.*"
+		
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_775"
+	when
+		MARC."775" has any "t,w,x,z"
+	then
+		set TEMP"1" to MARC."775" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-775"
+	when
+		MARC."880" has any "t,w,x,z" AND
+		MARC."880"."6" match "775-.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_776"
+	when
+		MARC."776" has any "t,w,x,z"
+	then
+		set TEMP"1" to MARC."776" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-776"
+	when
+		MARC."880" has any "t,w,x,z" AND
+		MARC."880"."6" match "776-.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_777"
+	when
+		MARC."777" has any "t,w,x"
+	then
+		set TEMP"1" to MARC."777" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-777"
+	when
+		MARC."880" has any "t,w,x" AND
+		MARC."880"."6" match "777-.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_780"
+	when
+		MARC."780" has any "t,w,x,z"
+	then
+		set TEMP"1" to MARC."780" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-780"
+	when
+		MARC."880" has any "t,w,x,z" AND
+		MARC."880"."6" match "780-.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_785"
+	when
+		MARC."785" has any "t,w,x,z"
+	then
+		set TEMP"1" to MARC."785" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-785"
+	when
+		MARC."880" has any "t,w,x,z" AND
+		MARC."880"."6" match "785-.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_786"
+	when
+		MARC."786" has any "t,w,x,z"
+	then
+		set TEMP"1" to MARC."786" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-786"
+	when
+		MARC."880" has any "t,w,x,z" AND
+		MARC."880"."6" match "786-.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_787"
+	when
+		MARC."787" has any "t,w,x,z"
+	then
+		set TEMP"1" to MARC."787" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-787"
+	when
+		MARC."880" has any "t,w,x,z" AND
+		MARC."880"."6" match "787-.*"
+	then
+		set TEMP"1" to MARC."880" sub without sort or empty "a,t"
+		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
+		create pnx."search"."lsr79" with TEMP"1"
+end
+
+#Begin rules to add other title fields for completeness of hyperlink search:
+rule "Primo VE Marc - Lsr79_100"
+	when
+		MARC is "100"
+	then
+		set TEMP"1" to MARC."100" excluding subfields without sorting "[0-9]|e"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-100"
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "100-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|e"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_110"
+	when
+		MARC is "110"
+	then
+		set TEMP"1" to MARC."110" excluding subfields without sorting "[0-9]|e"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-110"
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "110-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|e"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_111"
+	when
+		MARC is "111"
+	then
+		set TEMP"1" to MARC."111" excluding subfields without sorting "[0-9]|j"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-111"
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "111-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|j"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_130"
+	when
+		MARC is "130"
+	then
+		set TEMP"1" to MARC."130" excluding subfields without sorting "[0-9]"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-130"
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "130-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_240"
+	when
+		MARC is "240"
+	then
+		set TEMP"1" to MARC."240" excluding subfields without sorting "[0-9]"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-240"
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "240-.*"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_245"
+	when
+		MARC is "245" AND NOT
+		MARC."130" has any "a" AND NOT
+		MARC."240" has any "a"
+	then
+		set TEMP"1" to MARC."245" excluding subfields without sorting "[0-9]|b|c|h"
+        create pnx."search"."lsr79" with TEMP"1"
+end
+
+rule "Primo VE Marc - Lsr79_880-245"
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "240-.*" AND NOT
+		MARC."130" has any "a" AND NOT
+		MARC."240" has any "a"
+	then
+		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|b|c|h"
+        create pnx."search"."lsr79" with TEMP"1"
+end

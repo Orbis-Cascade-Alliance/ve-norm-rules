@@ -1,0 +1,7 @@
+rule "Primo VE Marc - Lsr50"
+    when
+	    MARC."655" has any "a" AND
+	    MARC."655".ind"2" equals "2"
+    then
+        create pnx."search"."lsr50" with MARC "655" subfields "a" delimited by " " remove substring using regex "\\.+$"
+end
