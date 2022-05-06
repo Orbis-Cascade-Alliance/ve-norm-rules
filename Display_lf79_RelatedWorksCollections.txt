@@ -247,7 +247,7 @@ end
 
 rule "Primo VE - Lds79_955"
 	when
-		MARC."955" has any "t"
+		MARC is "955"
 	then
 		set TEMP"1" to MARC."955" subfields "i"
 		set TEMP"2" to MARC."955"  excluding subfields without sorting "[0-9]|x|i|="
@@ -263,7 +263,7 @@ end
 
 rule "Primo VE - Lds79_880-955"
 	when
-		MARC "880" has any "t" AND
+		MARC is "880" AND
 		MARC."880"."6" match "955-.*"
 	then
 		set TEMP"1" to MARC."880" subfields "i"
