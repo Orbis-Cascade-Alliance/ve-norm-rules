@@ -15,10 +15,52 @@ end
 
 rule "Primo VE - Lds90 546"
 # 546 - Language Note
+# ex: 29852723 (with $3), 49502329 (without $3)
 priority 1
 when
-	MARC is "546"."a"
+	MARC."546" has any "a,3"
 then
-	set TEMP"1" to MARC."546"."a"
+	set TEMP"1" to MARC."546" subfields "3"
+	set TEMP"2" to MARC."546" subfields "a"
+# combine $3 and $a so $3 comes first; add colon in case missing
+	concatenate existing with delimiter (TEMP"1",TEMP"2",": ")
+# remove extra colon if it was already there in data
+	replace string by string (TEMP"1","::",":")
+	create pnx."display"."lds90" with TEMP"1"
+end
+
+rule "Primo VE - Lds90 546$b"
+# 546 - Language Note, $b - Information code or alphabet
+# ex: 6663393, 780679186
+priority 1
+when
+	MARC."546" has any "b,3"
+then
+	set TEMP"1" to MARC."546" subfields "3"
+	set TEMP"2" to MARC."546" subfields "b"
+# add label prefix to $b
+	add prefix (TEMP"2","Notation or Script: ")
+# combine $3 and $a so $3 comes first; add colon in case missing
+	concatenate existing with delimiter (TEMP"1",TEMP"2",": ")
+# remove extra colon if it was already there in data
+	replace string by string (TEMP"1","::",":")
+	create pnx."display"."lds90" with TEMP"1"
+end
+
+rule "Primo VE - Lds90 377$l"
+# 377 - Associated Language, $l - Language term
+# ex: 998751948
+priority 1
+when
+	MARC."377" has any "l,3"
+then
+	set TEMP"1" to MARC."377" subfields "3"
+	set TEMP"2" to MARC."377" subfields "l"
+# add label prefix to $l
+	add prefix (TEMP"2","Associated Language: ")
+# combine $3 and $a so $3 comes first; add colon in case missing
+	concatenate existing with delimiter (TEMP"1",TEMP"2",": ")
+# remove extra colon if it was already there in data
+	replace string by string (TEMP"1","::",":")
 	create pnx."display"."lds90" with TEMP"1"
 end
