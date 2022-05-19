@@ -1,6 +1,6 @@
 rule "Primo VE Display - Creator 100"
 #otb rules
-#Difference from OTB: 100 = add d,e,j,q,u to condition. 110 = add d,e,n to condition; limit display form to a,b,c,d,e,n subfields; limit search index form to subfield a.  111 = add d,e,n,j,q to condition; limit display form to a,c,d,e,n,j,q subfields.  880-100 = add j,q to condition.  880-110 = remove subfield b from search indexed form. 880-111 = add e, q to condition.
+#Difference from OTB: 100 = add d,e,j,q,u to condition. 110 = add d,e,n to condition; limit display form to a,b,c,d,e,n subfields.  111 = add d,e,n,j,q to condition; limit display form to a,c,d,e,n,j,q subfields.  880-100 = add j,q to condition. 880-111 = add e, q to condition.
 priority 10
 	when
 		MARC."100" has any "a,b,c,d,e,j,q,u"
@@ -22,7 +22,7 @@ priority 20
 		MARC."110" has any "a,b,c,d,e,n"
 	then
 	    set TEMP"1" to MARC."110" sub without sort "a,b,c,d,e,n"
-		set TEMP"2" to MARC."110" sub without sort "a"
+		set TEMP"2" to MARC."110" sub without sort "a,b"
 		replace string by string (TEMP"1",";"," ")
 #		replace string by string (TEMP"2",";()?*"," ")
 		remove substring using regex (TEMP"2","[.,/=]+$")
@@ -74,7 +74,7 @@ priority 20
 		MARC."880"."6" match "110-.*"
 	then
 	    set TEMP"1" to MARC."880" excluding num subfields without sort
-		set TEMP"2" to MARC."880" sub without sort "a"
+		set TEMP"2" to MARC."880" sub without sort "a,b"
 		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
         add prefix (TEMP"2","$$Q")
         remove substring using regex (TEMP"2","^$$Q$")
