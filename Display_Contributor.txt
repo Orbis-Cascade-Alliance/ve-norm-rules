@@ -26,7 +26,7 @@ priority 30
     then
         set TEMP"1" to MARC."710" sub without sort "a,b,c,d,e,n,3"
         remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
-        set TEMP"2" to MARC."710" sub without sort "a"
+        set TEMP"2" to MARC."710" sub without sort "a,b"
         remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
         add prefix (TEMP"2","$$Q")
         remove substring using regex (TEMP"2","^$$Q$")
@@ -80,7 +80,7 @@ priority 30
     then
         set TEMP"1" to MARC."880" sub without sort "a,b,c,d,e"
         remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
-        set TEMP"2" to MARC."880" sub without sort "a"
+        set TEMP"2" to MARC."880" sub without sort "a,b"
         remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
         add prefix (TEMP"2","$$Q")
         remove substring using regex (TEMP"2","^$$Q$")
