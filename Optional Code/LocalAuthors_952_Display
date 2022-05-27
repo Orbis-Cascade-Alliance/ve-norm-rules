@@ -1,0 +1,26 @@
+rule "Primo VE - Lds25"
+	when
+		MARC."952" has any "a,b,c,d,e,j,q,u"
+                MARC."952"."a" match ".*" AND NOT
+                MARC."952"."t" match ".*"
+	then
+		create pnx."display"."lds25" with MARC "952" sub without sort "a,b,c,d,e,j,q,u" 
+end
+
+rule "Primo VE - Lds25"
+	when
+		MARC "953" has any "a,b,c,d,e,n"
+                MARC."953"."a" match ".*" AND NOT
+                MARC."953"."t" match ".*"
+	then
+		create pnx."display"."lds25" with MARC "953" sub without sort "a,b,c,d,e,n"
+end
+
+rule "Primo VE - Lds25"
+	when
+		MARC "954" has any "a,b,c,d,e,j,n,q"
+                MARC."954"."a" match ".*" AND NOT
+                MARC."954"."t" match ".*"
+	then
+		create pnx."display"."lds25" with MARC "953" sub without sort "a,b,c,d,e,n"
+end
