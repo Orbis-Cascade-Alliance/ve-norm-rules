@@ -1,0 +1,7 @@
+rule "Primo VE - Lds48"
+#DO NOT USE FOR DISPLAY
+when
+	MARC is "041"
+then
+create pnx."display"."Lds48" 
+end

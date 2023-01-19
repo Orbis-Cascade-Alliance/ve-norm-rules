@@ -1,0 +1,152 @@
+rule "Primo VE Marc - Lsr48"
+# 60556363 $h ger $h spa
+# 1158419826 $h fre $h ger $h ita 
+# 53033697 $h ger
+when
+	# match 041$h when code comes from ISO 639-3 or
+	# MARC language codes (no $2) 
+	MARC is "041"."h" AND
+	(MARC."041"."2" match "iso639-3" OR NOT
+	MARC."041"."2" match ".*")
+then
+	set TEMP"1" to MARC."041" subfields "h"
+	# remove any spaces
+	replace string by string (TEMP"1"," ","")
+	# get the first 3-character code
+	replace string by string (TEMP"1","(.{3}).*","$1")
+	# add prefix so code matches against OTB language code table
+	add prefix (TEMP"1","lang.")
+	create pnx."search"."lsr48" with TEMP"1" 
+end
+
+rule "Primo VE Marc - Lsr48a"
+when
+	# match 041$h when code comes from ISO 639-3 or
+	# MARC language codes (no $2) 
+	MARC is "041"."h" AND
+	(MARC."041"."2" match "iso639-3" OR NOT
+	MARC."041"."2" match ".*")
+then
+	set TEMP"1" to MARC."041" subfields "h"
+	# remove any spaces
+	replace string by string (TEMP"1"," ","")
+	# add suffix to identify strings that don't match regex
+	add suffix (TEMP"1","111")
+	# get the second 3-character code
+	replace string by string (TEMP"1","(.{3})(.{3}).*","$2")
+	# add prefix so code matches against OTB language code table
+	add prefix (TEMP"1","lang.")
+	# delete string if it didn't match regex
+	replace string by string (TEMP"1",".*111$","")
+	create pnx."search"."lsr48" with TEMP"1" 
+end
+
+rule "Primo VE Marc - Lsr48b"
+when
+	# match 041$h when code comes from ISO 639-3 or
+	# MARC language codes (no $2) 
+	MARC is "041"."h" AND
+	(MARC."041"."2" match "iso639-3" OR NOT
+	MARC."041"."2" match ".*")
+then
+	set TEMP"1" to MARC."041" subfields "h"
+	# remove any spaces
+	replace string by string (TEMP"1"," ","")
+	# add suffix to identify strings that don't match regex
+	add suffix (TEMP"1","111")
+	# get the next 3-character code
+	replace string by string (TEMP"1","(.{6})(.{3}).*","$2")
+	# add prefix so code matches against OTB language code table
+	add prefix (TEMP"1","lang.")
+	# delete string if it didn't match regex
+	replace string by string (TEMP"1",".*111$","")
+	create pnx."search"."lsr48" with TEMP"1" 
+end
+
+rule "Primo VE Marc - Lsr48c"
+when
+	# match 041$h when code comes from ISO 639-3 or
+	# MARC language codes (no $2) 
+	MARC is "041"."h" AND
+	(MARC."041"."2" match "iso639-3" OR NOT
+	MARC."041"."2" match ".*")
+then
+	set TEMP"1" to MARC."041" subfields "h"
+	# remove any spaces
+	replace string by string (TEMP"1"," ","")
+	# add suffix to identify strings that don't match regex
+	add suffix (TEMP"1","111")
+	# get the next 3-character code
+	replace string by string (TEMP"1","(.{9})(.{3}).*","$2")
+	# add prefix so code matches against OTB language code table
+	add prefix (TEMP"1","lang.")
+	# delete string if it didn't match regex
+	replace string by string (TEMP"1",".*111$","")
+	create pnx."search"."lsr48" with TEMP"1" 
+end
+
+rule "Primo VE Marc - Lsr48d"
+when
+	# match 041$h when code comes from ISO 639-3 or
+	# MARC language codes (no $2) 
+	MARC is "041"."h" AND
+	(MARC."041"."2" match "iso639-3" OR NOT
+	MARC."041"."2" match ".*")
+then
+	set TEMP"1" to MARC."041" subfields "h"
+	# remove any spaces
+	replace string by string (TEMP"1"," ","")
+	# add suffix to identify strings that don't match regex
+	add suffix (TEMP"1","111")
+	# get the next 3-character code
+	replace string by string (TEMP"1","(.{12})(.{3}).*","$2")
+	# add prefix so code matches against OTB language code table
+	add prefix (TEMP"1","lang.")
+	# delete string if it didn't match regex
+	replace string by string (TEMP"1",".*111$","")
+	create pnx."search"."lsr48" with TEMP"1" 
+end
+
+rule "Primo VE Marc - Lsr48e"
+when
+	# match 041$h when code comes from ISO 639-3 or
+	# MARC language codes (no $2) 
+	MARC is "041"."h" AND
+	(MARC."041"."2" match "iso639-3" OR NOT
+	MARC."041"."2" match ".*")
+then
+	set TEMP"1" to MARC."041" subfields "h"
+	# remove any spaces
+	replace string by string (TEMP"1"," ","")
+	# add suffix to identify strings that don't match regex
+	add suffix (TEMP"1","111")
+	# get the next 3-character code
+	replace string by string (TEMP"1","(.{15})(.{3}).*","$2")
+	# add prefix so code matches against OTB language code table
+	add prefix (TEMP"1","lang.")
+	# delete string if it didn't match regex
+	replace string by string (TEMP"1",".*111$","")
+	create pnx."search"."lsr48" with TEMP"1" 
+end
+
+rule "Primo VE Marc - Lsr48f"
+when
+	# match 041$h when code comes from ISO 639-3 or
+	# MARC language codes (no $2) 
+	MARC is "041"."h" AND
+	(MARC."041"."2" match "iso639-3" OR NOT
+	MARC."041"."2" match ".*")
+then
+	set TEMP"1" to MARC."041" subfields "h"
+	# remove any spaces
+	replace string by string (TEMP"1"," ","")
+	# add suffix to identify strings that don't match regex
+	add suffix (TEMP"1","111")
+	# get the next 3-character code
+	replace string by string (TEMP"1","(.{18})(.{3}).*","$2")
+	# add prefix so code matches against OTB language code table
+	add prefix (TEMP"1","lang.")
+	# delete string if it didn't match regex
+	replace string by string (TEMP"1",".*111$","")
+	create pnx."search"."lsr48" with TEMP"1" 
+end
