@@ -1,6 +1,7 @@
-#Difference from OTB: Added 500, 504, 515, 555, 522, 525, 550, 547 fields; Removed 520 and 880-520.
-
 rule "Primo VE - Description 500"
+##5XX = NOTES
+##Ex: 964093193
+
 when
 MARC is "500"."a" AND NOT
 MARC."500"."5" match ".*"
@@ -59,4 +60,68 @@ when
 MARC is "547"."a"
 then 
 create pnx."display"."description" with MARC."547"."a"
+end
+
+rule "Primo VE - Description 880-500"
+when
+        MARC is "880" AND
+        MARC."880"."6" match "500-.*"
+	then
+        create pnx."display"."description" with MARC."880" excluding num subfields without sort
+end
+
+rule "Primo VE - Description 880-504"
+when
+        MARC is "880" AND
+        MARC."880"."6" match "504-.*"
+	then
+        create pnx."display"."description" with MARC."880" excluding num subfields without sort
+end
+
+rule "Primo VE - Description 880-515"
+when
+        MARC is "880" AND
+        MARC."880"."6" match "515-.*"
+	then
+        create pnx."display"."description" with MARC."880" excluding num subfields without sort
+end
+
+rule "Primo VE - Description 880-555"
+when
+        MARC is "880" AND
+        MARC."880"."6" match "555-.*"
+	then
+        create pnx."display"."description" with MARC."880" excluding num subfields without sort
+end
+
+rule "Primo VE - Description 880-522"
+when
+        MARC is "880" AND
+        MARC."880"."6" match "522-.*"
+	then
+        create pnx."display"."description" with MARC."880" excluding num subfields without sort
+end
+
+rule "Primo VE - Description 880-525"
+when
+        MARC is "880" AND
+        MARC."880"."6" match "525-.*"
+	then
+        create pnx."display"."description" with MARC."880" excluding num subfields without sort
+end
+
+rule "Primo VE - Description 880-550"
+when
+        MARC is "880" AND
+        MARC."880"."6" match "550-.*"
+	then
+        create pnx."display"."description" with MARC."880" excluding num subfields without sort
+end
+
+rule "Primo VE - Description 880-547"
+when
+        MARC is "880" AND
+        MARC."880"."6" match "547-.*"
+	then
+        create pnx."display"."description" with MARC."880" excluding num subfields without sort
 end
