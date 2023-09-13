@@ -1,15 +1,19 @@
 rule "Primo VE - Lds96"
-# ex 704989658 ($3 with colon)
-when
-	MARC."386" has any "3,a"
-then
-	set TEMP"1" to MARC."386" subfields "3"
-	set TEMP"2" to MARC."386" subfields "a"
-	# combine $3 and $a so $3 comes first; add colon in case missing
-	concatenate existing with delimiter (TEMP"1",TEMP"2",": ")
-	# remove extra colon if it was already there in data
-	replace string by string (TEMP"1","::",":")
-	create pnx."display"."lds96" with TEMP"1"
+## MARC 386 - Creator/Contributor Characteristics (R)
+## Newest update: 8/29/2023
+## Ex: 925959193
+	when
+		MARC."386" has any "a,i" AND
+		MARC."386"."3" match ".*"
+	then
+		set TEMP"1" to MARC."386" subfields "3"
+		set TEMP"2" to MARC."386" subfields "i"
+		set TEMP"3" to MARC."386" subfields "a" delimited by "; " remove substring using regex "\\.+$"
+		concatenate with delimiter (TEMP"1",TEMP"2","; ")
+		concatenate with delimiter (TEMP"1",TEMP"3",": ")
+		# remove extra colon if it was already there in data
+		replace string by string (TEMP"1","::",":")
+		create pnx."display"."lds96" with TEMP"1"
 end
 
 rule "Primo VE - Lds96b"
@@ -20,6 +24,18 @@ rule "Primo VE - Lds96b"
 	then
 		set TEMP"1" to MARC."386" subfields "i"
 		set TEMP"2" to MARC."386" subfields "a" delimited by "; " remove substring using regex "\\.+$"
-		concatenate with delimiter (TEMP"1",TEMP"2"," ")
+		concatenate with delimiter (TEMP"1",TEMP"2",": ")
+                replace string by string (TEMP"1","::",":")
+		create pnx."display"."lds96" with TEMP"1"
+end
+
+rule "Primo VE - Ld96c"
+##Ex: 02112725
+	when
+		MARC."386" has any "a" AND NOT
+		MARC."386"."3" match ".*" AND NOT
+		MARC."386"."i" match ".*" 
+	then
+		set TEMP"1" to MARC."386" subfields "a" delimited by "; " remove substring using regex "\\.+$"
 		create pnx."display"."lds96" with TEMP"1"
 end
