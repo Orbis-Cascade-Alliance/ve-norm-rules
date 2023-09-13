@@ -1,0 +1,30 @@
+rule "Primo VE - Lds46" 	
+# OCLC #51783399 (olacvggt)
+###Option One: TO ADD/REMOVE VOCABULARIES (if desired at your local institution): 
+# A) Find and replace on this string: gsso|gttg|lobt|olacvggt|vgmsgg|vgmsng|wikidata
+# B) Add/remove vocabulary codes as desired
+###Option Two: TO MAKE THIS RULE DISPLAY SEPARATELY FROM Genre (Local)
+# A) Find and replace on this string: create pnx."display"."lds78"
+# B) Replace with string: create pnx."display"."lds46" (so each stanza will be updated at once)
+    when
+        MARC."655" has any "a" AND
+        MARC."655".ind"2" equals "7" AND  
+        (MARC."655"."2" match "gsso|gttg|lobt|olacvggt|vgmsgg|vgmsng|wikidata")
+    then
+        set TEMP"1" to MARC."655" subfields "a" delimited by " " remove substring using regex "\\.+$"
+        set TEMP"2" to MARC."655" sub without sorting "v,x-z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
+        concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+        create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds46 655 #1"
+# OCLC #05239517
+    when
+        MARC."655" has any "a" AND
+        MARC."655".ind"2" equals "1"	        
+    then
+        set TEMP"1" to MARC."655" subfields "a" delimited by " " remove substring using regex "\\.+$"
+        set TEMP"2" to MARC."655" sub without sorting "v,x-z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
+        concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+        create pnx."display"."lds78" with TEMP"1"
+end
