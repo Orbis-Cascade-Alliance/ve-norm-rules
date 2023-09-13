@@ -24,7 +24,8 @@ rule "Primo VE - Lsr78 655 #0,4"
 #655 _0 OCLC 43354922 
     when
         MARC."655" has any "a" AND
-        (MARC."655".ind"2" equals "0" OR		
+        (MARC."655".ind"2" equals "0" OR	
+        MARC."655".ind"2" equals "1" OR	
         MARC."655".ind"2" equals "4")
     then
         set TEMP"1" to MARC."655" subfields "a" delimited by " " remove substring using regex "\\.+$"
