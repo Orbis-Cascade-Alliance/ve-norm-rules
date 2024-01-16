@@ -1,0 +1,241 @@
+rule "Primo VE - Lds43"
+# FYI, "$$Q" is the delimiter that separates the displayed text string (here, TEMP"1") and the text to be included in the search string when the hyperlink is clicked (here, TEMP"2"). This function is not described in ExLibris documentation (as of 5/25/23).
+	when
+		MARC."400" has any "a"
+	then
+	    set TEMP"1" to MARC "400" excluding num subfields without sort
+		set TEMP"2" to MARC."400" sub without sort "a"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43b"
+	when
+		MARC."440" has any "a"
+	then
+	    set TEMP"1" to MARC "440" excluding num subfields without sort
+		set TEMP"2" to MARC."440" sub without sort "a"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        kormarc remove nonfiling brackets MARC."440" sourcetag "440" from TEMP"1"
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43c"
+# 490 ind1=0 fields have no corresponding 8xx, so the 490 should generate a hyperlink so that something based on that series title is clickable in the record.
+# 490 ind1=1 fields do have a corresponding 8xx field which is preferable for precise hyperlink-based searching. So, such 490 fields should not generate their own hyperlink. That rule stanza moved to description rule.
+	when
+		MARC."490" has any "a" AND
+		MARC."490".ind"1" equals "0"
+	then
+	    set TEMP"1" to MARC "490" excluding num subfields without sort
+		set TEMP"2" to MARC."490" sub without sort "a"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+    	kormarc remove nonfiling brackets MARC."490" sourcetag "490" from TEMP"1"
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43d"
+	when
+		MARC."800" has any "t,w,x"
+	then
+	    set TEMP"1" to MARC "800" excluding num subfields without sort
+		set TEMP"2" to MARC."800" sub without sort or empty "a,b,c,d,f,k,l,m,n,o,p,q,r,s,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."800" prima_w_relation "w"
+		set TEMP"4" to MARC."800" prima_x_relation "x"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        concatenate with delimiter (TEMP"1",TEMP"4","")
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43e"
+	when
+		MARC."810" has any "t,w,x"
+	then
+	    set TEMP"1" to MARC "810" excluding num subfields without sort
+		set TEMP"2" to MARC."810" sub without sort or empty "a,b,c,d,f,k,l,m,n,o,p,r,s,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."810" prima_w_relation "w"
+		set TEMP"4" to MARC."810" prima_x_relation "x"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        concatenate with delimiter (TEMP"1",TEMP"4","")
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43f"
+	when
+		MARC."811" has any "t,w,x"
+	then
+	    set TEMP"1" to MARC "811" excluding num subfields without sort
+		set TEMP"2" to MARC."811" sub without sort or empty "a,c,d,f,e,k,l,n,p,q,s,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."811" prima_w_relation "w"
+		set TEMP"4" to MARC."811" prima_x_relation "x"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        concatenate with delimiter (TEMP"1",TEMP"4","")
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43g"
+	when
+		MARC."830" has any "a,t,w,x"
+	then
+	    set TEMP"1" to MARC "830" excluding num subfields without sort
+		set TEMP"2" to MARC."830" sub without sort or empty "a,k,l,m,n,o,p,r,s,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+		set TEMP"3" to MARC."830" prima_w_relation "w"
+		set TEMP"4" to MARC."830" prima_x_relation "x"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        concatenate with delimiter (TEMP"1",TEMP"4","")
+        kormarc remove nonfiling brackets MARC."830" sourcetag "830" from TEMP"1"
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43h"
+	when
+		MARC."840" has any "a"
+	then
+	    set TEMP"1" to MARC "840" excluding num subfields without sort
+		set TEMP"2" to MARC."840" sub without sort "a"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43i"
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "400-.*"
+
+	then
+	    set TEMP"1" to MARC "880" excluding num subfields without sort
+		set TEMP"2" to MARC."880" sub without sort "a"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43j"
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "440-.*"
+	then
+	    set TEMP"1" to MARC "880" excluding num subfields without sort
+		set TEMP"2" to MARC."880" sub without sort "a"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43k"
+# 490 ind1=0 fields have no corresponding 8xx, so the 880-490 should generate a hyperlink so that something based on that series title is clickable in the record.
+# 490 ind1=1 fields do have a corresponding 8xx field which is preferable for precise hyperlink-based searching. So, such 880-490 fields should not generate their own hyperlink. That rule stanza moved to description rule.
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "490-0.*"
+	then
+	    set TEMP"1" to MARC "880" excluding num subfields without sort
+		set TEMP"2" to MARC."880" sub without sort "a"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43l"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "800-.*"
+	then
+	    set TEMP"1" to MARC "880" excluding num subfields without sort
+		set TEMP"2" to MARC."880" sub without sort "a,b,c,d,f,k,l,m,n,o,p,q,r,s,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43m"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "810-.*"
+	then
+	    set TEMP"1" to MARC "880" excluding num subfields without sort
+		set TEMP"2" to MARC."880" sub without sort "a,b,c,d,f,k,l,m,n,o,p,r,s,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43n"
+	when
+		MARC."880" has any "t" AND
+		MARC."880"."6" match "811-.*"
+	then
+	    set TEMP"1" to MARC "880" excluding num subfields without sort
+		set TEMP"2" to MARC."880" sub without sort "a,c,d,f,e,k,l,n,p,q,s,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43o"
+	when
+		MARC."880" has any "a,t" AND
+		MARC."880"."6" match "830-.*"
+	then
+	    set TEMP"1" to MARC "880" excluding num subfields without sort
+		set TEMP"2" to MARC."880" sub without sort "a,k,l,m,n,o,p,r,s,t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds43" with TEMP"1"
+end
+
+rule "Primo VE - Lds43p"
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "840.*"
+	then
+	    set TEMP"1" to MARC "880" excluding num subfields without sort
+		set TEMP"2" to MARC."880" sub without sort "a"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+		create pnx."display"."lds43" with TEMP"1"
+end
