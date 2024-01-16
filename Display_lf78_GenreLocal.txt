@@ -1,19 +1,26 @@
 rule "Primo VE - Lds78"
-#655_7 lcgft OCLC 774607605 
+#655_7 lcgft OCLC 774607605
+#655_7 fast OCLC 05264690
+#655 _0 OCLC 43354922
+#008/25 nature of contents e OCLC 1055568196
+#008/25 nature of contents p OCLC 71328147
+#008/30 lit text for sound recordings b OCLC 1197080110
+#008/33 literary form p OCLC 1057242876
     when
         MARC."655" has any "a" AND
-        MARC."655".ind"2" equals "7" AND  
-        MARC."655"."2" match "lcgft" 
+        MARC."655".ind"2" equals "7" AND
+        MARC."655"."2" match "lcgft" AND NOT
+        MARC."655"."5" match ".*"
     then
         create pnx."display"."lds78" with MARC "655" subfields "a" delimited by " " remove substring using regex "\\.+$"
 end
 
 rule "Primo VE - Lds78 655 #7 except lcgft"
-#655_7 fast OCLC 05264690 
     when
         MARC."655" has any "a" AND
-        MARC."655".ind"2" equals "7" AND  
-        (MARC."655"."2" match "aat|fast|gmgpc|gsafd|homoit|lcsh|local|mesh|migfg|mim|ngl|rbbin|rbgenr|rbmscv|rbpap|rbpri|rbprov|rbpub|rbtyp")
+        MARC."655".ind"2" equals "7" AND
+        (MARC."655"."2" match " (aat|fast|gmgpc|gsafd|homoit|lcsh|local|mesh|migfg|mim|ngl|rbbin|rbgenr|rbmscv|rbpap|rbpri|rbprov|rbpub|rbtyp") AND NOT        
+        MARC."655"."5" match ".*"
     then
         set TEMP"1" to MARC."655" subfields "a" delimited by " " remove substring using regex "\\.+$"
         set TEMP"2" to MARC."655" sub without sorting "v,x-z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
@@ -22,11 +29,11 @@ rule "Primo VE - Lds78 655 #7 except lcgft"
 end
 
 rule "Primo VE - Lds78 655 #0,4"
-#655 _0 OCLC 43354922 
     when
         MARC."655" has any "a" AND
-        (MARC."655".ind"2" equals "0" OR		
-        MARC."655".ind"2" equals "4")
+        (MARC."655".ind"2" equals "0" OR
+        MARC."655".ind"2" equals "4") AND NOT
+       MARC."655"."5" match ".*"
     then
         set TEMP"1" to MARC."655" subfields "a" delimited by " " remove substring using regex "\\.+$"
         set TEMP"2" to MARC."655" sub without sorting "v,x-z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
@@ -51,197 +58,206 @@ rule "Primo VE - Lds78 694"
         create pnx."display"."lds78" with TEMP"1"
 end
 
-rule "Primo VE - Lds78 008/30"
-# lit text - sound recordings OCLC 1197080110
-    when
-        (MARC.control."008"(30-31) equals "a" OR
-        MARC.control."008"(30-31) equals "b" OR
-        MARC.control."008"(30-31) equals "c" OR
-        MARC.control."008"(30-31) equals "d" OR
-        MARC.control."008"(30-31) equals "e" OR
-        MARC.control."008"(30-31) equals "f" OR
-        MARC.control."008"(30-31) equals "h" OR
-        MARC.control."008"(30-31) equals "i" OR
-        MARC.control."008"(30-31) equals "j" OR
-        MARC.control."008"(30-31) equals "k" OR
-        MARC.control."008"(30-31) equals "l" OR
-        MARC.control."008"(30-31) equals "m" OR
-        MARC.control."008"(30-31) equals "o" OR
-        MARC.control."008"(30-31) equals "p" OR
-        MARC.control."008"(30-31) equals "t") AND
-        MARC.control."LDR"(6-7) matches "i|j"  
-    then
-        set TEMP"1" to position("008",30-31)
-        add prefix (TEMP"1","$$Tgenre_008_LitTxtSR_")
-        add suffix (TEMP"1","$$")
-        create pnx."display"."lds78" with TEMP"1"
-end
-
-rule "Primo VE - Lds78 008/31"
-    when
-        (MARC.control."008"(31-32) equals "a" OR
-        MARC.control."008"(31-32) equals "b" OR
-        MARC.control."008"(31-32) equals "c" OR
-        MARC.control."008"(31-32) equals "d" OR
-        MARC.control."008"(31-32) equals "e" OR
-        MARC.control."008"(31-32) equals "f" OR
-        MARC.control."008"(31-32) equals "h" OR
-        MARC.control."008"(31-32) equals "i" OR
-        MARC.control."008"(31-32) equals "j" OR
-        MARC.control."008"(31-32) equals "k" OR
-        MARC.control."008"(31-32) equals "l" OR
-        MARC.control."008"(31-32) equals "m" OR
-        MARC.control."008"(31-32) equals "o" OR
-        MARC.control."008"(31-32) equals "p" OR
-        MARC.control."008"(31-32) equals "t") AND
-        MARC.control."LDR"(6-7) matches "i|j"  
-    then
-        set TEMP"1" to position("008",31-32)
-        add prefix (TEMP"1","$$Tgenre_008_LitTxtSR_")
-        add suffix (TEMP"1","$$")
-        create pnx."display"."lds78" with TEMP"1"
-end
-
 rule "Primo VE - Lds78 008/24"
-# nature of contents OCLC 1055568196
+#Nature of contents
     when
-        (MARC.control."008"(24-25) equals "5" OR
-        MARC.control."008"(24-25) equals "6" OR
-        MARC.control."008"(24-25) equals "c" OR
-        MARC.control."008"(24-25) equals "d" OR
-        MARC.control."008"(24-25) equals "e" OR
-        MARC.control."008"(24-25) equals "f" OR
-        MARC.control."008"(24-25) equals "i" OR
-        MARC.control."008"(24-25) equals "j" OR
-        MARC.control."008"(24-25) equals "k" OR
-        MARC.control."008"(24-25) equals "o" OR
-        MARC.control."008"(24-25) equals "p" OR
-        MARC.control."008"(24-25) equals "r" OR
-        MARC.control."008"(24-25) equals "s" OR
-        MARC.control."008"(24-25) equals "t" OR
-        MARC.control."008"(24-25) equals "w" OR
-        MARC.control."008"(24-25) equals "y" OR
-        MARC.control."008"(24-25) equals "z") AND
+        MARC.control is "008" AND
         MARC.control."LDR"(6-8) matches "aa|ac|ad|am"
     then
         set TEMP"1" to position("008",24-25)
-        add prefix (TEMP"1","$$Tgenre_008_NatureContents_")
-        add suffix (TEMP"1","$$")
+        add suffix (TEMP"1","xxx")
+        replace string by string (TEMP"1","5xxx","Calendars")
+        replace string by string (TEMP"1","6xxx","Graphic novels")
+        replace string by string (TEMP"1","cxxx","Catalogs")
+        replace string by string (TEMP"1","dxxx","Dictionaries")
+        replace string by string (TEMP"1","exxx","Encyclopedias")
+        replace string by string (TEMP"1","fxxx","Handbooks and manuals")
+        replace string by string (TEMP"1","ixxx","Indexes")
+        replace string by string (TEMP"1","jxxx","Patents")
+        replace string by string (TEMP"1","kxxx","Discographies")
+        replace string by string (TEMP"1","oxxx","Reviews")
+        replace string by string (TEMP"1","pxxx","Programmed instructional materials")
+        replace string by string (TEMP"1","rxxx","Directories")
+        replace string by string (TEMP"1","sxxx","Statistics")
+        replace string by string (TEMP"1","txxx","Technical reports")
+        replace string by string (TEMP"1","wxxx","Law digests")
+        replace string by string (TEMP"1","yxxx","Yearbooks")
+        replace string by string (TEMP"1","zxxx","Treaties")
+        replace string by string (TEMP"1",".*xxx$","")
         create pnx."display"."lds78" with TEMP"1"
 end
 
 rule "Primo VE - Lds78 008/25"
-# nature of contents
+#Nature of contents
     when
-        (MARC.control."008"(25-26) equals "5" OR
-        MARC.control."008"(25-26) equals "6" OR
-        MARC.control."008"(25-26) equals "c" OR
-        MARC.control."008"(25-26) equals "d" OR
-        MARC.control."008"(25-26) equals "e" OR
-        MARC.control."008"(25-26) equals "f" OR
-        MARC.control."008"(25-26) equals "i" OR
-        MARC.control."008"(25-26) equals "j" OR
-        MARC.control."008"(25-26) equals "k" OR
-        MARC.control."008"(25-26) equals "o" OR
-        MARC.control."008"(25-26) equals "p" OR
-        MARC.control."008"(25-26) equals "r" OR
-        MARC.control."008"(25-26) equals "s" OR
-        MARC.control."008"(25-26) equals "t" OR
-        MARC.control."008"(25-26) equals "w" OR
-        MARC.control."008"(25-26) equals "y" OR
-        MARC.control."008"(25-26) equals "z") AND
+        MARC.control is "008" AND
         MARC.control."LDR"(6-8) matches "aa|ac|ad|am"
     then
         set TEMP"1" to position("008",25-26)
-        add prefix (TEMP"1","$$Tgenre_008_NatureContents_")
-        add suffix (TEMP"1","$$")
+        add suffix (TEMP"1","xxx")
+        replace string by string (TEMP"1","5xxx","Calendars")
+        replace string by string (TEMP"1","6xxx","Graphic novels")
+        replace string by string (TEMP"1","cxxx","Catalogs")
+        replace string by string (TEMP"1","dxxx","Dictionaries")
+        replace string by string (TEMP"1","exxx","Encyclopedias")
+        replace string by string (TEMP"1","fxxx","Handbooks and manuals")
+        replace string by string (TEMP"1","ixxx","Indexes")
+        replace string by string (TEMP"1","jxxx","Patents")
+        replace string by string (TEMP"1","kxxx","Discographies")
+        replace string by string (TEMP"1","oxxx","Reviews")
+        replace string by string (TEMP"1","pxxx","Programmed instructional materials")
+        replace string by string (TEMP"1","rxxx","Directories")
+        replace string by string (TEMP"1","sxxx","Statistics")
+        replace string by string (TEMP"1","txxx","Technical reports")
+        replace string by string (TEMP"1","wxxx","Law digests")
+        replace string by string (TEMP"1","yxxx","Yearbooks")
+        replace string by string (TEMP"1","zxxx","Treaties")
+        replace string by string (TEMP"1",".*xxx$","")
         create pnx."display"."lds78" with TEMP"1"
 end
 
 rule "Primo VE - Lds78 008/26"
-# nature of contents
+#Nature of contents
     when
-        (MARC.control."008"(26-27) equals "5" OR
-        MARC.control."008"(26-27) equals "6" OR
-        MARC.control."008"(26-27) equals "c" OR
-        MARC.control."008"(26-27) equals "d" OR
-        MARC.control."008"(26-27) equals "e" OR
-        MARC.control."008"(26-27) equals "f" OR
-        MARC.control."008"(26-27) equals "i" OR
-        MARC.control."008"(26-27) equals "j" OR
-        MARC.control."008"(26-27) equals "k" OR
-        MARC.control."008"(26-27) equals "o" OR
-        MARC.control."008"(26-27) equals "p" OR
-        MARC.control."008"(26-27) equals "r" OR
-        MARC.control."008"(26-27) equals "s" OR
-        MARC.control."008"(26-27) equals "t" OR
-        MARC.control."008"(26-27) equals "w" OR
-        MARC.control."008"(26-27) equals "y" OR
-        MARC.control."008"(26-27) equals "z") AND
+        MARC.control is "008" AND
         MARC.control."LDR"(6-8) matches "aa|ac|ad|am"
     then
         set TEMP"1" to position("008",26-27)
-        add prefix (TEMP"1","$$Tgenre_008_NatureContents_")
-        add suffix (TEMP"1","$$")
+        add suffix (TEMP"1","xxx")
+        replace string by string (TEMP"1","5xxx","Calendars")
+        replace string by string (TEMP"1","6xxx","Graphic novels")
+        replace string by string (TEMP"1","cxxx","Catalogs")
+        replace string by string (TEMP"1","dxxx","Dictionaries")
+        replace string by string (TEMP"1","exxx","Encyclopedias")
+        replace string by string (TEMP"1","fxxx","Handbooks and manuals")
+        replace string by string (TEMP"1","ixxx","Indexes")
+        replace string by string (TEMP"1","jxxx","Patents")
+        replace string by string (TEMP"1","kxxx","Discographies")
+        replace string by string (TEMP"1","oxxx","Reviews")
+        replace string by string (TEMP"1","pxxx","Programmed instructional materials")
+        replace string by string (TEMP"1","rxxx","Directories")
+        replace string by string (TEMP"1","sxxx","Statistics")
+        replace string by string (TEMP"1","txxx","Technical reports")
+        replace string by string (TEMP"1","wxxx","Law digests")
+        replace string by string (TEMP"1","yxxx","Yearbooks")
+        replace string by string (TEMP"1","zxxx","Treaties")
+        replace string by string (TEMP"1",".*xxx$","")
         create pnx."display"."lds78" with TEMP"1"
 end
 
 rule "Primo VE - Lds78 008/27"
-# nature of contents
+#Nature of contents
     when
-        (MARC.control."008"(27-28) equals "5" OR
-        MARC.control."008"(27-28) equals "6" OR
-        MARC.control."008"(27-28) equals "c" OR
-        MARC.control."008"(27-28) equals "d" OR
-        MARC.control."008"(27-28) equals "e" OR
-        MARC.control."008"(27-28) equals "f" OR
-        MARC.control."008"(27-28) equals "i" OR
-        MARC.control."008"(27-28) equals "j" OR
-        MARC.control."008"(27-28) equals "k" OR
-        MARC.control."008"(27-28) equals "o" OR
-        MARC.control."008"(27-28) equals "p" OR
-        MARC.control."008"(27-28) equals "r" OR
-        MARC.control."008"(27-28) equals "s" OR
-        MARC.control."008"(27-28) equals "t" OR
-        MARC.control."008"(27-28) equals "w" OR
-        MARC.control."008"(27-28) equals "y" OR
-        MARC.control."008"(27-28) equals "z") AND
+        MARC.control is "008" AND
         MARC.control."LDR"(6-8) matches "aa|ac|ad|am"
     then
         set TEMP"1" to position("008",27-28)
-        add prefix (TEMP"1","$$Tgenre_008_NatureContents_")
-        add suffix (TEMP"1","$$")
+        add suffix (TEMP"1","xxx")
+        replace string by string (TEMP"1","5xxx","Calendars")
+        replace string by string (TEMP"1","6xxx","Graphic novels")
+        replace string by string (TEMP"1","cxxx","Catalogs")
+        replace string by string (TEMP"1","dxxx","Dictionaries")
+        replace string by string (TEMP"1","exxx","Encyclopedias")
+        replace string by string (TEMP"1","fxxx","Handbooks and manuals")
+        replace string by string (TEMP"1","ixxx","Indexes")
+        replace string by string (TEMP"1","jxxx","Patents")
+        replace string by string (TEMP"1","kxxx","Discographies")
+        replace string by string (TEMP"1","oxxx","Reviews")
+        replace string by string (TEMP"1","pxxx","Programmed instructional materials")
+        replace string by string (TEMP"1","rxxx","Directories")
+        replace string by string (TEMP"1","sxxx","Statistics")
+        replace string by string (TEMP"1","txxx","Technical reports")
+        replace string by string (TEMP"1","wxxx","Law digests")
+        replace string by string (TEMP"1","yxxx","Yearbooks")
+        replace string by string (TEMP"1","zxxx","Treaties")
+        replace string by string (TEMP"1",".*xxx$","")
+        create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds78 008/30"
+#lit text - sound recordings
+    when
+        MARC.control is "008" AND
+        MARC.control."LDR"(6-7) matches "i|j"
+    then
+        set TEMP"1" to position("008",30-31)
+        add suffix (TEMP"1","xxx")
+        replace string by string (TEMP"1","axxx","Autobiographies")
+        replace string by string (TEMP"1","bxxx","Biographies")
+        replace string by string (TEMP"1","cxxx","Conference papers and proceedings")
+        replace string by string (TEMP"1","dxxx","Drama")
+        replace string by string (TEMP"1","exxx","Essays")
+        replace string by string (TEMP"1","fxxx","Fiction")
+        replace string by string (TEMP"1","hxxx","History")
+        replace string by string (TEMP"1","ixxx","Instructional and educational works")
+        replace string by string (TEMP"1","jxxx","Instructional and educational works")
+        replace string by string (TEMP"1","kxxx","Humor")
+        replace string by string (TEMP"1","lxxx","Speeches")
+        replace string by string (TEMP"1","mxxx","Autobiographies")
+        replace string by string (TEMP"1","oxxx","Folk tales")
+        replace string by string (TEMP"1","pxxx","Poetry")
+        replace string by string (TEMP"1","txxx","Interviews")
+        replace string by string (TEMP"1",".*xxx$","")
+        create pnx."display"."lds78" with TEMP"1"
+end
+
+rule "Primo VE - Lds78 008/31"
+#lit text - sound recordings
+    when
+        MARC.control is "008" AND
+        MARC.control."LDR"(6-7) matches "i|j"
+    then
+        set TEMP"1" to position("008",31-32)
+        add suffix (TEMP"1","xxx")
+        replace string by string (TEMP"1","axxx","Autobiographies")
+        replace string by string (TEMP"1","bxxx","Biographies")
+        replace string by string (TEMP"1","cxxx","Conference papers and proceedings")
+        replace string by string (TEMP"1","dxxx","Drama")
+        replace string by string (TEMP"1","exxx","Essays")
+        replace string by string (TEMP"1","fxxx","Fiction")
+        replace string by string (TEMP"1","hxxx","History")
+        replace string by string (TEMP"1","ixxx","Instructional and educational works")
+        replace string by string (TEMP"1","jxxx","Instructional and educational works")
+        replace string by string (TEMP"1","kxxx","Humor")
+        replace string by string (TEMP"1","lxxx","Speeches")
+        replace string by string (TEMP"1","mxxx","Autobiographies")
+        replace string by string (TEMP"1","oxxx","Folk tales")
+        replace string by string (TEMP"1","pxxx","Poetry")
+        replace string by string (TEMP"1","txxx","Interviews")
+        replace string by string (TEMP"1",".*xxx$","")
         create pnx."display"."lds78" with TEMP"1"
 end
 
 rule "Primo VE - Lds78 008/33"
-# literary form OCLC 1057242876
+#literary form
     when
-        (MARC.control."008"(33-34) equals "1" OR
-        MARC.control."008"(33-34) equals "d" OR
-        MARC.control."008"(33-34) equals "e" OR
-        MARC.control."008"(33-34) equals "f" OR
-        MARC.control."008"(33-34) equals "j" OR
-        MARC.control."008"(33-34) equals "p" OR
-        MARC.control."008"(33-34) equals "s") AND
+        MARC.control is "008" AND
         MARC.control."LDR"(6-8) matches "ab|ai|as"
     then
         set TEMP"1" to position("008",33-34)
-        add prefix (TEMP"1","$$Tgenre_008_LitF_")
-        add suffix (TEMP"1","$$")
+        add suffix (TEMP"1","xxx")
+        replace string by string (TEMP"1","1xxx","Fiction")
+        replace string by string (TEMP"1","dxxx","Drama")
+        replace string by string (TEMP"1","exxx","Essays")
+        replace string by string (TEMP"1","fxxx","Novels")
+        replace string by string (TEMP"1","jxxx","Short stories")
+        replace string by string (TEMP"1","pxxx","Poetry")
+        replace string by string (TEMP"1","sxxx","Speeches")
+        replace string by string (TEMP"1",".*xxx$","")
         create pnx."display"."lds78" with TEMP"1"
 end
 
 rule "Primo VE - Lds78 008/34"
 #biography
     when
-        (MARC.control."008"(34-35) equals "a" OR
-        MARC.control."008"(34-35) equals "b" OR
-        MARC.control."008"(34-35) equals "c") AND
+        MARC.control is "008" AND
         MARC.control."LDR"(6-8) matches "aa|ac|ad|am"
     then
         set TEMP"1" to position("008",34-35)
-        add prefix (TEMP"1","$$Tgenre_008_Biog_")
-        add suffix (TEMP"1","$$")
+        add suffix (TEMP"1","xxx")
+        replace string by string (TEMP"1","axxx","Autobiographies")
+        replace string by string (TEMP"1","bxxx","Biographies")
+        replace string by string (TEMP"1","cxxx","Biographies")
+        replace string by string (TEMP"1",".*xxx$","")
         create pnx."display"."lds78" with TEMP"1"
 end
