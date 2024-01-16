@@ -1,0 +1,6 @@
+rule "Primo VE - Series"
+    when
+        MARC is "XXX"."a"
+    then
+        create pnx."display"."series" with MARC "XXX"."a"
+end
