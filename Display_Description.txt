@@ -1,6 +1,9 @@
-rule "Primo VE - Description 500"
-##5XX = NOTES
-##Ex: 964093193
+rule "Primo VE - Description 5XX"
+## 5XX = NOTES
+## Newest update: 8/29/2023
+## 880 equivalents of 500, 504, 515, 555, 522, 525, 550, and 547 fields are now included in the Description display field
+## Ex: 964093193
+## 490 1_ and 880 equivalent added, 9/28/2023
 
 when
 MARC is "500"."a" AND NOT
@@ -60,6 +63,17 @@ when
 MARC is "547"."a"
 then 
 create pnx."display"."description" with MARC."547"."a"
+end
+
+rule "Primo VE - Description 490"
+# 490 ind1=1 fields do have a corresponding 8xx field which is preferable for precise hyperlink-based searching. So, such 490 fields should not generate their own hyperlink. Rule stanza moved from lds43 rule (a hyperlinked field).
+	when
+		MARC."490" has any "a" AND
+		MARC."490".ind"1" equals "1"
+	then
+		set TEMP"1" to MARC "490" excluding num subfields without sort
+		add prefix (TEMP"1","<b>Series statement:</b> ")
+		create pnx."display"."description" with TEMP"1"
 end
 
 rule "Primo VE - Description 880-500"
@@ -124,4 +138,15 @@ when
         MARC."880"."6" match "547-.*"
 	then
         create pnx."display"."description" with MARC."880" excluding num subfields without sort
+end
+
+rule "Primo VE - Description 880-490"
+# 490 ind1=1 fields do have a corresponding 8xx field which is preferable for precise hyperlink-based searching. So, such 880-490 fields should not generate their own hyperlink. Rule stanza moved from lds43 rule (a hyperlinked field).
+	when
+		MARC."880" has any "a" AND
+		MARC."880"."6" match "490-1.*"
+	then
+		set TEMP"1" to MARC "880" excluding num subfields without sort
+		add prefix (TEMP"1","<b>Series statement:</b> ")
+		create pnx."display"."description" with TEMP"1"
 end
