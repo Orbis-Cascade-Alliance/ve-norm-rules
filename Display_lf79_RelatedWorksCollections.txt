@@ -1,5 +1,6 @@
 rule "Primo VE - Lds79"
-#Field displays 7700, 710, 711, 952, 953, 954 with $t and 2ind not = 2 and corresponding 880s, plus 730s with 2ind not = 2 and corresponding 880.
+#Field displays 700, 710, 711, 952, 953, 954 with $t and 2nd ind not = 2 and corresponding 880s, plus 730s with 2nd ind not = 2 and corresponding 880, plus 960.
+# Field also displays 770, 762, 765, 767, 780, 785-787 with additional prima logic from OTB rule
 
 	when
 		MARC."700" has any "t" AND NOT
@@ -248,7 +249,7 @@ end
 rule "Primo VE - Lds79_955"
 	when
 		MARC is "955" AND NOT
-                MARC."955".ind"2" equals "2"
+		MARC."955".ind"2"  equals "2"
 	then
 		set TEMP"1" to MARC."955" subfields "i"
 		set TEMP"2" to MARC."955"  excluding subfields without sorting "[0-9]|x|i|="
@@ -266,7 +267,7 @@ rule "Primo VE - Lds79_880-955"
 	when
 		MARC is "880" AND
 		MARC."880"."6" match "955-.*" AND NOT
-		MARC."880".ind"2"  equals "2"
+		MARC."880".ind"2" equals "2"
 	then
 		set TEMP"1" to MARC."880" subfields "i"
 		set TEMP"2" to MARC."880"  excluding subfields without sorting "[0-9]|x|i|="
@@ -600,76 +601,6 @@ rule "Primo VE - Lds79_880-774_with_9"
        	set TEMP"3" to MARC."880" subfields "9"
         add prefix (TEMP"3","$$9")
         concatenate with delimiter (TEMP"1",TEMP"3","")
-		create pnx."display"."lds79" with TEMP"1"
-end
-
-rule "Primo VE - Lds79_775"
-	when
-		MARC."775" has any "t"
-	then
-		set TEMP"1" to MARC "775" excluding subfields without sorting or default "i|u|w|x|y|z|6|9"
-		add prefix (TEMP"1","$$Cedition$$V")
-		set TEMP"2" to MARC."775" sub without sort or empty "a,t"
-		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
-        add prefix (TEMP"2","$$Q")
-        remove substring using regex (TEMP"2","^$$Q$")
-        set TEMP"3" to MARC."775" prima_w_relation "w"
-		set TEMP"4" to MARC."775" prima_x_relation "x"
-		set TEMP"5" to MARC."775" prima_x_relation "z"
-        concatenate with delimiter (TEMP"1",TEMP"2","")
-        concatenate with delimiter (TEMP"1",TEMP"3","")
-		concatenate with delimiter (TEMP"1",TEMP"4","")
-		concatenate with delimiter (TEMP"1",TEMP"5","")
-		create pnx."display"."lds79" with TEMP"1"
-end
-
-rule "Primo VE - Lds79_880-775"
-	when
-		MARC."880" has any "t" AND
-		MARC."880"."6" match "775-.*"
-	then
-		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|i|u|w|x|y|z"
-		add prefix (TEMP"1","$$Cedition$$V")
-		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
-		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
-        add prefix (TEMP"2","$$Q")
-        remove substring using regex (TEMP"2","^$$Q$")
-        concatenate with delimiter (TEMP"1",TEMP"2","")
-		create pnx."display"."lds79" with TEMP"1"
-end
-
-rule "Primo VE - Lds79_776"
-	when
-		MARC."776" has any "t"
-	then
-		set TEMP"1" to MARC "776" excluding subfields without sorting or default "u|w|x|y|z|6|9"
-		add prefix (TEMP"1","$$Cform$$V")
-		set TEMP"2" to MARC."776" sub without sort or empty "a,t"
-		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
-        add prefix (TEMP"2","$$Q")
-        remove substring using regex (TEMP"2","^$$Q$")
-        set TEMP"3" to MARC."776" prima_w_relation "w"
-		set TEMP"4" to MARC."776" prima_x_relation "x"
-		set TEMP"5" to MARC."776" prima_x_relation "z"
-        concatenate with delimiter (TEMP"1",TEMP"2","")
-        concatenate with delimiter (TEMP"1",TEMP"3","")
-		concatenate with delimiter (TEMP"1",TEMP"4","")
-		concatenate with delimiter (TEMP"1",TEMP"5","")
-		create pnx."display"."lds79" with TEMP"1"
-end
-
-rule "Primo VE - Lds79_880-776"
-	when
-		MARC."880" has any "t" AND
-		MARC."880"."6" match "776-.*"
-	then
-		set TEMP"1" to MARC "880" excluding subfields without sorting or default "6|u|w|x|y|z"
-		add prefix (TEMP"1","$$Cform$$V")
-		set TEMP"2" to MARC."880" sub without sort or empty "a,t"
-		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
-        add prefix (TEMP"2","$$Q")
-        remove substring using regex (TEMP"2","^$$Q$")
-        concatenate with delimiter (TEMP"1",TEMP"2","")
 		create pnx."display"."lds79" with TEMP"1"
 end
 
