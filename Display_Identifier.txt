@@ -1,5 +1,3 @@
-#Difference from OTB: 776 given "additional physical format" label.  024 fields separated based on first indicator value. Add 074 field.  Removed 010, 028, 035, 084, and 086 fields.
-
 rule "Primo VE - Identifier 020"
 	when
 		MARC is "020"."a"
@@ -64,5 +62,20 @@ rule "Prima Display - ISSN 074"
 	then
 		set TEMP"1" to MARC "074"."a"
 		add prefix (TEMP"1","GPO : ")
+		create pnx."display"."identifier" with TEMP"1"
+end
+
+rule "Primo VE - Identifier 028"
+	when
+		MARC "028" has any "a,b"
+	then
+		set TEMP"1" to MARC "028" subfields "a"
+		add prefix (TEMP"1","$$CPUBNUM$$V")
+		set TEMP"2" to MARC "028" subfields "b"
+		add prefix (TEMP"2","(")
+                add suffix (TEMP"2",")")
+		set TEMP"3" to MARC "028" subfields "q"
+		concatenate with delimiter (TEMP"1",TEMP"2"," ")
+                concatenate with delimiter (TEMP"1",TEMP"3"," ")
 		create pnx."display"."identifier" with TEMP"1"
 end
