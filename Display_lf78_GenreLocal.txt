@@ -19,8 +19,8 @@ rule "Primo VE - Lds78 655 #7 except lcgft"
     when
         MARC."655" has any "a" AND
         MARC."655".ind"2" equals "7" AND
-        (MARC."655"."2" match " (aat|fast|gmgpc|gsafd|homoit|lcsh|local|mesh|migfg|mim|ngl|rbbin|rbgenr|rbmscv|rbpap|rbpri|rbprov|rbpub|rbtyp") AND NOT        
-        MARC."655"."5" match ".*"
+        (MARC."655"."2" match "aat|fast|gmgpc|gsafd|homoit|lcsh|local|mesh|migfg|mim|ngl|rbbin|rbgenr|rbmscv|rbpap|rbpri|rbprov|rbpub|rbtyp" AND NOT        
+        MARC."655"."5" match ".*")
     then
         set TEMP"1" to MARC."655" subfields "a" delimited by " " remove substring using regex "\\.+$"
         set TEMP"2" to MARC."655" sub without sorting "v,x-z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
