@@ -1,5 +1,8 @@
 rule "Primo VE Marc - Lsr80"
+#NRSG updated version, 3/3/2024
+#Removed restricted conditions regarding 955 2ind=2, enabling the retrieval of local collection names through hyperlink searching.
 #Field provides Name+title search for 700, 710, 711 with $t and 2ind = 2 and corresponding 880s, plus 730s with 2ind = 2 and corresponding 880.  Also includes uniform title 130 and corresponding 880 for non-serials, 100+240 for most other records, 100+245 for music items, and local 952, 953, 954, and 955 (and corresponding 880s) to provide hyperlink retrieval based on Name+Title searching.
+
     when
 		MARC."700" has any "t" AND
 		MARC."700".ind"2"  equals "2"
@@ -999,8 +1002,7 @@ end
 rule "Primo VE Marc - Lsr80_955"
 
 	when
-		MARC is "955" AND
-		MARC."955".ind"2"  equals "2"
+		MARC is "955"
 	then
 		set TEMP"1" to MARC."955" excluding subfields without sorting "[0-9]|x|i|=|f"
 		create pnx."search"."lsr80" with TEMP"1"
@@ -1010,8 +1012,7 @@ rule "Primo VE Marc - Lsr80_880-955"
 
 	when
 		MARC is "880" AND
-		MARC."880"."6" match "955-.*" AND
-		MARC."880".ind"2"  equals "2"
+		MARC."880"."6" match "955-.*"
 	then
 		set TEMP"1" to MARC."880" excluding subfields without sorting "[0-9]|x|i|=|f"
 		create pnx."search"."lsr80" with TEMP"1"
