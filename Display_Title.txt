@@ -1,0 +1,8 @@
+rule "Primo VE - Title"
+	when
+		MARC is "245"."a"
+	then
+	    set TEMP"1" to MARC."245" sub without sort "a,b,f,g,k,n,p,s"
+        remove substring using regex (TEMP"1","(,|/|:|;|=)+$")
+		create pnx."display"."title" with TEMP"1"
+end
