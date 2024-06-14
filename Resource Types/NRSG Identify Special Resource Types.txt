@@ -31,8 +31,8 @@ when
     #Sound recording AND not online form.
     ((existsControl "LDR.{6,1}.i|j") AND (not existsControl "008.{23,1}.o"))
     AND 
-    #Sound recording category with sound disc SMD and 12 in diameter dimension in 007 OR 300 contains 12 in. dimension (if 007 not coded properly).
-    ((existsControl "007.{0,7}.sd****e") OR (exists "300.c.*12 in*"))
+    #Sound recording category with sound disc SMD and 16, 12, 10, or 7 in diameter dimension in 007 OR 300 contains 16, 12, 10, or 7 in. dimension (if 007 not coded properly).
+    ((existsControl "007.{0,7}.sd****c|d|e|f") OR (exists "300.c.*16 in*|*12 in*|*10 in*|*7 in*"))
 then
     set indication."true"
 end
