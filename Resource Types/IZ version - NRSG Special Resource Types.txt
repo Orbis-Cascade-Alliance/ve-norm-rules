@@ -29,7 +29,7 @@ priority 90
 when
     (((existsControl "LDR.{6,1}.i|j") AND (not existsControl "008.{23,1}.o"))
     AND 
-    ((existsControl "007.{0,7}.sd****e") OR (exists "300.c.*12 in*")))
+    ((existsControl "007.{0,7}.sd****c|d|e|f") OR (exists "300.c.*16 in*|*12 in*|*10 in*|*7 in*")))
 then
     addField "972.a.lprecords" if (not exists "972")
     addSubField "972.9.LOCAL" if (not exists "972.9.LOCAL")
