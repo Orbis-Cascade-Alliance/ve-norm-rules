@@ -1,9 +1,36 @@
 rule "Primo VE - Lds70"
+	# Examples: 38117624 (monograph with 130 and no 245$c); 23658809 (serial)
+	when
+		MARC is "130"."a" AND NOT
+			(MARC "245" has any "c" AND NOT
+			MARC.control."LDR"(7-8) matches "b|i|s")
+	then
+	    set TEMP"1" to MARC."130" sub without sort "a,d,f,k,l,m,n,o,p,r,s"
+        remove substring using regex (TEMP"1","(,|/|:|;|=)+$")
+		create pnx."display"."lds70" with TEMP"1"
+end
+
+rule "Primo VE - Lds70_130_880"
+	# Examples: 2434-6063 (serial)
+	when
+		MARC is "880"."a" AND
+        MARC."880"."6" match "130-.*" AND NOT
+			(MARC "245" has any "c" AND NOT
+			MARC.control."LDR"(7-8) matches "b|i|s")
+	then
+	    set TEMP"1" to MARC."880" sub without sort "a,d,f,k,l,m,n,o,p,r,s"
+        remove substring using regex (TEMP"1","(,|/|:|;|=)+$")
+		create pnx."display"."lds70" with TEMP"1"
+end
+
+rule "Primo VE - Lds70_245c"
+	# Example: 744473745 (monograph with 130); 52902422 (monograph without 1xx)
 	when
 		MARC is "245"."c" AND NOT
                 MARC "100" has any "a" AND NOT
                 MARC "110" has any "a" AND NOT
-                MARC "111" has any "a"
+                MARC "111" has any "a" AND NOT
+                MARC.control."LDR"(7-8) matches "b|i|s"
 	then
                 set TEMP"1" to MARC."245" subfields "c"
                 remove substring using regex (TEMP"1","(=).*$")
@@ -14,16 +41,18 @@ rule "Primo VE - Lds70"
                 add suffix (TEMP"1","...")
                 replace string by string (TEMP"1","(_\\.\\.\\.)$","")
                 replace string by string (TEMP"1",";(?!.*;).*$(?<=.{200})","...")
-		create pnx."display"."lds70" with TEMP"1"
+		create pnx."display"."lds70" with TEMP"1" 
 end
 
-rule "Primo VE - Lds70_880"
+rule "Primo VE - Lds70_245c_880"
+	# Example: 914356593 (monograph with 130); 244441178 (monograph without 1xx)
 	when
 		MARC is "880"."c" AND
                 MARC."880"."6" match "245-.*" AND NOT
                 MARC "100" has any "a" AND NOT
                 MARC "110" has any "a" AND NOT
-                MARC "111" has any "a"
+                MARC "111" has any "a" AND NOT
+                MARC.control."LDR"(7-8) matches "b|i|s"
 	then
                 set TEMP"1" to MARC."880" subfields "c"
                 remove substring using regex (TEMP"1","(=).*$")
