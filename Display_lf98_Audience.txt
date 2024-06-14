@@ -1,113 +1,108 @@
 rule "Primo VE - Lds98"
-##Ex: 60421176
+#Ex: 60421176
 	when
 		MARC is "385"."a"
 	then
               set TEMP"1" to MARC "385"."a"		
-              append TEMP"1" to pnx."display"."lds98" delimited by "; "
+                create pnx."display"."lds98" with TEMP"1"
 end
 ################The rules below use the 22nd character of 008 as a lookup table################
 ################The rules below exclude SE (Continuing Resources), MP (Maps), and MX (Mixed Materials)################
-rule "Primo VE - Lds98_008_22_b"
-	when
-                MARC.control."008"(22-23) equals "b" AND NOT
-                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
-                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
-		MARC is "385"
-	then
-                set TEMP"1" to position("008",22-23)
-                add prefix (TEMP"1","School children,Children") 
-                remove string (TEMP"1","b") 
-                create pnx."display"."lds98" with TEMP"1"
-end
-rule "Primo VE - Lds98_008_22_c"
-	when
-                MARC.control."008"(22-23) equals "c" AND NOT
-                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
-                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
-		MARC is "385"
-	then
-                set TEMP"1" to position("008",22-23)
-                add prefix (TEMP"1","Preteens,Children") 
-                remove string (TEMP"1","c") 
-                create pnx."display"."lds98" with TEMP"1"
-end
-rule "Primo VE - Lds98_008_22_d"
-	when
-                MARC.control."008"(22-23) equals "d" AND NOT
-                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
-                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
-		MARC is "385"
-	then
-                set TEMP"1" to position("008",22-23)
-                add prefix (TEMP"1","Teenagers") 
-                remove string (TEMP"1","d") 
-                create pnx."display"."lds98" with TEMP"1"
-end
-rule "Primo VE - Lds98_008_22_e"
-	when
-                MARC.control."008"(22-23) equals "e" AND NOT
-                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
-                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
-		MARC is "385"
-	then
-                set TEMP"1" to position("008",22-23)
-                add prefix (TEMP"1","Adults") 
-                remove string (TEMP"1","e") 
-                create pnx."display"."lds98" with TEMP"1"
-end
-rule "Primo VE - Lds98_008_22_f"
-	when
-                MARC.control."008"(22-23) equals "f" AND NOT
-                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
-                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
-		MARC is "385"
-	then
-                set TEMP"1" to position("008",22-23)
-                add prefix (TEMP"1","Specialized audience") 
-                remove string (TEMP"1","f") 
-                create pnx."display"."lds98" with TEMP"1"
-end
-rule "Primo VE - Lds98_008_22_g"
-	when
-                MARC.control."008"(22-23) equals "g" AND NOT
-                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
-                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
-		MARC is "385"
-	then
-                set TEMP"1" to position("008",22-23)
-                add prefix (TEMP"1","General audience") 
-                remove string (TEMP"1","g") 
-                create pnx."display"."lds98" with TEMP"1"
-end
-rule "Primo VE - Lds98_008_22_j"
-##Ex: 06357402
-	when
-                MARC.control."008"(22-23) equals "j" AND NOT
-                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
-                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
-		MARC is "385"
-	then
-                set TEMP"1" to position("008",22-23)
-                add prefix (TEMP"1","Children") 
-                remove string (TEMP"1","j") 
-                create pnx."display"."lds98" with TEMP"1"
-end
 rule "Primo VE - Lds98_008_22_a"
+#Ex: 36133166
 	when
                 MARC.control."008"(22-23) equals "a" AND NOT
                 MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
-                MARC.control."LDR"(6-8) matches "ab|ai|as" AND NOT
-		MARC is "385"
+                MARC.control."LDR"(6-8) matches "ab|ai|as"
 	then
                 set TEMP"1" to position("008",22-23)
-                add prefix (TEMP"1","Preschool children,Children") 
-                remove string (TEMP"1","a") 
+				replace string by string (TEMP"1","a","Preschool children")
+                create pnx."display"."lds98" with TEMP"1"
+end
+rule "Primo VE - Lds98_008_22_b"
+#Ex: 464593086
+	when
+                MARC.control."008"(22-23) equals "b" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as"
+	then
+                set TEMP"1" to position("008",22-23)
+				replace string by string (TEMP"1","b","School children")
+                create pnx."display"."lds98" with TEMP"1"
+end
+rule "Primo VE - Lds98_008_22_c"
+#Ex: 978654061
+	when
+                MARC.control."008"(22-23) equals "c" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as"
+	then
+                set TEMP"1" to position("008",22-23)
+				replace string by string (TEMP"1","c","Preteens")
+                create pnx."display"."lds98" with TEMP"1"
+end
+rule "Primo VE - Lds98_008_22_d"
+#Ex: 65184068
+	when
+                MARC.control."008"(22-23) equals "d" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as"
+	then
+                set TEMP"1" to position("008",22-23)
+				replace string by string (TEMP"1","d","Teenagers")
+                create pnx."display"."lds98" with TEMP"1"
+end
+rule "Primo VE - Lds98_008_22_e"
+#Ex: 04801119
+	when
+                MARC.control."008"(22-23) equals "e" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as"
+	then
+                set TEMP"1" to position("008",22-23)
+				replace string by string (TEMP"1","e","Adults")
+                create pnx."display"."lds98" with TEMP"1"
+end
+rule "Primo VE - Lds98_008_22_f"
+#Ex: 1198929811
+	when
+                MARC.control."008"(22-23) equals "f" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as"
+	then
+                set TEMP"1" to position("008",22-23)
+				replace string by string (TEMP"1","f","Specialized audience")
+                create pnx."display"."lds98" with TEMP"1"
+end
+rule "Primo VE - Lds98_008_22_g"
+#Ex: 56478619
+	when
+                MARC.control."008"(22-23) equals "g" AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as"
+	then
+                set TEMP"1" to position("008",22-23)
+				replace string by string (TEMP"1","g","General audience")
+                create pnx."display"."lds98" with TEMP"1"
+end
+rule "Primo VE - Lds98_008_22_j"
+#Ex: 60421176
+#Ex: 06357402
+	when
+                (MARC.control."008"(22-23) equals "a" OR
+                MARC.control."008"(22-23) equals "b" OR
+                MARC.control."008"(22-23) equals "c" OR
+                MARC.control."008"(22-23) equals "j") AND NOT
+                MARC.control."LDR"(6-7) matches "e|f|p" AND NOT
+                MARC.control."LDR"(6-8) matches "ab|ai|as"
+	then
+                set TEMP"1" to position("008",22-23)
+				replace string by string (TEMP"1","a|b|c|j","Children")
                 create pnx."display"."lds98" with TEMP"1"
 end
 ################################
 rule "Primo VE - Lds98_521_ind1_other"
-##Ex: 1042567415
+#Ex: 1042567415
 	when
 		MARC."521" has any "a,b,3" AND
                 MARC."521".ind"1" equals "8"
@@ -124,7 +119,7 @@ rule "Primo VE - Lds98_521_ind1_0"
                 create pnx."display"."lds98" with TEMP"1"
 end
 rule "Primo VE - Lds98_521_ind1_1"
-##Ex: 213442273
+#Ex: 213442273
 	when
 		MARC."521" has any "a,b,3" AND
                 MARC."521".ind"1" equals "1"
