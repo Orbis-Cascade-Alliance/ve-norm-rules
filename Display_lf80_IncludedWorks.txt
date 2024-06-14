@@ -1,5 +1,5 @@
 rule "Primo VE - Lds80"
-#Field displays 700, 710, 711 with $t and 2ind = 2 and corresponding 880s, plus 730s with 2ind = 2 and corresponding 880.  Also includes uniform title 130 for non-serials, 100+240 for most other records, 100+245 for music items, and local 952, 953, 954, and 955 (and corresponding 880s) to provide hyperlink retrieval based on Name+Title searching.
+#Field displays 700, 710, 711 with $t and 2ind = 2 and corresponding 880s, plus 730s with 2ind = 2 and corresponding 880.  Also includes uniform title 130, 100/110/111+240 for most other records, 100+245 for music items, and local 952, 953, 954, and 955 (and corresponding 880s) to provide hyperlink retrieval based on Name+Title searching.
     when
 		MARC."700" has any "t" AND
 		MARC."700".ind"2"  equals "2"
@@ -115,12 +115,11 @@ rule "Primo VE - Lds80_880-730"
         create pnx."display"."lds80" with TEMP"1"
 end
 
-#uniform title 130 for non-serials and corresponding 880.
+#uniform title 130 and corresponding 880.
 rule "Primo VE - Lds80_130"
 
 	when
-		MARC is "130"."a" AND NOT
-		MARC.control."LDR"(6-8) matches "ab|ai|as"
+		MARC is "130"."a"
 	then
 		set TEMP"1" to MARC."130" excluding num subfields without sort
 		remove string (TEMP"1","<<")
@@ -132,8 +131,7 @@ rule "Primo VE - Lds80_880-130"
 
 	when
 		MARC is "880" AND
-		MARC."880"."6" match "130-.*" AND NOT
-		MARC.control."LDR"(6-7) matches "ab|ai|as"
+		MARC."880"."6" match "130-.*"
 	then
 		set TEMP"1" to MARC."880" excluding num subfields without sort
 		remove string (TEMP"1","<<")
