@@ -1,0 +1,107 @@
+rule "Primo VE Display - Contents 505/0/_,0 - TOC"
+#04032941;170037841
+	when
+		MARC."505" has any "a,g,r,t" AND
+		MARC."505".ind"1" equals "0"
+	then
+		set TEMP"1" to MARC."505" sub without sort "a,g,r,t"
+		remove leading and trailing spaces (TEMP"1")
+		add prefix (TEMP"1","<p><b>Table of contents</b>: ")
+		add suffix (TEMP"1","</p>")
+		create pnx."display"."contents" with TEMP"1"
+end
+
+rule "Primo VE Display - Contents 505/1/_,0 - TOC"
+#154782868;672465824
+	when
+		MARC."505" has any "a,g,r,t" AND
+		MARC."505".ind"1" equals "1"
+	then
+		set TEMP"1" to MARC."505" sub without sort "a,g,r,t"
+		remove leading and trailing spaces (TEMP"1")
+		add prefix (TEMP"1","<p><b>Table of contents (incomplete)</b>: ")
+		add suffix (TEMP"1","</p>")
+		create pnx."display"."contents" with TEMP"1"
+end
+
+rule "Primo VE Display - Contents 505/2/_,0 - TOC"
+#86110420;00335977
+	when
+		MARC."505" has any "a,g,r,t" AND
+		MARC."505".ind"1" equals "2"
+	then
+		set TEMP"1" to MARC."505" sub without sort "a,g,r,t"
+		remove leading and trailing spaces (TEMP"1")
+		add prefix (TEMP"1","<p><b>Table of contents (partial)</b>: ")
+		add suffix (TEMP"1","</p>")
+		create pnx."display"."contents" with TEMP"1"
+end
+
+rule "Primo VE Display - Contents 505/8/_,0 - TOC"
+#914153201;879984251
+	when
+		MARC."505" has any "a,g,r,t" AND
+		MARC."505".ind"1" equals "8"
+	then
+		set TEMP"1" to MARC."505" sub without sort "a,g,r,t"
+		remove leading and trailing spaces (TEMP"1")
+		add prefix (TEMP"1","<p> ")
+		add suffix (TEMP"1","</p>")
+		create pnx."display"."contents" with TEMP"1"
+end
+
+rule "Primo VE Display - contents 880_505_0"
+#20436494
+	when
+		MARC is "880" AND
+		MARC."880".ind"1" equals "0" AND
+		MARC."880"."6" match "505-.*"
+	then
+		set TEMP"1" to MARC "880" excluding num subfields without sort
+		remove leading and trailing spaces (TEMP"1")
+		add prefix (TEMP"1","<p><b>Table of contents</b>: ")
+		add suffix (TEMP"1","</p>")
+		create pnx."display"."contents" with TEMP"1"
+end
+
+rule "Primo VE Display - contents 880_505_1"
+#54391635
+	when
+		MARC is "880" AND
+		MARC."880".ind"1" equals "1" AND
+		MARC."880"."6" match "505-.*"
+	then
+		set TEMP"1" to MARC "880" excluding num subfields without sort
+		remove leading and trailing spaces (TEMP"1")
+		add prefix (TEMP"1","<p><b>Table of contents (incomplete)</b>: ")
+		add suffix (TEMP"1","</p>")
+		create pnx."display"."contents" with TEMP"1"
+end
+
+rule "Primo VE Display - contents 880_505_2"
+#05061538
+	when
+		MARC is "880" AND
+		MARC."880".ind"1" equals "2" AND
+		MARC."880"."6" match "505-.*"
+	then
+		set TEMP"1" to MARC "880" excluding num subfields without sort
+		remove leading and trailing spaces (TEMP"1")
+		add prefix (TEMP"1","<p><b>Table of contents (partial)</b>: ")
+		add suffix (TEMP"1","</p>")
+		create pnx."display"."contents" with TEMP"1"
+end
+
+rule "Primo VE Display - contents 880_505_8"
+#10846858
+	when
+		MARC is "880" AND
+		MARC."880".ind"1" equals "8" AND
+		MARC."880"."6" match "505-.*"
+	then
+		set TEMP"1" to MARC "880" excluding num subfields without sort
+		remove leading and trailing spaces (TEMP"1")
+		add prefix (TEMP"1","<p>")
+		add suffix (TEMP"1","</p>")
+		create pnx."display"."contents" with TEMP"1"
+end
