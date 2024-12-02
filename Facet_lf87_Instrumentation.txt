@@ -17,7 +17,7 @@ rule "Primo VE Marc - Lsr87b2"
 	when
 		MARC is "382"."b"
 	then
-		set TEMP"1" to MARC."382" subfields "b"
+		set TEMP"1" to MARC."382"."b"
 		add suffix (TEMP"1"," (solo)")
 		create pnx."search"."lsr87" with TEMP"1"
 end
