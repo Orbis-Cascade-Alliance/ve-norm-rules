@@ -147,7 +147,7 @@ rule "Primo VE - Lds80_100/240"
 		MARC is "240"
 	then
 	    set TEMP"1" to MARC."100" excluding subfields without sorting "[0-9]|e|="
-        set TEMP"2" to MARC."240" excluding numeric subfields
+        set TEMP"2" to MARC."240" excluding num subfields without sort
         concatenate with delimiter (TEMP"1",TEMP"2"," ")
         set TEMP"3" to MARC."100" excluding subfields without sorting "[0-9]|e|f|="
         set TEMP"4" to MARC."240" excluding subfields without sorting "[0-9]|f|="
@@ -165,7 +165,7 @@ rule "Primo VE - Lds80_110/240"
 		MARC is "240"
 	then
 	    set TEMP"1" to MARC."110" excluding subfields without sorting "[0-9]|e|="
-        set TEMP"2" to MARC."240" excluding numeric subfields
+        set TEMP"2" to MARC."240" excluding num subfields without sort
         concatenate with delimiter (TEMP"1",TEMP"2"," ")
         set TEMP"3" to MARC."110" excluding subfields without sorting "[0-9]|e|f|="
         set TEMP"4" to MARC."240" excluding subfields without sorting "[0-9]|f|="
@@ -183,7 +183,7 @@ rule "Primo VE - Lds80_111/240"
 		MARC is "240"
 	then
 	    set TEMP"1" to MARC."111" excluding subfields without sorting "[0-9]|e|="
-        set TEMP"2" to MARC."240" excluding numeric subfields
+        set TEMP"2" to MARC."240" excluding num subfields without sort
         concatenate with delimiter (TEMP"1",TEMP"2"," ")
         set TEMP"3" to MARC."111" excluding subfields without sorting "[0-9]|e|f|="
         set TEMP"4" to MARC."240" excluding subfields without sorting "[0-9]|f|="
@@ -203,7 +203,7 @@ rule "Primo VE - Lds80_880-100/880-240a"
 		MARC is "880" AND
 		MARC."880"."6" match "240-.*"
 	then
-		set TEMP"1" to MARC."880" excluding numeric subfields
+		set TEMP"1" to MARC."880" excluding num subfields without sort
 		set TEMP"2" to MARC."880" excluding subfields without sorting "[0-9]|f|="
 		add prefix (TEMP"2","$$Q")
 		remove substring using regex (TEMP"2","^$$Q$")
@@ -233,7 +233,7 @@ priority 90
 		MARC is "880" AND
 		MARC."880"."6" match "240-.*"
 	then
-		set TEMP"1" to MARC."880" excluding numeric subfields
+		set TEMP"1" to MARC."880" excluding num subfields without sort
 		append TEMP"1" to pnx."display"."lds80" delimited by " "
 end
 
@@ -274,7 +274,7 @@ rule "Primo VE - Lds80_880-110/880-240a"
 		MARC is "880" AND
 		MARC."880"."6" match "240-.*"
 	then
-		set TEMP"1" to MARC."880" excluding numeric subfields
+		set TEMP"1" to MARC."880" excluding num subfields without sort
 		set TEMP"2" to MARC."880" excluding subfields without sorting "[0-9]|f|="
 		add prefix (TEMP"2","$$Q")
 		remove substring using regex (TEMP"2","^$$Q$")
@@ -304,7 +304,7 @@ priority 70
 		MARC is "880" AND
 		MARC."880"."6" match "240-.*"
 	then
-		set TEMP"1" to MARC."880" excluding numeric subfields
+		set TEMP"1" to MARC."880" excluding num subfields without sort
 		append TEMP"1" to pnx."display"."lds80" delimited by " "
 end
 
@@ -345,7 +345,7 @@ rule "Primo VE - Lds80_880-111/880-240a"
 		MARC is "880" AND
 		MARC."880"."6" match "240-.*"
 	then
-		set TEMP"1" to MARC."880" excluding numeric subfields
+		set TEMP"1" to MARC."880" excluding num subfields without sort
 		set TEMP"2" to MARC."880" excluding subfields without sorting "[0-9]|f|="
 		add prefix (TEMP"2","$$Q")
 		remove substring using regex (TEMP"2","^$$Q$")
@@ -375,7 +375,7 @@ priority 50
 		MARC is "880" AND
 		MARC."880"."6" match "240-.*"
 	then
-		set TEMP"1" to MARC."880" excluding numeric subfields
+		set TEMP"1" to MARC."880" excluding num subfields without sort
 		append TEMP"1" to pnx."display"."lds80" delimited by " "
 end
 
@@ -604,7 +604,7 @@ rule "Primo VE - Lds80_880-100/880-245_Music_a"
 		MARC is "880" AND
 		MARC."880"."6" match "245-.*"
 	then
-		set TEMP"1" to MARC."880" excluding numeric subfields
+		set TEMP"1" to MARC."880" excluding num subfields without sort
 		set TEMP"2" to MARC."880" excluding subfields without sorting "[0-9]|f|="
 		add prefix (TEMP"2","$$Q")
 		remove substring using regex (TEMP"2","^$$Q$")
@@ -636,7 +636,7 @@ priority 30
 		MARC is "880" AND
 		MARC."880"."6" match "245-.*"
 	then
-		set TEMP"1" to MARC."880" excluding numeric subfields
+		set TEMP"1" to MARC."880" excluding num subfields without sort
 		append TEMP"1" to pnx."display"."lds80" delimited by " "
 end
 
