@@ -1,0 +1,196 @@
+rule "Primo VE Marc - Lsr47"
+#With thanks to Caroline Reul at OHSU for development!
+###Option One: TO ADD/REMOVE VOCABULARIES (if desired at your local institution): 
+# A) Find and replace on this string: fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit
+# B) Add/remove vocabulary codes as desired
+# C) Replace all occurrences of the string (so each stanza will be updated at once)
+	when
+		MARC."600" has any "a-z" AND
+		MARC."600".ind"2" equals "7" AND
+		MARC."600"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND NOT
+		MARC."600"."9" match ".*"
+	then
+		set TEMP"1" to MARC."600" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."600" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "600" "Subject" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr47" with TEMP"1"
+end
+
+rule "Primo VE - Lsr47b"
+	when
+		MARC."610" has any "a-z" AND
+		MARC."610".ind"2" equals "7" AND
+		MARC."610"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND NOT
+		MARC."610"."9" match ".*"
+	then
+		set TEMP"1" to MARC."610" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."610" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "610" "Subject" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr47" with TEMP"1"
+end
+
+rule "Primo VE - Lsr47c"
+	when
+		MARC."611" has any "a-z" AND
+		MARC."611".ind"2" equals "7" AND
+		MARC."611"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND NOT
+		MARC."611"."9" match ".*"
+	then
+		set TEMP"1" to MARC."611" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."611" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "611" "Subject" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr47" with TEMP"1"
+end
+
+rule "Primo VE - Lsr47d"	
+	when
+		MARC."630" has any "a-z" AND
+		MARC."630".ind"2" equals "7" AND
+		MARC."630"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit"  AND NOT
+		MARC."630"."9" match ".*"
+	then
+		set TEMP"1" to MARC."630" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."630" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "630" "Subject" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr47" with TEMP"1"
+end
+
+rule "Primo VE - Lsr47e"
+	when
+		MARC."650" has any "a-z" AND
+		MARC."650".ind"2" equals "7" AND
+		MARC."650"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND NOT
+		MARC."650"."9" match ".*"
+	then
+		set TEMP"1" to MARC."650" subfields "a-u" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."650" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")		
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "650" "Subject" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr47" with TEMP"1"
+end
+
+rule "Primo VE - Lsr47f"
+	when
+		MARC."651" has any "a-z" AND
+		MARC."651".ind"2" equals "7" AND
+		MARC."651"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND NOT
+		MARC."651"."9" match ".*"
+	then
+		set TEMP"1" to MARC."651" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."651" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "651" "Subject" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr47" with TEMP"1"
+end
+
+rule "Primo VE - Lsr47g"
+	when
+		MARC."880" has any "a-z" AND
+		MARC."880".ind"2" equals "7" AND
+		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND
+		MARC."880"."6" match "600-.*"
+	then
+		set TEMP"1" to MARC."880" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."880" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")		
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "880" "Subject" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr47" with TEMP"1"
+end
+
+rule "Primo VE - Lsr47h"
+	when
+		MARC."880" has any "a-z" AND
+		MARC."880".ind"2" equals "7" AND
+		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND
+		MARC."880"."6" match "610-.*"
+	then
+		set TEMP"1" to MARC."880" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."880" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")		
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "880" "Subject" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr47" with TEMP"1"
+end
+
+rule "Primo VE - Lsr47i"
+	when
+		MARC."880" has any "a-z" AND
+		MARC."880".ind"2" equals "7" AND
+		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND
+		MARC."880"."6" match "611-.*"
+	then
+		set TEMP"1" to MARC."880" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."880" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")		
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "880" "Subject" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr47" with TEMP"1"
+end
+
+rule "Primo VE - Lsr47j"
+	when
+		MARC."880" has any "a-z" AND
+		MARC."880".ind"2" equals "7" AND
+		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND
+		MARC."880"."6" match "630-.*"
+	then
+		set TEMP"1" to MARC."880" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."880" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")		
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "880" "Subject" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr47" with TEMP"1"
+end
+
+rule "Primo VE - Lsr47k"
+	when
+		MARC."880" has any "a-z" AND
+		MARC."880".ind"2" equals "7" AND
+		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND 
+		MARC."880"."6" match "650-.*"
+	then
+		set TEMP"1" to MARC."880" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."880" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")		
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "880" "Subject" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr47" with TEMP"1"
+end
+
+rule "Primo VE - Lsr47m"
+	when
+		MARC."880" has any "a-z" AND
+		MARC."880".ind"2" equals "7" AND
+		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND 
+		MARC."880"."6" match "651-.*"
+	then
+		set TEMP"1" to MARC."880" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		set TEMP"2" to MARC."880" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")		
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "880" "Subject" "display"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr47" with TEMP"1"
+end
