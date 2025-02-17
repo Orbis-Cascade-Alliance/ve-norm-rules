@@ -1,10 +1,14 @@
 rule "Primo Ve - Complete Title 880-245"
 #Remove $c, $h from display
+#Revised stanza by changing "subfields" to "sub without sort"
+# Ex: OCLC 1035137294
+# Last modified: 2/3/2025
+
 	when
 		MARC is "880" AND
 	    MARC."880"."6" match "245-.*"
 	then
-		set TEMP"1" to MARC."880" subfields "a,n,p,b,f,g,k,s"
+		set TEMP"1" to MARC."880" sub without sort "a,n,p,b,f,g,k,s"
 		remove substring using regex (TEMP"1","(/|:|;|=|,)+$")
 		create pnx."display"."vertitle" with TEMP"1"
 end
