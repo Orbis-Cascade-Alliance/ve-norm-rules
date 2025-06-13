@@ -244,23 +244,199 @@ rule "Primo VE - Lds97m"
 		create pnx."display"."lds97" with TEMP"1"
 end
 
-##NRSG Rules End Here
+##Expanded 880 rules(Lds97n1-n9) for MARC 246 (Varying Form of Title)
 
-rule "Primo VE - Lds97n"
+rule "Primo VE - Lds97n1_880-246"
+##880-246 ind 1 = 0 (Note, no added entry) or 1 (Note, added entry)
+##includes $i (Display text)
 	when
 		MARC."880" has any "i,a,b,f,g,n,p" AND
-		MARC."880"."6" match "246-.*"
-
+		MARC."880"."6" match "246-.*" AND
+		(MARC."880".ind"1" equals "0" OR 
+        MARC."880".ind"1" equals "1") AND
+		MARC."880"."i" match ".*"
+                
 	then
-		create pnx."display"."lds97" with MARC."880" sub without sort "i,a,b,f,g,n,p"
+		set TEMP"1" to MARC."880" sub without sort "i,a,b,f,g,n,p"
+		replace string by string (TEMP"1",">","&gt;")
+		replace string by string (TEMP"1","<","&lt;")
+		create pnx."display"."lds97" with TEMP"1"
 end
 
-rule "Primo VE - Lds97o"
+rule "Primo VE - Lds97n2_880-246"
+##880-246 ind 2 = 1 (Parallel title)
+##does not include $i (Display text)
 	when
-		MARC."880" has any "i,a,b,f,g,n,p" AND
-		MARC."880"."6" match "247-.*"
+		MARC."880" has any "a,b,f,g,n,p" AND
+		MARC."880"."6" match "246-.*" AND
+		(MARC."880".ind"1" equals "0" OR 
+        MARC."880".ind"1" equals "1") AND
+		MARC."880".ind"2" equals "1" AND NOT
+		MARC."880"."i" match ".*"		
+		
 	then
-		create pnx."display"."lds97" with MARC."880" sub without sort "i,a,b,f,g,n,p"
+		set TEMP"1" to MARC."880" sub without sort "a,b,f,g,n,p"
+		replace string by string (TEMP"1",">","&gt;")
+		replace string by string (TEMP"1","<","&lt;")
+		add prefix (TEMP"1","Parallel title in another language: ")
+		create pnx."display"."lds97" with TEMP"1"
+end
+
+rule "Primo VE - Lds97n3_880-246"
+##880-246 ind 2 = 2 (Distinctive title)
+##does not include $i (Display text)
+	when
+		MARC."880" has any "a,b,f,g,n,p" AND
+		MARC."880"."6" match "246-.*" AND
+		(MARC."880".ind"1" equals "0" OR 
+        MARC."880".ind"1" equals "1") AND
+		MARC."880".ind"2" equals "2" AND NOT
+		MARC."880"."i" match ".*"
+		
+	then
+		set TEMP"1" to MARC."880" sub without sort "a,b,f,g,n,p"
+		replace string by string (TEMP"1",">","&gt;")
+		replace string by string (TEMP"1","<","&lt;")
+		add prefix (TEMP"1","Distinctive title: ")
+		create pnx."display"."lds97" with TEMP"1"
+end	
+	
+rule "Primo VE - Lds97n4_880-246"
+##880-246 ind 2 = 4 (Cover title)
+##does not include $i (Display text)
+	when
+		MARC."880" has any "a,b,f,g,n,p" AND
+		MARC."880"."6" match "246-.*" AND
+		(MARC."880".ind"1" equals "0" OR 
+        MARC."880".ind"1" equals "1") AND
+		MARC."880".ind"2" equals "4" AND NOT
+		MARC."880"."i" match ".*"
+		
+	then
+		set TEMP"1" to MARC."880" sub without sort "a,b,f,g,n,p"
+		replace string by string (TEMP"1",">","&gt;")
+		replace string by string (TEMP"1","<","&lt;")
+		add prefix (TEMP"1","Cover title: ")
+		create pnx."display"."lds97" with TEMP"1"
+end
+
+rule "Primo VE - Lds97n5_880-246"
+##880-246 ind 2 = 5 (Added title page title)
+##does not include $i (Display text)
+	when
+		MARC."880" has any "a,b,f,g,n,p" AND
+		MARC."880"."6" match "246-.*" AND
+		(MARC."880".ind"1" equals "0" OR 
+        MARC."880".ind"1" equals "1") AND
+		MARC."880".ind"2" equals "5" AND NOT
+		MARC."880"."i" match ".*"
+	
+	then
+		set TEMP"1" to MARC."880" sub without sort "a,b,f,g,n,p"
+		replace string by string (TEMP"1",">","&gt;")
+		replace string by string (TEMP"1","<","&lt;")
+		add prefix (TEMP"1","Added title page title: ")
+		create pnx."display"."lds97" with TEMP"1"
+end
+
+rule "Primo VE - Lds97n6_880-246"
+##880-246 ind 2 = 6 (Caption title)
+##does not include $i (Display text)
+	when
+		MARC."880" has any "a,b,f,g,n,p" AND
+		MARC."880"."6" match "246-.*" AND
+		(MARC."880".ind"1" equals "0" OR 
+        MARC."880".ind"1" equals "1") AND
+		MARC."880".ind"2" equals "6" AND NOT
+		MARC."880"."i" match ".*"
+		
+	then
+		set TEMP"1" to MARC."880" sub without sort "a,b,f,g,n,p"
+		replace string by string (TEMP"1",">","&gt;")
+		replace string by string (TEMP"1","<","&lt;")
+		add prefix (TEMP"1","Caption title: ")
+		create pnx."display"."lds97" with TEMP"1"
+end
+
+rule "Primo VE - Lds97n7_880-246"
+##880-246 ind 2 = 7 (Running title)
+##does not include $i (Display text)
+	when
+		MARC."880" has any "a,b,f,g,n,p" AND
+		MARC."880"."6" match "246-.*" AND
+		(MARC."880".ind"1" equals "0" OR 
+        MARC."880".ind"1" equals "1") AND
+		MARC."880".ind"2" equals "7" AND NOT
+		MARC."880"."i" match ".*"
+		
+	then
+		set TEMP"1" to MARC."880" sub without sort "a,b,f,g,n,p"
+		replace string by string (TEMP"1",">","&gt;")
+		replace string by string (TEMP"1","<","&lt;")
+		add prefix (TEMP"1","Running title: ")
+		create pnx."display"."lds97" with TEMP"1"
+end
+
+rule "Primo VE - Lds97n8_880-246"
+##880-246 ind 2 = 8 (Spine title)
+##does not include $i (Display text)
+	when
+		MARC."880" has any "a,b,f,g,n,p" AND
+		MARC."880"."6" match "246-.*" AND
+		(MARC."880".ind"1" equals "0" OR 
+        MARC."880".ind"1" equals "1") AND
+		MARC."880".ind"2" equals "8" AND NOT
+		MARC."880"."i" match ".*"
+		
+	then
+		set TEMP"1" to MARC."880" sub without sort "a,b,f,g,n,p"
+		replace string by string (TEMP"1",">","&gt;")
+		replace string by string (TEMP"1","<","&lt;")
+		add prefix (TEMP"1","Spine title: ")
+		create pnx."display"."lds97" with TEMP"1"
+end
+
+rule "Primo VE - Lds97n9_880-246"
+## 880-246 ind2 ≠ 1–2,4–8 (e.g., #, 0, 3)
+## does not include $i (Display text)
+  when
+   MARC."880" has any "a,b,f,g,n,p" AND
+   MARC."880"."6" match "246-.*" AND
+		(MARC."880".ind"1" equals "0" OR
+                MARC."880".ind"1" equals "1") AND NOT
+		(MARC."880".ind"2" equals "1" OR
+                MARC."880".ind"2" equals "2" OR
+                MARC."880".ind"2" equals "4" OR
+                MARC."880".ind"2" equals "5" OR
+                MARC."880".ind"2" equals "6" OR
+                MARC."880".ind"2" equals "7" OR
+                MARC."880".ind"2" equals "8") AND NOT
+                MARC."880"."i" match ".*"
+  then
+    set TEMP"1" to MARC."880" sub without sort "a,b,f,g,n,p"
+    replace string by string (TEMP"1",">","&gt;")
+    replace string by string (TEMP"1","<","&lt;")
+    create pnx."display"."lds97" with TEMP"1"
+end
+
+## Revised 880 rules(Lds97o) for MARC 247 (Former title)
+
+rule "Primo VE - Lds97o_880-247"
+## Handles 880 for 247, excluding ind2=1
+      when
+             MARC."880" has any "a,b,g,n,p,x,f" AND
+             MARC."880"."6" match "247-.*" AND NOT
+             MARC."880".ind"2" equals "1"
+     then
+            set TEMP"1" to MARC."880" sub without sort "a,b,g,n,p,x"
+	    add prefix (TEMP"1","Former title: ")
+            set TEMP"2" to MARC."880" subfields "f"
+            replace string by string (TEMP"1",">","&gt;")
+            replace string by string (TEMP"1","<","&lt;")
+            replace string by string (TEMP"2",">","&gt;")
+            replace string by string (TEMP"2","<","&lt;")
+            concatenate with delimiter (TEMP"1",TEMP"2"," ")
+            create pnx."display"."lds97" with TEMP"1"
 end
 
 rule "Primo VE - Lds97p"
