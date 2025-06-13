@@ -6,10 +6,11 @@ rule "Primo VE - Lds47"
 ###Option Two: TO MAKE THIS RULE DISPLAY SEPARATELY FROM LCSH SUBJECTS
 # A) Find and replace on this string: create pnx."display"."subject"
 # B) Replace with string: create pnx."display"."lds47" (so each stanza will be updated at once)
+###Language Limiting: To limit display of vocabularies with multiple language options to English-language entries, change the wildcard form of the vocabulary code to the unqualified form and a form containing each desired language code. Example: Change "homoit.*" to "homoit|homoit/eng" in the vocabulary lines.
 	when
 		MARC."600" has any "a-z" AND
 		MARC."600".ind"2" equals "7" AND
-		MARC."600"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND NOT
+		MARC."600"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit.*" AND NOT
 		MARC."600"."9" match ".*"
 	then
 		set TEMP"1" to MARC."600" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
@@ -25,7 +26,7 @@ rule "Primo VE - Lds47b"
 	when
 		MARC."610" has any "a-z" AND
 		MARC."610".ind"2" equals "7" AND
-		MARC."610"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND NOT
+		MARC."610"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit.*" AND NOT
 		MARC."610"."9" match ".*"
 	then
 		set TEMP"1" to MARC."610" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
@@ -41,7 +42,7 @@ rule "Primo VE - Lds47c"
 	when
 		MARC."611" has any "a-z" AND
 		MARC."611".ind"2" equals "7" AND
-		MARC."611"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND NOT
+		MARC."611"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit.*" AND NOT
 		MARC."611"."9" match ".*"
 	then
 		set TEMP"1" to MARC."611" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
@@ -57,7 +58,7 @@ rule "Primo VE - Lds47d"
 	when
 		MARC."630" has any "a-z" AND
 		MARC."630".ind"2" equals "7" AND
-		MARC."630"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit"  AND NOT
+		MARC."630"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit.*"  AND NOT
 		MARC."630"."9" match ".*"
 	then
 		set TEMP"1" to MARC."630" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
@@ -73,7 +74,7 @@ rule "Primo VE - Lds47e"
 	when
 		MARC."650" has any "a-z" AND
 		MARC."650".ind"2" equals "7" AND
-		MARC."650"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND NOT
+		MARC."650"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit.*" AND NOT
 		MARC."650"."9" match ".*"
 	then
 		set TEMP"1" to MARC."650" subfields "a-u" delimited by " " remove substring using regex "\\.+$"
@@ -89,7 +90,7 @@ rule "Primo VE - Lds47f"
 	when
 		MARC."651" has any "a-z" AND
 		MARC."651".ind"2" equals "7" AND
-		MARC."651"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND NOT
+		MARC."651"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit.*" AND NOT
 		MARC."651"."9" match ".*"
 	then
 		set TEMP"1" to MARC."651" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
@@ -105,7 +106,7 @@ rule "Primo VE - Lds47g"
 	when
 		MARC."880" has any "a-z" AND
 		MARC."880".ind"2" equals "7" AND
-		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND
+		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit.*" AND
 		MARC."880"."6" match "600-.*"
 	then
 		set TEMP"1" to MARC."880" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
@@ -121,7 +122,7 @@ rule "Primo VE - Lds47h"
 	when
 		MARC."880" has any "a-z" AND
 		MARC."880".ind"2" equals "7" AND
-		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND
+		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit.*" AND
 		MARC."880"."6" match "610-.*"
 	then
 		set TEMP"1" to MARC."880" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
@@ -137,7 +138,7 @@ rule "Primo VE - Lds47i"
 	when
 		MARC."880" has any "a-z" AND
 		MARC."880".ind"2" equals "7" AND
-		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND
+		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit.*" AND
 		MARC."880"."6" match "611-.*"
 	then
 		set TEMP"1" to MARC."880" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
@@ -153,7 +154,7 @@ rule "Primo VE - Lds47j"
 	when
 		MARC."880" has any "a-z" AND
 		MARC."880".ind"2" equals "7" AND
-		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND
+		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit.*" AND
 		MARC."880"."6" match "630-.*"
 	then
 		set TEMP"1" to MARC."880" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
@@ -169,7 +170,7 @@ rule "Primo VE - Lds47k"
 	when
 		MARC."880" has any "a-z" AND
 		MARC."880".ind"2" equals "7" AND
-		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND 
+		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit.*" AND 
 		MARC."880"."6" match "650-.*"
 	then
 		set TEMP"1" to MARC."880" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
@@ -185,7 +186,7 @@ rule "Primo VE - Lds47m"
 	when
 		MARC."880" has any "a-z" AND
 		MARC."880".ind"2" equals "7" AND
-		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit" AND 
+		MARC."880"."2" match "fast|dtict|unbist|scgdst|bisacsh|netc|lctgm|local|homoit.*" AND 
 		MARC."880"."6" match "651-.*"
 	then
 		set TEMP"1" to MARC."880" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
