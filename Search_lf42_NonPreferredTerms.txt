@@ -1,0 +1,354 @@
+rule "Primo VE Marc - Lsr42"
+	when
+		MARC is "XXX"."a"
+	then
+		create pnx."search"."lsr42" with MARC "XXX"."a"
+end
+
+rule "Primo VE Marc - Subject 600_1_gulfAMR"
+##Ex: 
+	when
+		MARC."600" has any "a-z" AND
+		MARC."600".ind"2" equals "0" AND NOT
+		MARC."600"."9" match ".*"
+	then
+		set TEMP"1" to MARC."600" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","Mexico, Gulf of","America, Gulf of")
+		replace string by string (TEMP"1","\\(Gulf of Mexico\\)","(Gulf of America)")
+		set TEMP"2" to MARC."600" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","Mexico, Gulf of","America, Gulf of")
+		replace string by string (TEMP"2","\\(Gulf of Mexico\\)","(Gulf of America)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "600" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 600_2_gulfMEX"
+##Ex: 
+	when
+		MARC."600" has any "a-z" AND
+		MARC."600".ind"2" equals "0" AND NOT
+		MARC."600"."9" match ".*"
+	then
+		set TEMP"1" to MARC."600" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","America, Gulf of","Mexico, Gulf of")
+		replace string by string (TEMP"1","\\(Gulf of America\\)","(Gulf of Mexico)")
+		set TEMP"2" to MARC."600" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","America, Gulf of","Mexico, Gulf of")
+		replace string by string (TEMP"2","\\(Gulf of America\\)","(Gulf of Mexico)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "600" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 600_3_mountMCK"
+##Ex: 
+	when
+		MARC."600" has any "a-z" AND
+		MARC."600".ind"2" equals "0" AND NOT
+		MARC."600"."9" match ".*"
+	then
+		set TEMP"1" to MARC."600" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","Denali, Mount \\(Alaska\\)","McKinley, Mount (Alaska)")
+		replace string by string (TEMP"1","\\(Alaska : Mount Denali\\)","(Alaska : Mount McKinley),")
+		replace string by string (TEMP"1","Mount Denali \\(Alaska\\)","Mount McKinley (Alaska)")
+		set TEMP"2" to MARC."600" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","Denali, Mount","McKinley, Mount")
+		replace string by string (TEMP"2","Denali, Mount \\(Alaska\\)","McKinley, Mount (Alaska)")
+		replace string by string (TEMP"2","\\(Alaska : Mount Denali\\)","(Alaska : Mount McKinley)")
+		replace string by string (TEMP"2","Mount Denali \\(Alaska\\)","Mount McKinley (Alaska)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "600" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 600_4_mountDEN"
+##Ex: 18739642, 47075293, 07550072, 43286552
+	when
+		MARC."600" has any "a-z" AND
+		MARC."600".ind"2" equals "0" AND NOT
+		MARC."600"."9" match ".*"
+	then
+		set TEMP"1" to MARC."600" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","McKinley, Mount","Denali, Mount")
+		replace string by string (TEMP"1","McKinley, Mount \\(Alaska\\)","Denali, Mount (Alaska)")
+		replace string by string (TEMP"1","\\(Alaska : Mount McKinley\\)","(Alaska : Mount Denali),")
+		replace string by string (TEMP"1","Mount McKinley \\(Alaska\\)","Mount Denali (Alaska)")
+		set TEMP"2" to MARC."600" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","McKinley, Mount","Denali, Mount")
+		replace string by string (TEMP"2","McKinley, Mount \\(Alaska\\)","Denali, Mount (Alaska)")
+		replace string by string (TEMP"2","\\(Alaska : Mount McKinley\\)","(Alaska : Mount Denali)")
+		replace string by string (TEMP"2","Mount McKinley \\(Alaska\\)","Mount Denali (Alaska)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "600" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 610_1_gulfAMR"
+##Ex: 
+	when
+		MARC."610" has any "a-z" AND
+		MARC."610".ind"2" equals "0" AND NOT
+		MARC."610"."9" match ".*"
+	then
+		set TEMP"1" to MARC."610" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","Mexico, Gulf of","America, Gulf of")
+		replace string by string (TEMP"1","\\(Gulf of Mexico\\)","(Gulf of America)")
+		set TEMP"2" to MARC."610" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","Mexico, Gulf of","America, Gulf of")
+		replace string by string (TEMP"2","\\(Gulf of Mexico\\)","(Gulf of America)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "610" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 610_2_gulfMEX"
+##Ex: 1041841655
+	when
+		MARC."610" has any "a-z" AND
+		MARC."610".ind"2" equals "0" AND NOT
+		MARC."610"."9" match ".*"
+	then
+		set TEMP"1" to MARC."610" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","America, Gulf of","Mexico, Gulf of")
+		replace string by string (TEMP"1","\\(Gulf of America\\)","(Gulf of Mexico)")
+		set TEMP"2" to MARC."610" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","America, Gulf of","Mexico, Gulf of")
+		replace string by string (TEMP"2","\\(Gulf of America\\)","(Gulf of Mexico)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "610" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 610_3_mountMCK"
+##Ex: 
+	when
+		MARC."610" has any "a-z" AND
+		MARC."610".ind"2" equals "0" AND NOT
+		MARC."610"."9" match ".*"
+	then
+		set TEMP"1" to MARC."610" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","Denali, Mount \\(Alaska\\)","McKinley, Mount (Alaska)")
+		replace string by string (TEMP"1","\\(Alaska : Mount Denali\\)","(Alaska : Mount McKinley),")
+		replace string by string (TEMP"1","Mount Denali \\(Alaska\\)","Mount McKinley (Alaska)")
+		set TEMP"2" to MARC."610" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","Denali, Mount","McKinley, Mount")
+		replace string by string (TEMP"2","Denali, Mount \\(Alaska\\)","McKinley, Mount (Alaska)")
+		replace string by string (TEMP"2","\\(Alaska : Mount Denali\\)","(Alaska : Mount McKinley)")
+		replace string by string (TEMP"2","Mount Denali \\(Alaska\\)","Mount McKinley (Alaska)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "610" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 610_4_mountDEN"
+##Ex: 
+	when
+		MARC."610" has any "a-z" AND
+		MARC."610".ind"2" equals "0" AND NOT
+		MARC."610"."9" match ".*"
+	then
+		set TEMP"1" to MARC."610" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","McKinley, Mount","Denali, Mount")
+		replace string by string (TEMP"1","McKinley, Mount \\(Alaska\\)","Denali, Mount (Alaska)")
+		replace string by string (TEMP"1","\\(Alaska : Mount McKinley\\)","(Alaska : Mount Denali),")
+		replace string by string (TEMP"1","Mount McKinley \\(Alaska\\)","Mount Denali (Alaska)")
+		set TEMP"2" to MARC."610" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","McKinley, Mount","Denali, Mount")
+		replace string by string (TEMP"2","McKinley, Mount \\(Alaska\\)","Denali, Mount (Alaska)")
+		replace string by string (TEMP"2","\\(Alaska : Mount McKinley\\)","(Alaska : Mount Denali)")
+		replace string by string (TEMP"2","Mount McKinley \\(Alaska\\)","Mount Denali (Alaska)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "610" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 650_1_gulfAMR"
+##Ex: 45661469, 32822032, 21226089, 56655274, 18584765 (Denali), 656869543 (Gulf)
+	when
+		MARC."650" has any "a-z" AND
+		MARC."650".ind"2" equals "0" AND NOT
+		MARC."650"."9" match ".*"
+	then
+		set TEMP"1" to MARC."650" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","Mexico, Gulf of","America, Gulf of")
+		replace string by string (TEMP"1","\\(Gulf of Mexico\\)","(Gulf of America)")
+		set TEMP"2" to MARC."650" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","Mexico, Gulf of","America, Gulf of")
+		replace string by string (TEMP"2","\\(Gulf of Mexico\\)","(Gulf of America)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "650" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 650_2_gulfMEX"
+##Ex: 852758559
+	when
+		MARC."650" has any "a-z" AND
+		MARC."650".ind"2" equals "0" AND NOT
+		MARC."650"."9" match ".*"
+	then
+		set TEMP"1" to MARC."650" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","America, Gulf of","Mexico, Gulf of")
+		replace string by string (TEMP"1","\\(Gulf of America\\)","(Gulf of Mexico)")
+		set TEMP"2" to MARC."650" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","America, Gulf of","Mexico, Gulf of")
+		replace string by string (TEMP"2","\\(Gulf of America\\)","(Gulf of Mexico)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "650" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 650_3_mountMCK"
+##Ex: 45661469, 32822032, 21226089, 56655274, 18584765 (Denali), 656869543 (Gulf)
+	when
+		MARC."650" has any "a-z" AND
+		MARC."650".ind"2" equals "0" AND NOT
+		MARC."650"."9" match ".*"
+	then
+		set TEMP"1" to MARC."650" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","Denali, Mount \\(Alaska\\)","McKinley, Mount (Alaska)")
+		replace string by string (TEMP"1","\\(Alaska : Mount Denali\\)","(Alaska : Mount McKinley),")
+		replace string by string (TEMP"1","Mount Denali \\(Alaska\\)","Mount McKinley (Alaska)")
+		set TEMP"2" to MARC."650" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","Denali, Mount","McKinley, Mount")
+		replace string by string (TEMP"2","Denali, Mount \\(Alaska\\)","McKinley, Mount (Alaska)")
+		replace string by string (TEMP"2","\\(Alaska : Mount Denali\\)","(Alaska : Mount McKinley)")
+		replace string by string (TEMP"2","Mount Denali \\(Alaska\\)","Mount McKinley (Alaska)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "650" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 650_4_mountDEN"
+##Ex: 648346519
+	when
+		MARC."650" has any "a-z" AND
+		MARC."650".ind"2" equals "0" AND NOT
+		MARC."650"."9" match ".*"
+	then
+		set TEMP"1" to MARC."650" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","McKinley, Mount","Denali, Mount")
+		replace string by string (TEMP"1","McKinley, Mount \\(Alaska\\)","Denali, Mount (Alaska)")
+		replace string by string (TEMP"1","\\(Alaska : Mount McKinley\\)","(Alaska : Mount Denali),")
+		replace string by string (TEMP"1","Mount McKinley \\(Alaska\\)","Mount Denali (Alaska)")
+		set TEMP"2" to MARC."650" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","McKinley, Mount","Denali, Mount")
+		replace string by string (TEMP"2","McKinley, Mount \\(Alaska\\)","Denali, Mount (Alaska)")
+		replace string by string (TEMP"2","\\(Alaska : Mount McKinley\\)","(Alaska : Mount Denali)")
+		replace string by string (TEMP"2","Mount McKinley \\(Alaska\\)","Mount Denali (Alaska)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "650" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 651_1_gulfAMR"
+##Ex: 45661469, 32822032, 21226089, 56655274, 18584765 (Denali), 656869543 (Gulf)
+	when
+		MARC."651" has any "a-z" AND
+		MARC."651".ind"2" equals "0" AND NOT
+		MARC."651"."9" match ".*"
+	then
+		set TEMP"1" to MARC."651" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","Mexico, Gulf of","America, Gulf of")
+		replace string by string (TEMP"1","\\(Gulf of Mexico\\)","(Gulf of America)")
+		set TEMP"2" to MARC."651" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","Mexico, Gulf of","America, Gulf of")
+		replace string by string (TEMP"2","\\(Gulf of Mexico\\)","(Gulf of America)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "651" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 651_2_gulfMEX"
+##Ex: 1097366224
+	when
+		MARC."651" has any "a-z" AND
+		MARC."651".ind"2" equals "0" AND NOT
+		MARC."651"."9" match ".*"
+	then
+		set TEMP"1" to MARC."651" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","America, Gulf of","Mexico, Gulf of")
+		replace string by string (TEMP"1","\\(Gulf of America\\)","(Gulf of Mexico)")
+		set TEMP"2" to MARC."651" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","America, Gulf of","Mexico, Gulf of")
+		replace string by string (TEMP"2","\\(Gulf of America\\)","(Gulf of Mexico)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "651" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 651_3_mountMCK"
+##Ex: 45661469, 32822032, 21226089, 56655274, 18584765 (Denali), 656869543 (Gulf)
+	when
+		MARC."651" has any "a-z" AND
+		MARC."651".ind"2" equals "0" AND NOT
+		MARC."651"."9" match ".*"
+	then
+		set TEMP"1" to MARC."651" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","Denali, Mount \\(Alaska\\)","McKinley, Mount (Alaska)")
+		replace string by string (TEMP"1","\\(Alaska : Mount Denali\\)","(Alaska : Mount McKinley),")
+		replace string by string (TEMP"1","Mount Denali \\(Alaska\\)","Mount McKinley (Alaska)")
+		set TEMP"2" to MARC."651" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","Denali, Mount","McKinley, Mount")
+		replace string by string (TEMP"2","Denali, Mount \\(Alaska\\)","McKinley, Mount (Alaska)")
+		replace string by string (TEMP"2","\\(Alaska : Mount Denali\\)","(Alaska : Mount McKinley)")
+		replace string by string (TEMP"2","Mount Denali \\(Alaska\\)","Mount McKinley (Alaska)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "651" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
+
+rule "Primo VE Marc - Subject 651_4_mountDEN"
+##Ex: 03433399
+	when
+		MARC."651" has any "a-z" AND
+		MARC."651".ind"2" equals "0" AND NOT
+		MARC."651"."9" match ".*"
+	then
+		set TEMP"1" to MARC."651" subfields "a-u,w" delimited by " " remove substring using regex "\\.+$"
+		replace string by string (TEMP"1","McKinley, Mount","Denali, Mount")
+		replace string by string (TEMP"1","McKinley, Mount \\(Alaska\\)","Denali, Mount (Alaska)")
+		replace string by string (TEMP"1","\\(Alaska : Mount McKinley\\)","(Alaska : Mount Denali),")
+		replace string by string (TEMP"1","Mount McKinley \\(Alaska\\)","Mount Denali (Alaska)")
+		set TEMP"2" to MARC."651" sub without sorting "v,x-z" delimited by " -- "
+		remove substring using regex (TEMP"2","\\.+$")
+		replace string by string (TEMP"2","McKinley, Mount","Denali, Mount")
+		replace string by string (TEMP"2","McKinley, Mount \\(Alaska\\)","Denali, Mount (Alaska)")
+		replace string by string (TEMP"2","\\(Alaska : Mount McKinley\\)","(Alaska : Mount Denali)")
+		replace string by string (TEMP"2","Mount McKinley \\(Alaska\\)","Mount Denali (Alaska)")
+		concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+		set TEMP"3" to multilingual by "651" "lsr42" "search"
+		concatenate with delimiter (TEMP"1",TEMP"3","")
+		create pnx."search"."lsr42" with TEMP"1"
+end
