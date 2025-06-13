@@ -1,0 +1,77 @@
+rule "Primo VE - Ispartof 773 without 9"
+	when
+		MARC."773" has any "t,w,x,z" AND
+		MARC."773"."9" not match ".*"
+	then
+		set TEMP"1" to MARC "773" excluding subfields without sorting or default "u|w|x|y|z|9|7|6"
+		set TEMP"2" to MARC."773" sub without sort or empty "t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."773" prima_w_relation "w"
+		set TEMP"4" to MARC."773" prima_x_relation "x"
+		set TEMP"5" to MARC."773" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+        create pnx."display"."ispartof" with TEMP"1"
+end
+
+rule "Primo VE - Ispartof 773 with 9"
+	when
+		MARC."773" has any "t,w,x,z" AND
+		MARC."773"."9" match ".*"
+	then
+		set TEMP"1" to MARC "773" excluding subfields without sorting or default "i|u|w|x|y|z|9|7"
+		set TEMP"2" to MARC."773" sub without sort or empty "t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        set TEMP"3" to MARC."773" prima_w_relation "w"
+		set TEMP"4" to MARC."773" prima_x_relation "x"
+		set TEMP"5" to MARC."773" prima_x_relation "z"
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+		concatenate with delimiter (TEMP"1",TEMP"4","")
+		concatenate with delimiter (TEMP"1",TEMP"5","")
+		set TEMP"6" to MARC."773" subfields "9"
+        add prefix (TEMP"6","$$9")
+        concatenate with delimiter (TEMP"1",TEMP"6","")
+        create pnx."display"."ispartof" with TEMP"1"
+end
+
+
+rule "Primo VE - Ispartof 880-773 without 9"
+	when
+        MARC."880" has any "t,w,x,z" AND
+        MARC."880"."6" match "773-.*" AND
+		MARC."880"."9" not match "773-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "u|w|x|y|z|9|7|6"
+		set TEMP"2" to MARC."880" sub without sort or empty "t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        create pnx."display"."ispartof" with TEMP"1"
+end
+
+
+rule "Primo VE - Ispartof 880-773 with 9"
+	when
+        MARC."880" has any "t,w,x,z" AND
+        MARC."880"."6" match "773-.*" AND
+		MARC."880"."9" match "773-.*"
+	then
+		set TEMP"1" to MARC "880" excluding subfields without sorting or default "i|u|w|x|y|z|9|7"
+		set TEMP"2" to MARC."880" sub without sort or empty "t"
+		remove substring using regex (TEMP"2","(/|:|;|=|,)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^$$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+       	set TEMP"3" to MARC."880" subfields "9"
+        add prefix (TEMP"3","$$9")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
+        create pnx."display"."ispartof" with TEMP"1"
+end
