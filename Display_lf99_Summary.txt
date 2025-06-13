@@ -1,164 +1,232 @@
 rule "Primo VE - Lds99"
-when
-MARC is "520"."a" AND 
-MARC."520".ind"1" equals "0"
+# Unlabeled summary
+# Ex: 435967532 (without $3); 1063646162 (with $3, c, u); 48177422 (with $b)
+when 
+	MARC."520" has any "a,b,c,u,3" AND NOT
+	MARC."520".ind"1" equals "0" AND NOT
+	MARC."520".ind"1" equals "1" AND NOT
+	MARC."520".ind"1" equals "2" AND NOT
+	MARC."520".ind"1" equals "3" AND NOT
+	MARC."520".ind"1" equals "4" 
 then	
-set TEMP"1" to MARC."520" subfields "a"
-remove substring using regex (TEMP"1","(-)+$")
-remove substring using regex (TEMP"1","(-)+$")
-add prefix (TEMP"1","<b>Subject:</b> ")
-set TEMP"2" to MARC."520" subfields "b"
-remove substring using regex (TEMP"2","(-)+$")
-remove substring using regex (TEMP"2","(-)+$")
-concatenate with delimiter (TEMP"1",TEMP"2"," ")
-set TEMP"3" to MARC."520" subfields "c"
-add prefix (TEMP"3","--")
-concatenate with delimiter (TEMP"1",TEMP"3","")
-set TEMP"4" to MARC."520" subfields "u"
-remove leading and trailing spaces (TEMP"4")
-add prefix (TEMP"4","(")
-add suffix (TEMP"4",")")
-concatenate with delimiter (TEMP"1",TEMP"4"," ")
-create pnx."display"."lds99" with TEMP"1"
+	set TEMP"1" to MARC."520" subfields "a"
+	remove substring using regex (TEMP"1","(-)+$")
+	remove substring using regex (TEMP"1","(-)+$")
+	
+	set TEMP"2" to MARC."520" subfields "b"
+	remove substring using regex (TEMP"2","(-)+$")
+	remove substring using regex (TEMP"2","(-)+$")
+	concatenate with delimiter (TEMP"1",TEMP"2"," ")
+	
+	set TEMP"3" to MARC."520" subfields "c"
+	add prefix (TEMP"3","--")
+	concatenate with delimiter (TEMP"1",TEMP"3","")
+	
+	set TEMP"4" to MARC."520" subfields "u"
+	remove leading and trailing spaces (TEMP"4")
+	add prefix (TEMP"4","(<a href=\"")
+	add suffix (TEMP"4","\" target=\"_blank\">Source</a>)")
+	concatenate with delimiter (TEMP"1",TEMP"4"," ")
+	
+	set TEMP"5" to MARC."520" subfields "3"
+	remove substring using regex (TEMP"5","(:)+$")
+	concatenate existing with delimiter (TEMP"5",TEMP"1",": ")
+	create pnx."display"."lds99" with TEMP"5"
 end
 
-rule "Primo VE - Lds99_1_1"
-when
-MARC is "520"."a" AND 
-MARC."520".ind"1" equals "1"
-then
-set TEMP"1" to MARC."520" subfields "a"
-remove substring using regex (TEMP"1","(-)+$")
-remove substring using regex (TEMP"1","(-)+$")
-add prefix (TEMP"1","<b>Review:</b> ")
-set TEMP"2" to MARC."520" subfields "b"
-remove substring using regex (TEMP"2","(-)+$")
-remove substring using regex (TEMP"2","(-)+$")
-concatenate with delimiter (TEMP"1",TEMP"2"," ")
-set TEMP"3" to MARC."520" subfields "c"
-add prefix (TEMP"3","--")
-concatenate with delimiter (TEMP"1",TEMP"3","")
-set TEMP"4" to MARC."520" subfields "u"
-remove leading and trailing spaces (TEMP"4")
-add prefix (TEMP"4","(")
-add suffix (TEMP"4",")")
-concatenate with delimiter (TEMP"1",TEMP"4"," ")
-create pnx."display"."lds99" with TEMP"1"
+rule "Primo VE - Lds99_0"
+# Subject
+# Ex: 32087153 (without $3)
+when 
+	MARC."520" has any "a,b,c,u,3" AND
+	MARC."520".ind"1" equals "0"
+then	
+	set TEMP"1" to MARC."520" subfields "a"
+	remove substring using regex (TEMP"1","(-)+$")
+	remove substring using regex (TEMP"1","(-)+$")
+	add prefix (TEMP"1","<b>Subject:</b> ")
+	
+	set TEMP"2" to MARC."520" subfields "b"
+	remove substring using regex (TEMP"2","(-)+$")
+	remove substring using regex (TEMP"2","(-)+$")
+	concatenate with delimiter (TEMP"1",TEMP"2"," ")
+	
+	set TEMP"3" to MARC."520" subfields "c"
+	add prefix (TEMP"3","--")
+	concatenate with delimiter (TEMP"1",TEMP"3","")
+	
+	set TEMP"4" to MARC."520" subfields "u"
+	remove leading and trailing spaces (TEMP"4")
+	add prefix (TEMP"4","(<a href=\"")
+	add suffix (TEMP"4","\" target=\"_blank\">Source</a>)")
+	concatenate with delimiter (TEMP"1",TEMP"4"," ")
+	
+	set TEMP"5" to MARC."520" subfields "3"
+	remove substring using regex (TEMP"5","(:)+$")
+	concatenate existing with delimiter (TEMP"5",TEMP"1",": ")
+	create pnx."display"."lds99" with TEMP"5"
 end
 
-rule "Primo VE - Lds99_1_2"
-when
-MARC is "520"."a" AND 
-MARC."520".ind"1" equals "2"
-then
-set TEMP"1" to MARC."520" subfields "a"
-remove substring using regex (TEMP"1","(-)+$")
-remove substring using regex (TEMP"1","(-)+$")
-add prefix (TEMP"1","<b>Scope and content:</b> ")
-set TEMP"2" to MARC."520" subfields "b"
-remove substring using regex (TEMP"2","(-)+$")
-remove substring using regex (TEMP"2","(-)+$")
-concatenate with delimiter (TEMP"1",TEMP"2"," ")
-set TEMP"3" to MARC."520" subfields "c"
-add prefix (TEMP"3","--")
-concatenate with delimiter (TEMP"1",TEMP"3","")
-set TEMP"4" to MARC."520" subfields "u"
-remove leading and trailing spaces (TEMP"4")
-add prefix (TEMP"4","(")
-add suffix (TEMP"4",")")
-concatenate with delimiter (TEMP"1",TEMP"4"," ")
-create pnx."display"."lds99" with TEMP"1"
+rule "Primo VE - Lds99_1"
+# Review
+# Ex: 24247542 (without $3)
+when 
+	MARC."520" has any "a,b,c,u,3" AND
+	MARC."520".ind"1" equals "1"
+then	
+	set TEMP"1" to MARC."520" subfields "a"
+	remove substring using regex (TEMP"1","(-)+$")
+	remove substring using regex (TEMP"1","(-)+$")
+	add prefix (TEMP"1","<b>Review:</b> ")
+	
+	set TEMP"2" to MARC."520" subfields "b"
+	remove substring using regex (TEMP"2","(-)+$")
+	remove substring using regex (TEMP"2","(-)+$")
+	concatenate with delimiter (TEMP"1",TEMP"2"," ")
+	
+	set TEMP"3" to MARC."520" subfields "c"
+	add prefix (TEMP"3","--")
+	concatenate with delimiter (TEMP"1",TEMP"3","")
+	
+	set TEMP"4" to MARC."520" subfields "u"
+	remove leading and trailing spaces (TEMP"4")
+	add prefix (TEMP"4","(<a href=\"")
+	add suffix (TEMP"4","\" target=\"_blank\">Source</a>)")
+	concatenate with delimiter (TEMP"1",TEMP"4"," ")
+	
+	set TEMP"5" to MARC."520" subfields "3"
+	remove substring using regex (TEMP"5","(:)+$")
+	concatenate existing with delimiter (TEMP"5",TEMP"1",": ")
+	create pnx."display"."lds99" with TEMP"5"
 end
 
-rule "Primo VE - Lds99_1_3"
-when
-MARC is "520"."a" AND 
-MARC."520".ind"1" equals "3"
-then
-set TEMP"1" to MARC."520" subfields "a"
-remove substring using regex (TEMP"1","(-)+$")
-remove substring using regex (TEMP"1","(-)+$")
-add prefix (TEMP"1","<b>Abstract:</b> ")
-set TEMP"2" to MARC."520" subfields "b"
-remove substring using regex (TEMP"2","(-)+$")
-remove substring using regex (TEMP"2","(-)+$")
-concatenate with delimiter (TEMP"1",TEMP"2"," ")
-set TEMP"3" to MARC."520" subfields "c"
-add prefix (TEMP"3","--")
-concatenate with delimiter (TEMP"1",TEMP"3","")
-set TEMP"4" to MARC."520" subfields "u"
-remove leading and trailing spaces (TEMP"4")
-add prefix (TEMP"4","(")
-add suffix (TEMP"4",")")
-concatenate with delimiter (TEMP"1",TEMP"4"," ")
-create pnx."display"."lds99" with TEMP"1"
+rule "Primo VE - Lds99_2"
+# Scope and content
+# Ex: 930875109 (without $3)
+when 
+	MARC."520" has any "a,b,c,u,3" AND
+	MARC."520".ind"1" equals "2"
+then	
+	set TEMP"1" to MARC."520" subfields "a"
+	remove substring using regex (TEMP"1","(-)+$")
+	remove substring using regex (TEMP"1","(-)+$")
+	add prefix (TEMP"1","<b>Scope and content:</b> ")
+	
+	set TEMP"2" to MARC."520" subfields "b"
+	remove substring using regex (TEMP"2","(-)+$")
+	remove substring using regex (TEMP"2","(-)+$")
+	concatenate with delimiter (TEMP"1",TEMP"2"," ")
+	
+	set TEMP"3" to MARC."520" subfields "c"
+	add prefix (TEMP"3","--")
+	concatenate with delimiter (TEMP"1",TEMP"3","")
+	
+	set TEMP"4" to MARC."520" subfields "u"
+	remove leading and trailing spaces (TEMP"4")
+	add prefix (TEMP"4","(<a href=\"")
+	add suffix (TEMP"4","\" target=\"_blank\">Source</a>)")
+	concatenate with delimiter (TEMP"1",TEMP"4"," ")
+	
+	set TEMP"5" to MARC."520" subfields "3"
+	remove substring using regex (TEMP"5","(:)+$")
+	concatenate existing with delimiter (TEMP"5",TEMP"1",": ")
+	create pnx."display"."lds99" with TEMP"5"
 end
 
-rule "Primo VE - Lds99_1_4"
-when
-MARC is "520"."a" AND 
-MARC."520".ind"1" equals "4"
-then
-set TEMP"1" to MARC."520" subfields "a"
-remove substring using regex (TEMP"1","(-)+$")
-remove substring using regex (TEMP"1","(-)+$")
-add prefix (TEMP"1","<b>Content advice:</b> ")
-set TEMP"2" to MARC."520" subfields "b"
-remove substring using regex (TEMP"2","(-)+$")
-remove substring using regex (TEMP"2","(-)+$")
-concatenate with delimiter (TEMP"1",TEMP"2"," ")
-set TEMP"3" to MARC."520" subfields "c"
-add prefix (TEMP"3","--")
-concatenate with delimiter (TEMP"1",TEMP"3","")
-set TEMP"4" to MARC."520" subfields "u"
-remove leading and trailing spaces (TEMP"4")
-add prefix (TEMP"4","(")
-add suffix (TEMP"4",")")
-concatenate with delimiter (TEMP"1",TEMP"4"," ")
-create pnx."display"."lds99" with TEMP"1"
+rule "Primo VE - Lds99_3"
+# Abstract
+# Ex: 1365390707 (without $3)
+when 
+	MARC."520" has any "a,b,c,u,3" AND
+	MARC."520".ind"1" equals "3"
+then	
+	set TEMP"1" to MARC."520" subfields "a"
+	remove substring using regex (TEMP"1","(-)+$")
+	remove substring using regex (TEMP"1","(-)+$")
+	add prefix (TEMP"1","<b>Abstract:</b> ")
+	
+	set TEMP"2" to MARC."520" subfields "b"
+	remove substring using regex (TEMP"2","(-)+$")
+	remove substring using regex (TEMP"2","(-)+$")
+	concatenate with delimiter (TEMP"1",TEMP"2"," ")
+	
+	set TEMP"3" to MARC."520" subfields "c"
+	add prefix (TEMP"3","--")
+	concatenate with delimiter (TEMP"1",TEMP"3","")
+	
+	set TEMP"4" to MARC."520" subfields "u"
+	remove leading and trailing spaces (TEMP"4")
+	add prefix (TEMP"4","(<a href=\"")
+	add suffix (TEMP"4","\" target=\"_blank\">Source</a>)")
+	concatenate with delimiter (TEMP"1",TEMP"4"," ")
+	
+	set TEMP"5" to MARC."520" subfields "3"
+	remove substring using regex (TEMP"5","(:)+$")
+	concatenate existing with delimiter (TEMP"5",TEMP"1",": ")
+	create pnx."display"."lds99" with TEMP"5"
 end
 
-rule "Primo VE - Lds99_1_other"
-when
-MARC is "520"."a" AND NOT
-MARC."520".ind"1" equals "0" AND NOT
-MARC."520".ind"1" equals "1" AND NOT
-MARC."520".ind"1" equals "2" AND NOT
-MARC."520".ind"1" equals "3" AND NOT
-MARC."520".ind"1" equals "4"
-then
-set TEMP"1" to MARC."520" subfields "a"
-remove substring using regex (TEMP"1","(-)+$")
-remove substring using regex (TEMP"1","(-)+$")
-set TEMP"2" to MARC."520" subfields "b"
-remove substring using regex (TEMP"2","(-)+$")
-remove substring using regex (TEMP"2","(-)+$")
-concatenate with delimiter (TEMP"1",TEMP"2"," ")
-set TEMP"3" to MARC."520" subfields "c"
-add prefix (TEMP"3","--")
-concatenate with delimiter (TEMP"1",TEMP"3","")
-set TEMP"4" to MARC."520" subfields "u"
-remove leading and trailing spaces (TEMP"4")
-add prefix (TEMP"4","(")
-add suffix (TEMP"4",")")
-concatenate with delimiter (TEMP"1",TEMP"4"," ")
-create pnx."display"."lds99" with TEMP"1"
+rule "Primo VE - Lds99_4"
+# Content advice
+# Ex: 778891291 (without $3)
+when 
+	MARC."520" has any "a,b,c,u,3" AND
+	MARC."520".ind"1" equals "4"
+then	
+	set TEMP"1" to MARC."520" subfields "a"
+	remove substring using regex (TEMP"1","(-)+$")
+	remove substring using regex (TEMP"1","(-)+$")
+	add prefix (TEMP"1","<b>Content advice:</b> ")
+	
+	set TEMP"2" to MARC."520" subfields "b"
+	remove substring using regex (TEMP"2","(-)+$")
+	remove substring using regex (TEMP"2","(-)+$")
+	concatenate with delimiter (TEMP"1",TEMP"2"," ")
+	
+	set TEMP"3" to MARC."520" subfields "c"
+	add prefix (TEMP"3","--")
+	concatenate with delimiter (TEMP"1",TEMP"3","")
+	
+	set TEMP"4" to MARC."520" subfields "u"
+	remove leading and trailing spaces (TEMP"4")
+	add prefix (TEMP"4","(<a href=\"")
+	add suffix (TEMP"4","\" target=\"_blank\">Source</a>)")
+	concatenate with delimiter (TEMP"1",TEMP"4"," ")
+	
+	set TEMP"5" to MARC."520" subfields "3"
+	remove substring using regex (TEMP"5","(:)+$")
+	concatenate existing with delimiter (TEMP"5",TEMP"1",": ")
+	create pnx."display"."lds99" with TEMP"5"
 end
 
 rule "Primo VE - Lds99_880"
-	when
-		MARC is "880"."a" AND
-MARC."880"."6" match "520-.*"
-	then
-set TEMP"1" to MARC."880" subfields "a"
-remove substring using regex (TEMP"1","(-)+$")
-remove substring using regex (TEMP"1","(-)+$")
-set TEMP"2" to MARC."880" subfields "b"
-remove substring using regex (TEMP"1","(-)+$")
-remove substring using regex (TEMP"1","(-)+$")
-concatenate with delimiter (TEMP"1",TEMP"2"," ")
-set TEMP"3" to MARC."880" subfields "c"
-add prefix (TEMP"3","--")
-concatenate with delimiter (TEMP"1",TEMP"3","")
-		create pnx."display"."lds99" with MARC "880"."a"
+# Non-Roman
+# Ex: 39173219 (without $3)
+when 
+	MARC."880" has any "a,b,c,u,3" AND 
+	MARC."880"."6" match "520-.*"
+then	
+	set TEMP"1" to MARC."880" subfields "a"
+	remove substring using regex (TEMP"1","(-)+$")
+	remove substring using regex (TEMP"1","(-)+$")
+	
+	set TEMP"2" to MARC."880" subfields "b"
+	remove substring using regex (TEMP"2","(-)+$")
+	remove substring using regex (TEMP"2","(-)+$")
+	concatenate with delimiter (TEMP"1",TEMP"2"," ")
+	
+	set TEMP"3" to MARC."880" subfields "c"
+	add prefix (TEMP"3","--")
+	concatenate with delimiter (TEMP"1",TEMP"3","")
+	
+	set TEMP"4" to MARC."880" subfields "u"
+	remove leading and trailing spaces (TEMP"4")
+	add prefix (TEMP"4","(<a href=\"")
+	add suffix (TEMP"4","\" target=\"_blank\">Source</a>)")
+	concatenate with delimiter (TEMP"1",TEMP"4"," ")
+	
+	set TEMP"5" to MARC."880" subfields "3"
+	remove substring using regex (TEMP"5","(:)+$")
+	concatenate existing with delimiter (TEMP"5",TEMP"1",": ")
+	create pnx."display"."lds99" with TEMP"5"
 end
