@@ -6,10 +6,11 @@ rule "Primo VE - Lds46"
 ###Option Two: TO MAKE THIS RULE DISPLAY SEPARATELY FROM Genre (Local)
 # A) Find and replace on this string: create pnx."display"."lds78"
 # B) Replace with string: create pnx."display"."lds46" (so each stanza will be updated at once)
+###Language Limiting: To limit display of vocabularies with multiple language options to English-language entries, change the wildcard form of the vocabulary code to the unqualified form and a form containing each desired language code. Example: Change "wikidata.*" to "wikidata|wikidata/eng" in line 13.
     when
         MARC."655" has any "a" AND
         MARC."655".ind"2" equals "7" AND  
-        (MARC."655"."2" match "gsso|gttg|lobt|olacvggt|vgmsgg|vgmsng|wikidata")
+        (MARC."655"."2" match "gsso|gttg|lobt|olacvggt|vgmsgg|vgmsng|wikidata.*")
     then
         set TEMP"1" to MARC."655" subfields "a" delimited by " " remove substring using regex "\\.+$"
         set TEMP"2" to MARC."655" sub without sorting "v,x-z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
