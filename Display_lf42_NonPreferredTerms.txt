@@ -7,7 +7,7 @@ end
 
 rule "Primo VE Display - Subject 600_1_gulfMEX"
 ##Ex: 
-	whena
+	when
 		MARC."600" has any "a-z" AND
 		MARC."600"."z" match ".*America, Gulf of.*|.*Gulf of America.*" AND
 		MARC."600".ind"2" equals "0" AND NOT
