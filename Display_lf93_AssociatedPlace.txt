@@ -1,28 +1,75 @@
 rule "Primo VE - Lds93"
+#rule "Primo VE - Lds93_370_c"
+#84662452
+priority 10
 when
-MARC is "370"."g" 
+MARC is "370"."c" AND NOT
+(MARC."370"."i" match ".*")
 then	
-set TEMP"1" to MARC."370" subfields "g"  delimited by "; " remove substring using regex "\\.+$"
-#there is no reason use remove substring, but does not work without it
-add prefix (TEMP"1","Place of Origin of Work: ")
+set TEMP"1" to MARC."370" subfields "c" delimited by "; " remove substring using regex "\\.+$"
+#add prefix (TEMP"1","Associated Country: ")
 create pnx."display"."lds93" with TEMP"1"
 end
 
-rule "Primo VE - Lds93_370_c"
-when
-MARC is "370"."c"
+rule "Primo VE - Lds93_370_c_and_i"
+#936143522
+priority 20
+when 
+MARC."370" has any "i,c" AND 
+(MARC."370"."i" match ".*" AND MARC."370"."c" match ".*")
 then	
-set TEMP"1" to MARC."370" subfields "c" delimited by "; " remove substring using regex "\\.+$"
-#there is no reason use remove substring, but does not work without it
-add prefix (TEMP"1","Associated Country: ")
+set TEMP"2" to MARC."370" subfields "c"  delimited by "; " remove substring using regex "\\.+$"
+set TEMP"1" to MARC."370" subfields "i"  delimited by "; " remove substring using regex "\\.+$"
+concatenate with delimiter (TEMP"1",TEMP"2"," ")
 create pnx."display"."lds93" with TEMP"1"
 end
 
 rule "Primo VE - Lds93_370_f"
+#228415161
+priority 30
 when
-MARC is "370"."f"
+MARC is "370"."f" AND NOT
+(MARC."370"."i" match ".*")
 then	
 set TEMP"1" to MARC."370" subfields "f"  delimited by "; " remove substring using regex "\\.+$"
-#there is no reason use remove substring, but does not work without it
+#add prefix (TEMP"1","Other Associated Place: ")
+create pnx."display"."lds93" with TEMP"1"
+end
+
+rule "Primo VE - Lds93_370_f_and_i"
+#1035792290
+priority 40
+when 
+MARC."370" has any "i,f" AND 
+(MARC."370"."i" match ".*" AND MARC."370"."f" match ".*")
+then	
+set TEMP"2" to MARC."370" subfields "f"  delimited by "; " remove substring using regex "\\.+$"
+set TEMP"1" to MARC."370" subfields "i"  delimited by "; " remove substring using regex "\\.+$"
+concatenate with delimiter (TEMP"1",TEMP"2"," ")
+create pnx."display"."lds93" with TEMP"1"
+end
+
+rule "Primo VE - Lds93_370_g"
+#22905530
+priority 50
+when
+MARC is "370"."g" AND NOT
+(MARC."370"."i" match ".*")
+then	
+set TEMP"1" to MARC."370" subfields "g"  delimited by "; " remove substring using regex "\\.+$"
+add prefix (TEMP"1","Place of Origin of Work: ")
+create pnx."display"."lds93" with TEMP"1"
+end
+
+rule "Primo VE - Lds93_370_g_and_i"
+#1304264230
+priority 60
+when 
+MARC."370" has any "i,g" AND 
+(MARC."370"."i" match ".*" AND MARC."370"."g" match ".*")
+then	
+set TEMP"2" to MARC."370" subfields "g"  delimited by "; " remove substring using regex "\\.+$"
+set TEMP"1" to MARC."370" subfields "i"  delimited by "; " remove substring using regex "\\.+$"
+concatenate with delimiter (TEMP"1",TEMP"2"," ")
 create pnx."display"."lds93" with TEMP"1"
 end
