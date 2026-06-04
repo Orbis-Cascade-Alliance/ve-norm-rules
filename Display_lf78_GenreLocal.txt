@@ -1,5 +1,5 @@
 rule "Primo VE - Lds78"
-#655_7 lcgft OCLC 774607605
+#655_7 lcgft OCLC 774607605 OCLC 1063646162
 #655_7 fast OCLC 05264690
 #655 _0 OCLC 43354922
 #008/25 nature of contents e OCLC 1055568196
@@ -12,7 +12,14 @@ rule "Primo VE - Lds78"
         MARC."655"."2" match "lcgft" AND NOT
         MARC."655"."5" match ".*"
     then
-        create pnx."display"."lds78" with MARC "655" subfields "a" delimited by " " remove substring using regex "\\.+$"
+        set TEMP"1" to MARC."655" sub without sort "3,a"
+        remove substring using regex (TEMP"1","(/|:|;|=|,|\\.)+$")
+        set TEMP"2" to MARC."655" sub without sort "a"
+        remove substring using regex (TEMP"2","(/|:|;|=|,|\\.)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^\\$\\$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        create pnx."display"."lds78" with TEMP"1"
 end
 
 rule "Primo VE - Lds78 655 #7 except lcgft"
@@ -20,12 +27,16 @@ rule "Primo VE - Lds78 655 #7 except lcgft"
     when
         MARC."655" has any "a" AND
         MARC."655".ind"2" equals "7" AND
-        (MARC."655"."2" match "aat|fast|gmgpc|gsafd|homoit.*|lcsh|local|mesh|migfg|mim|ngl|rbbin|rbgenr|rbmscv|rbpap|rbpri|rbprov|rbpub|rbtyp" AND NOT        
-        MARC."655"."5" match ".*")
+        MARC."655"."2" match "aat|fast|gmgpc|gsafd|homoit.*|lcsh|local|mesh|migfg|mim|ngl|rbbin|rbgenr|rbmscv|rbpap|rbpri|rbprov|rbpub|rbtyp" AND NOT        
+        MARC."655"."5" match ".*"
     then
-        set TEMP"1" to MARC."655" subfields "a" delimited by " " remove substring using regex "\\.+$"
-        set TEMP"2" to MARC."655" sub without sorting "v,x-z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
+        set TEMP"1" to MARC."655" subfields "3,a" delimited by " " remove substring using regex "\\.+$"
+        set TEMP"2" to MARC."655" sub without sorting "v,x,y,z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
         concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+        set TEMP"3" to MARC."655" sub without sorting "a,v,x,y,z" delimited by " -- " remove substring using regex (TEMP"3","\\.+$")
+        add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^\\$\\$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
         create pnx."display"."lds78" with TEMP"1"
 end
 
@@ -34,11 +45,15 @@ rule "Primo VE - Lds78 655 #0,4"
         MARC."655" has any "a" AND
         (MARC."655".ind"2" equals "0" OR
         MARC."655".ind"2" equals "4") AND NOT
-       MARC."655"."5" match ".*"
+        MARC."655"."5" match ".*"
     then
-        set TEMP"1" to MARC."655" subfields "a" delimited by " " remove substring using regex "\\.+$"
+        set TEMP"1" to MARC."655" subfields "3,a" delimited by " " remove substring using regex "\\.+$"
         set TEMP"2" to MARC."655" sub without sorting "v,x-z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
         concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+        set TEMP"3" to MARC."655" sub without sorting "a,v,x-z" delimited by " -- " remove substring using regex (TEMP"3","\\.+$")
+        add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^\\$\\$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
         create pnx."display"."lds78" with TEMP"1"
 end
 
@@ -46,16 +61,27 @@ rule "Primo VE - Lds78 380"
     when
         MARC."380" has any "a"
     then
-        create pnx."display"."lds78" with MARC "380" subfields "a" delimited by " " remove substring using regex "\\.+$"
+        set TEMP"1" to MARC."380" sub without sort "3,a"
+        remove substring using regex (TEMP"1","(/|:|;|=|,|\\.)+$")
+        set TEMP"2" to MARC."380" sub without sort "a"
+        remove substring using regex (TEMP"2","(/|:|;|=|,|\\.)+$")
+        add prefix (TEMP"2","$$Q")
+        remove substring using regex (TEMP"2","^\\$\\$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"2","")
+        create pnx."display"."lds78" with TEMP"1"
 end
 
 rule "Primo VE - Lds78 694"
     when
         MARC."694" has any "a"
     then
-        set TEMP"1" to MARC."694" subfields "a" delimited by " " remove substring using regex "\\.+$"
-        set TEMP"2" to MARC."694" sub without sorting "v,x-z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
+        set TEMP"1" to MARC."694" subfields "3,a" delimited by " " remove substring using regex "\\.+$"
+        set TEMP"2" to MARC."694" sub without sorting "v,x,y,z" delimited by " -- " remove substring using regex (TEMP"2","\\.+$")
         concatenate with delimiter (TEMP"1",TEMP"2"," -- ")
+        set TEMP"3" to MARC."694" sub without sorting "a,v,x,y,z" delimited by " -- " remove substring using regex (TEMP"3","\\.+$")
+        add prefix (TEMP"3","$$Q")
+        remove substring using regex (TEMP"3","^\\$\\$Q$")
+        concatenate with delimiter (TEMP"1",TEMP"3","")
         create pnx."display"."lds78" with TEMP"1"
 end
 
