@@ -2,6 +2,10 @@
 # OCLC 1037021863
 # OCLC 921146450
 # OCLC 1412156762
+## Added 880 to MARC 362 to match the main rule
+## examples: 64439276; 09709910; 04969214
+## Added 880 to MARC 502 to match the main rule
+## examples: 27756522, 24018274, 1368206583
 
 rule "Primo VE - publisher 260 3#, $3"
 	when
@@ -562,10 +566,33 @@ priority 60
 		create pnx."display"."publisher" with MARC."502" subfields "c"
 end
 
+rule "Primo VE - publisher notes 880-502a"
+    when
+        MARC."880" has any "a"
+        AND MARC."880"."6" match "502-.*"
+    then
+        create pnx."display"."publisher_notes" with MARC."880" subfields "a"
+end
+
+rule "Primo VE - publisher notes 880-502c"
+    when
+        MARC."880" has any "c"
+        AND MARC."880"."6" match "502-.*"
+    then
+        create pnx."display"."publisher_notes" with MARC."880" subfields "c"
+end
 
 rule "Primo VE - publisher notes 362"
 	when
 		MARC."362" has any "a,z"
 	then
 		create pnx."display"."publisher_notes" with "N/A"
+end
+
+rule "Primo VE - publisher notes 880-362"
+    when
+        MARC."880" has any "a,z"
+        AND MARC."880"."6" match "362-.*"
+    then
+        create pnx."display"."publisher_notes" with MARC."880" subfields "a,z"
 end
