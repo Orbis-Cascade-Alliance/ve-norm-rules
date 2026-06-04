@@ -1,0 +1,103 @@
+rule "Primo VE Marc - Lsr41"
+	when
+		MARC is "341"."b" AND
+                MARC."341"."b" match ".*aptions"
+	then
+		create pnx."search"."lsr41" with "Captions"
+end
+
+rule "Primo VE Marc - lsr41/2"
+	when
+		MARC is "341"."a" AND
+                MARC."341"."a" match ".*aptions"
+	then
+		create pnx."search"."lsr41" with "Captions"
+end
+
+rule "Primo VE Marc - lsr41/3"
+	when
+		MARC is "341"."c" AND
+                MARC."341"."c" match "signLanguage"
+	then
+		create pnx."search"."lsr41" with "Sign Language"
+end
+
+rule "Primo VE Marc - lsr41/4"
+	when
+		MARC is "341"."d" AND
+                MARC."341"."d" match "audioDescription"
+	then
+		create pnx."search"."lsr41" with "Audio Description"
+end
+
+rule "Primo VE Marc - lsr41/5"
+	when
+		MARC is "532"."a" AND
+                MARC."532"."a" match ".*deaf.*" 
+         then
+              create pnx."search"."lsr41" with "Subtitles for the Deaf and Hearing Impaired (SDH)"
+end
+
+rule "Primo VE Marc - lsr41/6"
+	when
+		MARC is "532"."a" AND
+                MARC."532"."a" match ".*hard of hearing.*" 
+         then
+              create pnx."search"."lsr41" with "Subtitles for the Deaf and Hearing Impaired (SDH)"
+end
+
+rule "Primo VE Marc - lsr41/7"
+	when
+		MARC is "532"."a" AND
+                MARC."532"."a" match ".*hard-of-hearing.*" 
+         then
+              create pnx."search"."lsr41" with "Subtitles for the Deaf and Hearing Impaired (SDH)"
+end
+
+rule "Primo VE Marc - lsr41/8"
+	when
+		MARC is "532"."a" AND
+                MARC."532"."a" match ".*hearing impaired.*" 
+         then
+              create pnx."search"."lsr41" with "Subtitles for the Deaf and Hearing Impaired (SDH)"
+end
+
+rule "Primo VE Marc - lsr41/9"
+	when
+		MARC is "532"."a" AND
+                MARC."532"."a" match ".*SDH.*" 
+         then
+              create pnx."search"."lsr41" with "Subtitles for the Deaf and Hearing Impaired (SDH)"
+end
+
+rule "Primo VE Marc - lsr41/10"
+	when
+		MARC is "041"."j" AND
+                MARC."041"."j" match "eng"
+	then
+		create pnx."search"."lsr41" with "English Subtitles"
+end
+
+rule "Primo VE Marc - lsr41/11"
+     when
+          MARC is "041"."j" AND
+          MARC."041"."j" match "spa"
+     then
+          create pnx."search"."lsr41" with "Spanish Subtitles"
+end
+
+rule "Primo VE Marc - lsr41/12"
+     when
+          (MARC.control."008"(23-24) equals "d" AND
+          MARC.control."LDR"(6-7) matches "a|t|")
+    then
+          create pnx."search"."lsr41" with "Large Print"
+end
+
+rule "Primo VE Marc - lsr41/13"
+     when
+          MARC is "041" AND
+          (MARC."041"."a" match "sgn" OR MARC."041"."h" match "sgn")
+     then
+          create pnx."search"."lsr41" with "Sign Language"
+end

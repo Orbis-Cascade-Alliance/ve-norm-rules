@@ -1,0 +1,12 @@
+rule "Primo VE - Lds44"
+	when
+MARC.control."008"(6-7) equals "r" AND		
+MARC is "264"."c" AND
+MARC."264".ind"2"  equals "2"
+	then
+	    set TEMP"1" to MARC."264"."c"
+	    remove substring using regex (TEMP"1","\\[+")
+	    remove substring using regex (TEMP"1","(\\]|:|,|=|/|\\.)+$")
+	   	remove substring using regex (TEMP"1","(\\])+")
+		set pnx."display"."lds44" to TEMP"1"
+end
