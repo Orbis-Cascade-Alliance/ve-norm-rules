@@ -588,11 +588,3 @@ rule "Primo VE - publisher notes 362"
 	then
 		create pnx."display"."publisher_notes" with "N/A"
 end
-
-rule "Primo VE - publisher notes 880-362"
-    when
-        MARC."880" has any "a,z"
-        AND MARC."880"."6" match "362-.*"
-    then
-        create pnx."display"."publisher_notes" with MARC."880" subfields "a,z"
-end
