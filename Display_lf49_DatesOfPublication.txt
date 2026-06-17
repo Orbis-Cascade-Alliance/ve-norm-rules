@@ -4,3 +4,11 @@ rule "Primo VE - Lds49"
     then 		
         create pnx."display"."lds49" with MARC "362" sub without sort "a,z" 
 end
+
+rule "Primo VE - Lds49 880"
+    when
+        MARC."880" has any "a,z"
+        AND MARC."880"."6" match "362-.*"
+    then
+        create pnx."display"."lds49" with MARC."880" subfields "a,z"
+end
